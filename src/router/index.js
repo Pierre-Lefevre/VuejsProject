@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Learn from '@/components/Learn'
 import Operation from '@/components/Operation'
+import Score from '@/components/Score'
 
 Vue.use(Router)
 
@@ -33,6 +34,11 @@ export default new Router({
       path: '/evaluation/operation',
       name: 'Operation',
       component: Operation
+    },
+    {
+      path: '/score',
+      name: 'Score',
+      component: Score
     }
   ]
 })
