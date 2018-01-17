@@ -2,11 +2,10 @@
   <div>
     <div>{{ operations[index].facteur1 }} x {{ operations[index].facteur2 }}</div>
     <ul id="answers">
-      <li v-bind:key="answer" v-for="answer in operations[index].answers">
-        <button @click="validAnswer(answer)">{{ answer }}</button>
+      <li v-bind:key="answer" v-for="(answer, i) in operations[index].answers">
+        <button @click="validAnswer(i)">{{ answer }}</button>
       </li>
     </ul>
-    <pre>{{ operations }}</pre>
   </div>
 </template>
 
@@ -55,11 +54,17 @@ export default {
         array.push(shuffleOperations[i])
       }
     },
-    validAnswer (answer) {
-      if (this.operations[this.index].facteur1 * this.operations[this.index].facteur2 === answer) {
-        console.log('ok')
+    validAnswer (indexAnswer) {
+      console.log(localStorage)
+      localStorage[indexAnswer] = 'a'
+      if (this.operations[this.index].facteur1 * this.operations[this.index].facteur2 === this.operations[this.index].answers[indexAnswer]) {
+        if (this.index === 9) {
+          this.$router.push({name: 'Home'})
+        } else {
+          this.index++
+        }
       } else {
-        console.log('nop')
+        this.operations[this.index].answers.splice(indexAnswer, 1)
       }
     }
   }

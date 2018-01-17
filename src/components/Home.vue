@@ -7,7 +7,11 @@
 
 <script>
 export default {
-  name: 'home'
+  name: 'home',
+  created () {
+    localStorage.clear()
+    console.log(localStorage)
+  }
 }
 </script>
 
