@@ -2,8 +2,8 @@
   <div>
     <div>{{ operations[index].facteur1 }} x {{ operations[index].facteur2 }}</div>
     <transition-group name="answers" tag="ul" id="answers">
-      <li v-for="(answer, i) in operations[index].answers" :key="answer" class="answer randomColor">
-        <span @click="validAnswer(i)">{{ answer }}</span>
+      <li v-for="(answer, i) in operations[index].answers" :key="answer" class="answer randomColor" @click="validAnswer(i)">
+        <span>{{ answer }}</span>
       </li>
     </transition-group>
   </div>
