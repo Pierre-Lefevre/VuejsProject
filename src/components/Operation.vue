@@ -2,15 +2,10 @@
   <div>
     <div>{{ operations[index].facteur1 }} x {{ operations[index].facteur2 }}</div>
     <transition-group name="answers" tag="ul" id="answers">
-      <li v-for="(answer, i) in operations[index].answers" :key="answer" class="answer">
-        <button @click="validAnswer(i)">{{ answer }}</button>
+      <li v-for="(answer, i) in operations[index].answers" :key="answer" class="answer randomColor">
+        <span @click="validAnswer(i)">{{ answer }}</span>
       </li>
     </transition-group>
-    <!--<ul id="answers">
-      <li v-bind:key="answer" v-for="(answer, i) in operations[index].answers">
-        <button @click="validAnswer(i)">{{ answer }}</button>
-      </li>
-    </ul>-->
   </div>
 </template>
 
@@ -85,13 +80,29 @@ export default {
 
   #answers {
     display: flex;
+    flex-direction: row;
+    justify-content: center;
   }
 
-  .answer-enter-active, .answer-leave-active {
+  .answers-leave-active {
     transition: all 1s;
   }
-  .answer-enter, .answer-leave-to /* .list-leave-active below version 2.1.8 */ {
+
+  .answers-leave-to {
     opacity: 0;
     transform: translateY(30px);
+  }
+
+  .answer {
+    background-color: dodgerblue;
+    background-size: cover;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    width: 100px;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
   }
 </style>
