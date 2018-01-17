@@ -2,13 +2,13 @@
   <div>
     <div>{{ operations[index].facteur1 }} x {{ operations[index].facteur2 }}</div>
     <transition-group name="answers" tag="ul" id="answers">
-    <li v-for="answer in operations[index].answers" :key="answer" class="answer">
-      <button @click="validAnswer(answer)">{{ answer }}</button>
-    </li>
+      <li v-for="(answer, i) in operations[index].answers" :key="answer" class="answer">
+        <button @click="validAnswer(i)">{{ answer }}</button>
+      </li>
     </transition-group>
     <!--<ul id="answers">
-      <li v-bind:key="answer" v-for="answer in operations[index].answers">
-        <button @click="validAnswer(answer)">{{ answer }}</button>
+      <li v-bind:key="answer" v-for="(answer, i) in operations[index].answers">
+        <button @click="validAnswer(i)">{{ answer }}</button>
       </li>
     </ul>-->
   </div>
@@ -59,11 +59,17 @@ export default {
         array.push(shuffleOperations[i])
       }
     },
-    validAnswer (answer) {
-      if (this.operations[this.index].facteur1 * this.operations[this.index].facteur2 === answer) {
-        console.log('ok')
+    validAnswer (indexAnswer) {
+      console.log(localStorage)
+      localStorage[indexAnswer] = 'a'
+      if (this.operations[this.index].facteur1 * this.operations[this.index].facteur2 === this.operations[this.index].answers[indexAnswer]) {
+        if (this.index === 9) {
+          this.$router.push({name: 'Home'})
+        } else {
+          this.index++
+        }
       } else {
-        console.log('nop')
+        this.operations[this.index].answers.splice(indexAnswer, 1)
       }
     }
   }
