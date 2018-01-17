@@ -1,12 +1,16 @@
 <template>
   <div>
     <div>{{ operations[index].facteur1 }} x {{ operations[index].facteur2 }}</div>
-    <ul id="answers">
+    <transition-group name="answers" tag="ul" id="answers">
+    <li v-for="answer in operations[index].answers" :key="answer" class="answer">
+      <button @click="validAnswer(answer)">{{ answer }}</button>
+    </li>
+    </transition-group>
+    <!--<ul id="answers">
       <li v-bind:key="answer" v-for="answer in operations[index].answers">
         <button @click="validAnswer(answer)">{{ answer }}</button>
       </li>
-    </ul>
-    <pre>{{ operations }}</pre>
+    </ul>-->
   </div>
 </template>
 
@@ -75,5 +79,13 @@ export default {
 
   #answers {
     display: flex;
+  }
+
+  .answer-enter-active, .answer-leave-active {
+    transition: all 1s;
+  }
+  .answer-enter, .answer-leave-to /* .list-leave-active below version 2.1.8 */ {
+    opacity: 0;
+    transform: translateY(30px);
   }
 </style>
