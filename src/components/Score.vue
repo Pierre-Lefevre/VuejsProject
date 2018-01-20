@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tr :key="i" v-for="(operation, i) in operations">
-        <td>{{ operation.facteur1 }} x {{ operation.facteur2 }}</td>
+        <td>{{ operation.factor1 }} x {{ operation.factor2 }}</td>
         <td>{{ operation.goodAnswer }}</td>
         <td>{{ getBadAnswers(operation.badAnswers) }}</td>
         <td>{{ operation.nbErrors }}</td>

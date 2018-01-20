@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>{{ operations[index].facteur1 }} x {{ operations[index].facteur2 }}</div>
+    <div>{{ operations[index].factor1 }} x {{ operations[index].factor2 }}</div>
     <!--<transition-group name="answers" tag="ul" id="answers">-->
     <div id="answers-wrapper">
       <ul id="answers">
@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import utils from '@/components/utils'
+
 export default {
   name: 'operation',
   data () {
@@ -47,58 +49,96 @@ export default {
       }
       for (let i = 1; i <= 10; i++) {
         let operation = {}
-        if ((Math.random() > 0.5) ? 1 : 0) {
-          operation = {facteur1: this.table, facteur2: i}
+        if (Math.random() > 0.5) {
+          operation = {factor1: this.table, factor2: i}
         } else {
-          operation = {facteur1: i, facteur2: this.table}
+          operation = {factor1: i, factor2: this.table}
         }
-        operation.goodAnswer = operation.facteur1 * operation.facteur2
+        operation.goodAnswer = operation.factor1 * operation.factor2
         operation.answers = JSON.parse(JSON.stringify(answers))
-        this.shuffleArray(operation.answers)
+        utils.shuffleArray(operation.answers)
         operation.badAnswers = []
         operation.nbErrors = 0
         this.operations.push(operation)
       }
-      this.shuffleArray(this.operations)
+      utils.shuffleArray(this.operations)
+    },
+    getFiveMostProblematicOperations () {
+      // Récupère l'historique des 5 dernières sessions d'opérations.
+      if (localStorage.history === undefined) {
+        return
+      }
+      let history = JSON.parse(localStorage.history).slice(0, 5)
+
+      console.log('history :')
+      console.log(history)
+
+      // Crée un tableau contenant toutes les opérations différentes effectuées (l'ordre des facteurs étant important).
+      let allOperations = []
+      history.forEach(function (session) {
+        session.forEach(function (operation) {
+          let index = utils.objectExistInArrayByProperties(allOperations, operation, ['factor1', 'factor2'])
+          if (index !== -1) {
+            allOperations[index].nbErrors += operation.nbErrors
+            allOperations[index].badAnswers = utils.arrayUnique(allOperations[index].badAnswers.concat(operation.badAnswers))
+          } else {
+            allOperations.push({factor1: operation.factor1, factor2: operation.factor2, nbErrors: operation.nbErrors, badAnswers: operation.badAnswers})
+          }
+        })
+      })
+
+      // Duplique, avec une probabilité de 1/4, certaines opérations.
+      allOperations.forEach(function (operation) {
+        if (Math.random() > 0.75) {
+          allOperations.push(utils.clone(operation))
+        }
+      })
+
+      // Trie toutes les opérations effectuées en fonction du nombre d'erreurs décroissant.
+      allOperations.sort(function (a, b) {
+        return (a.nbErrors < b.nbErrors) ? 1 : ((b.nbErrors < a.nbErrors) ? -1 : 0)
+      })
+
+      // Récupère, au maximum, les 5 opérations les plus problématiques.
+      return allOperations.slice(0, 5)
     },
     generateOperationsTest () {
-      for (let i = 1; i <= 10; i++) {
-        let operation = {facteur1: Math.floor(Math.random() * 10) + 1, facteur2: Math.floor(Math.random() * 10) + 1}
-        operation.goodAnswer = operation.facteur1 * operation.facteur2
-        let tmpAnswers = [operation.goodAnswer]
-        for (let j = 1; j <= 9; j++) {
-          let answer
-          do {
-            answer = (Math.floor(Math.random() * 10) + 1) * (Math.floor(Math.random() * 10) + 1)
-          } while (tmpAnswers.indexOf(answer) !== -1)
-          tmpAnswers.push(answer)
+      let problematicOperations = this.getFiveMostProblematicOperations()
+      for (let i = 0; i < 10; i++) {
+        let operation
+        let tmpAnswers
+        let nbRandomAnswers
+        if (problematicOperations.length > 0) {
+          let problematicOperation = problematicOperations.splice(0, 1)[0]
+          console.log('problematicOperation :')
+          console.log(problematicOperation)
+          operation = {factor1: problematicOperation.factor1, factor2: problematicOperation.factor2}
+          operation.goodAnswer = operation.factor1 * operation.factor2
+          tmpAnswers = [operation.goodAnswer].concat(problematicOperation.badAnswers.slice(0, 9))
+          nbRandomAnswers = 10 - tmpAnswers.length
+        } else {
+          operation = {factor1: utils.randomBetween(1, 10), factor2: utils.randomBetween(1, 10)}
+          operation.goodAnswer = operation.factor1 * operation.factor2
+          tmpAnswers = [operation.goodAnswer]
+          nbRandomAnswers = 9
         }
+        tmpAnswers = tmpAnswers.concat(utils.getClosestValues(operation.goodAnswer, nbRandomAnswers, tmpAnswers))
         operation.answers = []
-        for (let j = 0; j < tmpAnswers.length; j++) {
+        tmpAnswers.forEach((answer) => {
           operation.answers.push({
-            value: tmpAnswers[j],
+            value: answer,
             class: 'initial'
           })
-        }
-        this.shuffleArray(operation.answers)
+        })
+        utils.shuffleArray(operation.answers)
         operation.badAnswers = []
         operation.nbErrors = 0
         this.operations.push(operation)
       }
-      this.shuffleArray(this.operations)
-    },
-    shuffleArray (array) {
-      let shuffleOperations = []
-      for (let i = 0; i < array.length; i++) {
-        shuffleOperations.splice(Math.round(Math.random() * shuffleOperations.length), 0, array[i])
-      }
-      array.splice(0, array.length)
-      for (let i = 0; i < shuffleOperations.length; i++) {
-        array.push(shuffleOperations[i])
-      }
+      utils.shuffleArray(this.operations)
     },
     validAnswer (indexAnswer) {
-      if (this.operations[this.index].facteur1 * this.operations[this.index].facteur2 === this.operations[this.index].answers[indexAnswer].value) {
+      if (this.operations[this.index].factor1 * this.operations[this.index].factor2 === this.operations[this.index].answers[indexAnswer].value) {
         this.operations[this.index].time = Date.now() - this.startTimestamp
         this.operations[this.index].answers[indexAnswer].class = 'correct'
         for (let i = 0; i < this.operations[this.index].answers.length; i++) {
