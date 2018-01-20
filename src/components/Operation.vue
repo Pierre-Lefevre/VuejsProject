@@ -144,12 +144,6 @@ export default {
     justify-content: center;
   }
 
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
   #answers {
     display: flex;
     flex-direction: row;
