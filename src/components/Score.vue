@@ -51,7 +51,8 @@ export default {
     }
   },
   created () {
-    this.operations = JSON.parse(localStorage.data).operations
+    let history = JSON.parse(localStorage.history)
+    this.operations = history[history.length - 1]
     this.pie.data = [10, this.getNbTotalError()]
   },
   methods: {

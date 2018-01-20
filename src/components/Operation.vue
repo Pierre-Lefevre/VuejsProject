@@ -112,7 +112,7 @@ export default {
         }, 1000)
         setTimeout(() => {
           this.nextQuestion()
-        }, 5000)
+        }, 1)
       } else {
         this.operations[this.index].nbErrors++
         this.operations[this.index].answers[indexAnswer].class = 'false'
@@ -127,7 +127,14 @@ export default {
     },
     nextQuestion () {
       if (this.index === 9) {
-        localStorage.data = JSON.stringify({operations: this.operations})
+        let history
+        if (localStorage.history !== undefined) {
+          history = JSON.parse(localStorage.history)
+        } else {
+          history = []
+        }
+        history.push(this.operations)
+        localStorage.history = JSON.stringify(history)
         this.$router.push({name: 'Score'})
       } else {
         this.index++
