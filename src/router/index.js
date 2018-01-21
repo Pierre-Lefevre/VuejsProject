@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import Learn from '@/components/Learn'
 import Operation from '@/components/Operation'
 import Score from '@/components/Score'
+import Statistics from '@/components/Statistics'
 
 Vue.use(Router)
 
@@ -33,6 +34,11 @@ export default new Router({
       path: '/score',
       name: 'Score',
       component: Score
+    },
+    {
+      path: '/statistiques',
+      name: 'Statistics',
+      component: Statistics
     }
   ]
 })
