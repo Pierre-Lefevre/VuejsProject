@@ -9,16 +9,16 @@
       <nav id="navbar">
         <ul>
           <li class="hvr-grow-rotate">
-            <router-link :to="{name: 'Home'}" tag="a" class="color-orange">Accueil</router-link>
+            <router-link :to="{name: 'Home'}" tag="a" class="color-orange"><h2>Accueil</h2></router-link>
           </li>
           <li class="hvr-grow-rotate">
-            <router-link :to="{name: 'Learn'}" tag="a" class="color-blue">Apprentissage</router-link>
+            <router-link :to="{name: 'Learn'}" tag="a" class="color-green"><h2>Apprentissage</h2></router-link>
           </li>
           <li class="hvr-grow-rotate">
-            <router-link :to="{name: 'Operation'}" tag="a" class="color-blue" v-if="canAccessTest()">Evaluation</router-link>
+            <router-link :to="{name: 'Operation'}" tag="a" class="color-red" v-if="canAccessTest()"><h2>Evaluation</h2></router-link>
           </li>
           <li class="hvr-grow-rotate">
-            <router-link :to="{name: 'Statistics'}" tag="a" class="color-blue">Statistiques</router-link>
+            <router-link :to="{name: 'Statistics'}" tag="a" class="color-blue"><h2>Statistiques</h2></router-link>
           </li>
         </ul>
       </nav>
@@ -83,15 +83,31 @@ export default {
     text-decoration: none;
   }
 
-  #app {
+  h1, h2, h3, h4, h5, h6 {
     font-family: 'TrashHand','Avenir', Helvetica, Arial, sans-serif;
+    font-weight: normal;
+  }
+
+  h1 {
+    font-size: 3em;
+  }
+
+  h2 {
+    font-size: 2em;
+  }
+
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-size: 2rem;
     color: #2c3e50;
     min-height: 100vh;
     margin:0 auto;
     position:relative;
+  }
+
+  .font-monster {
+    font-family: 'TrashHand','Avenir', Helvetica, Arial, sans-serif;
   }
 
   .background-blue {
@@ -161,6 +177,7 @@ export default {
   }
 
   footer {
+    color: white;
     justify-content: center;
     position: absolute;
     bottom: 0;
@@ -171,12 +188,16 @@ export default {
   }
 
   main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     padding: 2rem 2rem calc(100px + 2rem);
   }
 
   #logo {
     margin-right: 0;
     margin-left: 10rem;
+    margin-bottom: 0;
     justify-self: left;
   }
 
