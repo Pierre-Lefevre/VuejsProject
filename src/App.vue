@@ -23,9 +23,10 @@
         </ul>
       </nav>
     </header>
-    <!--<img src="./assets/logo.png">-->
-    <alert></alert>
-    <router-view/>
+    <main>
+      <alert></alert>
+      <router-view/>
+    </main>
     <footer class="background-yellow">
       <save-load-progress></save-load-progress>
       <button @click="resetLocalStorage">Reset localstorage</button>
@@ -151,8 +152,11 @@ export default {
     position: absolute;
     bottom: 0;
     width: 100%;
-    padding-top: 50px;
-    height: 50px;
+    padding: 2rem 1rem;
+  }
+
+  main {
+    padding: 2rem 1rem;
   }
 
   #logo {

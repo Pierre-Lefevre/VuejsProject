@@ -169,7 +169,7 @@ export default {
     },
     nextQuestion () {
       if (this.index === 9) {
-        lsm.pushValue("history", this.operations)
+        lsm.pushValue('history', this.operations)
         this.$router.push({name: 'Score'})
       } else {
         this.index++
