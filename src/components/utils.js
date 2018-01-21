@@ -46,21 +46,6 @@ export default {
     }
   },
   getClosestValues (goodAnswers, nbValues, except) {
-    // let allPossibleResults = []
-    // for (let i = 1; i <= 10; i++) {
-    //   for (let j = 1; j <= 10; j++) {
-    //     allPossibleResults.push(i * j)
-    //   }
-    // }
-    //
-    // allPossibleResults = this.arrayUnique(allPossibleResults)
-    //
-    // allPossibleResults.sort(function (a, b) {
-    //   return a - b
-    // })
-    //
-    // console.log(allPossibleResults)
-
     let allPossibleResults = this.cloneArray(gAllPossibleResults)
 
     for (let i = 0; i < except.length; i++) {

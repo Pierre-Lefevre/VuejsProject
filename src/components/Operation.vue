@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import config from '@/config/config'
 import utils from '@/components/utils'
 
 export default {
@@ -66,7 +67,7 @@ export default {
     getFiveMostProblematicOperations () {
       // Récupère l'historique des 5 dernières sessions d'opérations.
       if (localStorage.history === undefined) {
-        return
+        return []
       }
       let history = JSON.parse(localStorage.history).slice(0, 5)
 
@@ -146,13 +147,13 @@ export default {
             this.operations[this.index].answers[i].class = 'disable'
           }
         }
-        this.timeNextQuestion = 5
+        this.timeNextQuestion = config.timeBetweenOperation / 1000
         this.timerNextQuestion = setInterval(() => {
           this.decreaseTimerNextQuestion()
         }, 1000)
         setTimeout(() => {
           this.nextQuestion()
-        }, 1)
+        }, config.timeBetweenOperation)
       } else {
         this.operations[this.index].nbErrors++
         this.operations[this.index].answers[indexAnswer].class = 'false'

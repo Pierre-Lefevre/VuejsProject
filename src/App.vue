@@ -14,14 +14,22 @@
       </ul>
     </nav>
     <button @click="resetLocalStorage">Reset localstorage</button>
-    <!--<img src="./assets/logo.png">-->
+    <save-load-progress></save-load-progress>
     <router-view/>
+    <alert></alert>
   </div>
 </template>
 
 <script>
+import Alert from '@/components/Alert'
+import SaveLoadProgress from '@/components/SaveLoadProgress'
+
 export default {
   name: 'App',
+  components: {
+    Alert,
+    SaveLoadProgress
+  },
   methods: {
     resetLocalStorage () {
       console.log(localStorage)
@@ -33,7 +41,11 @@ export default {
 </script>
 
 <style>
-  body, ul {
+  * {
+    box-sizing: border-box;
+  }
+
+  body, ul, p {
     margin: 0;
   }
 
@@ -52,6 +64,7 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
+    min-height: 100vh;
   }
 
   #navbar ul {
