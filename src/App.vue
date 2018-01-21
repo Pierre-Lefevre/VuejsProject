@@ -23,6 +23,7 @@
 <script>
 import Alert from '@/components/Alert'
 import SaveLoadProgress from '@/components/SaveLoadProgress'
+import lsm from '@/components/localStorageManager'
 
 export default {
   name: 'App',
@@ -32,9 +33,7 @@ export default {
   },
   methods: {
     resetLocalStorage () {
-      console.log(localStorage)
-      localStorage.clear()
-      console.log(localStorage)
+      lsm.clear()
     }
   }
 }

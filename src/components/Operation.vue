@@ -17,6 +17,7 @@
 <script>
 import config from '@/config/config'
 import utils from '@/components/utils'
+import lsm from '@/components/localStorageManager'
 
 export default {
   name: 'operation',
@@ -66,10 +67,10 @@ export default {
     },
     getFiveMostProblematicOperations () {
       // Récupère l'historique des 5 dernières sessions d'opérations.
-      if (localStorage.history === undefined) {
+      if (!lsm.keyExists('history')) {
         return []
       }
-      let history = JSON.parse(localStorage.history).slice(0, 5)
+      let history = lsm.getValue('history').slice(0, 5)
 
       console.log('history :')
       console.log(history)
@@ -168,14 +169,7 @@ export default {
     },
     nextQuestion () {
       if (this.index === 9) {
-        let history
-        if (localStorage.history !== undefined) {
-          history = JSON.parse(localStorage.history)
-        } else {
-          history = []
-        }
-        history.push(this.operations)
-        localStorage.history = JSON.stringify(history)
+        lsm.pushValue("history", this.operations)
         this.$router.push({name: 'Score'})
       } else {
         this.index++

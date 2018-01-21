@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import lsm from '@/components/localStorageManager'
 import Pie from '@/components/Pie'
 
 export default {
@@ -51,7 +52,11 @@ export default {
     }
   },
   created () {
-    let history = JSON.parse(localStorage.history)
+    if (!lsm.keyExists('history')) {
+      this.$router.push({name: 'Home'})
+      return
+    }
+    let history = lsm.getValue('history')
     this.operations = history[history.length - 1]
     this.pie.data = [10, this.getNbTotalError()]
   },
