@@ -169,7 +169,14 @@ export default {
     },
     nextQuestion () {
       if (this.index === 9) {
-        lsm.pushValue("history", this.operations)
+        lsm.pushValue('history', this.operations)
+        if (this.table !== null) {
+          let tablesAlreadyDone = lsm.getValue('tablesAlreadyDone')
+          if (tablesAlreadyDone === undefined || (tablesAlreadyDone !== undefined && tablesAlreadyDone.indexOf(this.table) === -1)) {
+            lsm.pushValue('tablesAlreadyDone', this.table)
+          }
+        }
+        console.log(localStorage)
         this.$router.push({name: 'Score'})
       } else {
         this.index++
