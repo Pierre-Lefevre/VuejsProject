@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tr :key="i" v-for="(operation, i) in operations">
-        <td>{{ operation.facteur1 }} x {{ operation.facteur2 }}</td>
+        <td>{{ operation.factor1 }} x {{ operation.factor2 }}</td>
         <td>{{ operation.goodAnswer }}</td>
         <td>{{ getBadAnswers(operation.badAnswers) }}</td>
         <td>{{ operation.nbErrors }}</td>
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import lsm from '@/components/localStorageManager'
 import Pie from '@/components/Pie'
 
 export default {
@@ -51,7 +52,11 @@ export default {
     }
   },
   created () {
-    let history = JSON.parse(localStorage.history)
+    if (!lsm.keyExists('history')) {
+      this.$router.push({name: 'Home'})
+      return
+    }
+    let history = lsm.getValue('history')
     this.operations = history[history.length - 1]
     this.pie.data = [10, this.getNbTotalError()]
   },
