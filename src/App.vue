@@ -12,13 +12,13 @@
             <router-link :to="{name: 'Home'}" tag="a" class="color-orange">Accueil</router-link>
           </li>
           <li class="hvr-grow-rotate">
-            <router-link :to="{name: 'Learn'}" tag="a" class="color-green">Apprentissage</router-link>
+            <router-link :to="{name: 'Learn'}" tag="a" class="color-blue">Apprentissage</router-link>
           </li>
           <li class="hvr-grow-rotate">
-            <router-link :to="{name: 'Operation'}" tag="a" class="color-green">Evaluation</router-link>
+            <router-link :to="{name: 'Operation'}" tag="a" class="color-blue">Evaluation</router-link>
           </li>
           <li class="hvr-grow-rotate">
-            <router-link :to="{name: 'Statistics'}" tag="a" class="color-green">Statistiques</router-link>
+            <router-link :to="{name: 'Statistics'}" tag="a" class="color-blue">Statistiques</router-link>
           </li>
         </ul>
       </nav>
@@ -27,7 +27,7 @@
       <alert></alert>
       <router-view/>
     </main>
-    <footer class="background-yellow">
+    <footer class="background-blue">
       <save-load-progress></save-load-progress>
       <button @click="resetLocalStorage">Reset localstorage</button>
     </footer>
@@ -89,6 +89,10 @@ export default {
     position:relative;
   }
 
+  .background-blue {
+    background-color: #2c3e50;
+  }
+
   .background-green {
     background-color: #40AE8A;
   }
@@ -103,6 +107,10 @@ export default {
 
   .background-red {
     background-color: #EB5F50;
+  }
+
+  .color-blue {
+    color: #2c3e50;
   }
 
   .color-green {
@@ -153,10 +161,12 @@ export default {
     bottom: 0;
     width: 100%;
     padding: 2rem 1rem;
+    margin-top: 2rem;
+    max-height: 100px;
   }
 
   main {
-    padding: 2rem 1rem;
+    padding: 2rem 2rem calc(100px + 2rem);
   }
 
   #logo {
