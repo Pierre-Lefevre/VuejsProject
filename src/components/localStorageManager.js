@@ -4,6 +4,16 @@ export default {
     localStorage.clear()
     console.log(localStorage)
   },
+  getAllToString () {
+    return JSON.stringify(localStorage)
+  },
+  setAllFromString (ls) {
+    this.clear()
+    let parseLs = JSON.parse(ls)
+    for (let key in parseLs) {
+      localStorage[key] = parseLs[key]
+    }
+  },
   keyExists (key) {
     return localStorage[key] !== undefined
   },
