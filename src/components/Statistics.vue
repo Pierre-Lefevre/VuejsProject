@@ -1,12 +1,16 @@
 <template>
   <div>
     <ul>
-      <li :key="i" v-for="(sessionHistory, i) in globalHistory">
+      <!--<li :key="i" v-for="(sessionHistory, i) in globalHistory">
         <ul>
           <li :key="j" v-for="(operation, j) in sessionHistory">
             {{ operation.facteur1 }} * {{ operation.facteur2 }}
           </li>
         </ul>
+      </li>-->
+      <li :key="i" v-for="(operation, i) in finalTab">
+        <p>{{ operation.facteur1 }} x {{ operation.facteur2 }}</p>
+        <p>Nombre d'erreurs moyen : {{ operation.nbErrors }}</p>
       </li>
     </ul>
     <pre>{{ globalHistory }}</pre>
@@ -39,6 +43,7 @@ export default {
           similar = false
           for (let i = 0; i < this.finalTab.length; i++) {
             if (operation.facteur1 === this.finalTab[i].facteur1 && operation.facteur2 === this.finalTab[i].facteur2) {
+              this.finalTab[i].nbErrors = (this.finalTab[i].nbErrors + operation.nbErrors) / 2
               similar = true
               break
             }
