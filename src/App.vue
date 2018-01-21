@@ -15,7 +15,7 @@
             <router-link :to="{name: 'Learn'}" tag="a" class="color-blue">Apprentissage</router-link>
           </li>
           <li class="hvr-grow-rotate">
-            <router-link :to="{name: 'Operation'}" tag="a" class="color-blue">Evaluation</router-link>
+            <router-link :to="{name: 'Operation'}" tag="a" class="color-blue" v-if="canAccessTest()">Evaluation</router-link>
           </li>
           <li class="hvr-grow-rotate">
             <router-link :to="{name: 'Statistics'}" tag="a" class="color-blue">Statistiques</router-link>
@@ -24,20 +24,21 @@
       </nav>
     </header>
     <main>
-      <alert></alert>
       <router-view/>
     </main>
     <footer class="background-blue">
       <save-load-progress></save-load-progress>
       <button @click="resetLocalStorage">Reset localstorage</button>
     </footer>
+    <alert></alert>
   </div>
 </template>
 
 <script>
+// import utils from '@/components/utils'
+import lsm from '@/components/localStorageManager'
 import Alert from '@/components/Alert'
 import SaveLoadProgress from '@/components/SaveLoadProgress'
-import lsm from '@/components/localStorageManager'
 
 export default {
   name: 'App',
@@ -46,6 +47,10 @@ export default {
     SaveLoadProgress
   },
   methods: {
+    canAccessTest () {
+      // return utils.canAccessTest()
+      return true
+    },
     resetLocalStorage () {
       lsm.clear()
     }

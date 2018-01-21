@@ -18,6 +18,7 @@
 import config from '@/config/config'
 import utils from '@/components/utils'
 import lsm from '@/components/localStorageManager'
+// import { EventBus } from '@/components/event-bus'
 
 export default {
   name: 'operation',
@@ -36,6 +37,11 @@ export default {
       this.table = parseInt(this.$route.params.id)
       this.generateOperationsLearn()
     } else {
+      // if (!utils.canAccessTest()) {
+      //   EventBus.$emit('alert', {type: 'info', message: 'Tu dois t\'entraîner davantage !'})
+      //   this.$router.push({name: 'Home'})
+      //   return
+      // }
       this.generateOperationsTest()
     }
     this.startTimestamp = Date.now()
@@ -170,6 +176,13 @@ export default {
     nextQuestion () {
       if (this.index === 9) {
         lsm.pushValue('history', this.operations)
+        if (this.table !== null) {
+          let tablesAlreadyDone = lsm.getValue('tablesAlreadyDone')
+          if (tablesAlreadyDone === undefined || (tablesAlreadyDone !== undefined && tablesAlreadyDone.indexOf(this.table) === -1)) {
+            lsm.pushValue('tablesAlreadyDone', this.table)
+          }
+        }
+        console.log(localStorage)
         this.$router.push({name: 'Score'})
       } else {
         this.index++
