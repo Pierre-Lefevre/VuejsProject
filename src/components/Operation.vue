@@ -18,6 +18,7 @@
 import config from '@/config/config'
 import utils from '@/components/utils'
 import lsm from '@/components/localStorageManager'
+import am from '@/components/achievementsManager'
 // import { EventBus } from '@/components/event-bus'
 
 export default {
@@ -182,6 +183,7 @@ export default {
             lsm.pushValue('tablesAlreadyDone', this.table)
           }
         }
+        am.tableMaster(this.table, this.operations)
         console.log(localStorage)
         this.$router.push({name: 'Score'})
       } else {

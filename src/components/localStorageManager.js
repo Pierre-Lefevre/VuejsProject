@@ -1,4 +1,17 @@
 export default {
+  init () {
+    if (!this.keyExists('history')) {
+      this.setValue('history', [])
+    }
+    if (!this.keyExists('achievements')) {
+      let achievements = {}
+      for (let i = 1; i <= 10; i++) {
+        achievements['table' + i + 'Master'] = false
+      }
+      this.setValue('achievements', achievements)
+    }
+    console.log(localStorage)
+  },
   clear () {
     console.log(localStorage)
     localStorage.clear()
