@@ -6,13 +6,14 @@
 </template>
 
 <script>
-import utils from '@/components/utils'
+// import utils from '@/components/utils'
 
 export default {
   name: 'home',
   methods: {
     canAccessTest () {
-      utils.canAccessTest()
+      // return utils.canAccessTest()
+      return true
     }
   }
 }
