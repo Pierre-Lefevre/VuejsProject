@@ -1,3 +1,5 @@
+import config from '@/config/config'
+
 export default {
   init () {
     if (!this.keyExists('history')) {
@@ -5,9 +7,9 @@ export default {
     }
     if (!this.keyExists('achievements')) {
       let achievements = {}
-      for (let i = 1; i <= 10; i++) {
-        achievements['table' + i + 'Master'] = false
-      }
+      Object.keys(config.achievements).forEach((key) => {
+        achievements[key] = false
+      })
       this.setValue('achievements', achievements)
     }
     console.log(localStorage)

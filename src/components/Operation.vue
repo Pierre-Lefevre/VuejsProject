@@ -183,8 +183,9 @@ export default {
             lsm.pushValue('tablesAlreadyDone', this.table)
           }
         }
-        am.tableMaster(this.table, this.operations)
-        console.log(localStorage)
+
+        // Vérifie que l'élève débloque un succès de type tableXMaster.
+        am.tableXMaster(this.table, this.operations)
         this.$router.push({name: 'Score'})
       } else {
         this.index++
