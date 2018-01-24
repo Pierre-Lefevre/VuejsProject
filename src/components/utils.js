@@ -82,7 +82,7 @@ export default {
     return answers
   },
   canAccessTest () {
-    let tablesAlreadyDone = lsm.getValue('tablesAlreadyDone')
+    let tablesAlreadyDone = lsm.getValueUser('tablesAlreadyDone')
     return tablesAlreadyDone !== undefined && tablesAlreadyDone.length === 10
   }
 }

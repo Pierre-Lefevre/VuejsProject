@@ -52,11 +52,11 @@ export default {
     }
   },
   created () {
-    if (!lsm.keyExists('history')) {
+    if (!lsm.keyExistsUser('history')) {
       this.$router.push({name: 'Home'})
       return
     }
-    let history = lsm.getValue('history')
+    let history = lsm.getValueUser('history')
     this.operations = history[history.length - 1]
     this.pie.data = [10, this.getNbTotalError()]
   },

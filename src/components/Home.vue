@@ -1,19 +1,25 @@
 <template>
   <div>
-    <router-link :to="{name: 'Learn'}" tag="button">Apprentissage</router-link>
-    <router-link :to="{name: 'Operation'}" tag="button" v-if="canAccessTest()">Evaluation</router-link>
+    <home-auth v-if="check"></home-auth>
+    <home-guest v-if="!check"></home-guest>
   </div>
 </template>
 
 <script>
 // import utils from '@/components/utils'
+import user from '@/components/auth'
+import homeAuth from '@/components/HomeAuth'
+import homeGuest from '@/components/HomeGuest'
 
 export default {
   name: 'home',
-  methods: {
-    canAccessTest () {
-      // return utils.canAccessTest()
-      return true
+  components: {
+    homeAuth,
+    homeGuest
+  },
+  computed: {
+    check () {
+      return user.check()
     }
   }
 }

@@ -8,7 +8,7 @@
 <script>
 import config from '@/config/config'
 import lsm from '@/components/localStorageManager'
-import { EventBus } from '@/components/event-bus'
+import { EventBus } from '@/components/eventBus'
 import crypto from 'crypto-js'
 import fs from 'file-saver'
 
@@ -16,7 +16,7 @@ export default {
   name: 'save-load-progress',
   methods: {
     saveProgress () {
-      let ciphertext = crypto.AES.encrypt(lsm.getAllToString(), config.hashKey)
+      let ciphertext = crypto.AES.encrypt(lsm.getAllToStringUser(), config.hashKey)
       let blob = new Blob([ciphertext], {type: 'text/plain;charset=utf-8'})
       fs.saveAs(blob, config.backupFileName)
       EventBus.$emit('alert', {type: 'success', message: 'Tu as sauvegardé ta progression !'})
@@ -34,7 +34,7 @@ export default {
       reader.onload = (e) => {
         let content = e.target.result
         let bytes = crypto.AES.decrypt(content.toString(), config.hashKey)
-        lsm.setAllFromString(bytes.toString(crypto.enc.Utf8))
+        lsm.setAllFromStringUser(bytes.toString(crypto.enc.Utf8))
         EventBus.$emit('alert', {type: 'success', message: 'Tu as récupéré ta progression !'})
       }
       reader.readAsText(file)

@@ -12,23 +12,30 @@
             <router-link :to="{name: 'Home'}" tag="a" class="color-orange"><h2>Accueil</h2></router-link>
           </li>
           <li class="hvr-grow-rotate">
-            <router-link :to="{name: 'Learn'}" tag="a" class="color-green"><h2>Apprentissage</h2></router-link>
+            <router-link :to="{name: 'SignIn'}" tag="a" class="color-orange" v-if="!check"><h2>Connexion</h2></router-link>
           </li>
           <li class="hvr-grow-rotate">
-            <router-link :to="{name: 'Operation'}" tag="a" class="color-red" v-if="canAccessTest()"><h2>Evaluation</h2></router-link>
+            <a class="color-orange" v-if="check" @click="logout"><h2>Déconnexion</h2></a>
           </li>
           <li class="hvr-grow-rotate">
-            <router-link :to="{name: 'Statistics'}" tag="a" class="color-blue"><h2>Statistiques</h2></router-link>
+            <router-link :to="{name: 'Learn'}" tag="a" class="color-green" v-if="check"><h2>Apprentissage</h2></router-link>
+          </li>
+          <li class="hvr-grow-rotate">
+            <router-link :to="{name: 'Operation'}" tag="a" class="color-red" v-if="check && canAccessTest"><h2>Evaluation</h2></router-link>
+          </li>
+          <li class="hvr-grow-rotate">
+            <router-link :to="{name: 'Statistics'}" tag="a" class="color-blue" v-if="check"><h2>Statistiques</h2></router-link>
           </li>
         </ul>
       </nav>
     </header>
     <main>
-      <router-view/>
+      <router-view :key="$route.fullPath"/>
     </main>
     <footer class="background-blue">
       <save-load-progress></save-load-progress>
       <button @click="resetLocalStorage">Reset localstorage</button>
+      <button @click="displayLocalStorage">Display localstorage</button>
     </footer>
     <alert></alert>
   </div>
@@ -39,6 +46,7 @@
 import lsm from '@/components/localStorageManager'
 import Alert from '@/components/Alert'
 import SaveLoadProgress from '@/components/SaveLoadProgress'
+import user from '@/components/auth'
 
 export default {
   name: 'App',
@@ -56,6 +64,18 @@ export default {
     },
     resetLocalStorage () {
       lsm.clear()
+    },
+    displayLocalStorage () {
+      console.log(localStorage)
+    },
+    logout () {
+      user.logout()
+      this.$router.push({name: 'Home'})
+    }
+  },
+  computed: {
+    check () {
+      return user.check()
     }
   }
 }
@@ -87,7 +107,7 @@ export default {
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'TrashHand','Avenir', Helvetica, Arial, sans-serif;
+    font-family: 'TrashHand', 'Avenir', Helvetica, Arial, sans-serif;
     font-weight: normal;
   }
 
@@ -99,18 +119,41 @@ export default {
     font-size: 2em;
   }
 
+  form > *:not(:last-child) {
+    margin-bottom: 10px;
+  }
+
+  form input[type="text"], form input[type="password"] {
+    width: 100%;
+    padding: 5px 10px;
+    font-size: 1rem;
+    color: #495057;
+    border: 1px solid #CED4DA;
+    border-radius: 4px;
+  }
+
+  button.btn-primary {
+    cursor: pointer;
+    padding: 5px 10px;
+    color: #FFFFFF;
+    background-color: #007BFF;
+    border: 1px solid #007BFF;
+    font-size: 1rem;
+    border-radius: 4px;
+  }
+
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
     min-height: 100vh;
-    margin:0 auto;
-    position:relative;
+    margin: 0 auto;
+    position: relative;
   }
 
   .font-monster {
-    font-family: 'TrashHand','Avenir', Helvetica, Arial, sans-serif;
+    font-family: 'TrashHand', 'Avenir', Helvetica, Arial, sans-serif;
   }
 
   .background-blue {
@@ -164,6 +207,7 @@ export default {
     -webkit-transition-property: transform;
     transition-property: transform;
   }
+
   .hvr-grow-rotate:hover, .hvr-grow-rotate:focus, .hvr-grow-rotate:active {
     -webkit-transform: scale(1.1) rotate(4deg);
     transform: scale(1.1) rotate(4deg);

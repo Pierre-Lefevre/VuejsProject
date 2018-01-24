@@ -19,7 +19,7 @@ import config from '@/config/config'
 import utils from '@/components/utils'
 import lsm from '@/components/localStorageManager'
 import am from '@/components/achievementsManager'
-// import { EventBus } from '@/components/event-bus'
+// import { EventBus } from '@/components/eventBus'
 
 export default {
   name: 'operation',
@@ -74,10 +74,10 @@ export default {
     },
     getFiveMostProblematicOperations () {
       // Récupère l'historique des 5 dernières sessions d'opérations.
-      if (!lsm.keyExists('history')) {
+      if (!lsm.keyExistsUser('history')) {
         return []
       }
-      let history = lsm.getValue('history').slice(0, 5)
+      let history = lsm.getValueUser('history').slice(0, 5)
 
       console.log('history :')
       console.log(history)
@@ -176,11 +176,11 @@ export default {
     },
     nextQuestion () {
       if (this.index === 9) {
-        lsm.pushValue('history', this.operations)
+        lsm.pushValueUser('history', this.operations)
         if (this.table !== null) {
-          let tablesAlreadyDone = lsm.getValue('tablesAlreadyDone')
+          let tablesAlreadyDone = lsm.getValueUser('tablesAlreadyDone')
           if (tablesAlreadyDone === undefined || (tablesAlreadyDone !== undefined && tablesAlreadyDone.indexOf(this.table) === -1)) {
-            lsm.pushValue('tablesAlreadyDone', this.table)
+            lsm.pushValueUser('tablesAlreadyDone', this.table)
           }
         }
 

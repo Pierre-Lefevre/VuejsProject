@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { EventBus } from '@/components/event-bus'
+import { EventBus } from '@/components/eventBus'
 
 export default {
   name: 'alert',
