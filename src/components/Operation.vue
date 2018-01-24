@@ -17,10 +17,10 @@
 
 <script>
 import config from '@/config/config'
-import utils from '@/components/utils'
-import lsm from '@/components/localStorageManager'
-import am from '@/components/achievementsManager'
-// import { EventBus } from '@/components/eventBus'
+import utils from '@/services/utils'
+import lsm from '@/services/localStorageManager'
+import am from '@/services/achievementsManager'
+// import { EventBus } from '@/services/eventBus'
 
 export default {
   name: 'operation',

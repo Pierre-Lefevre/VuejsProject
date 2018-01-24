@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import user from '@/components/auth'
-import { EventBus } from '@/components/eventBus'
+import user from '@/services/auth'
+import { EventBus } from '@/services/eventBus'
 
 export default {
   name: 'signIn',

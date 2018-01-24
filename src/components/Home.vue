@@ -6,8 +6,8 @@
 </template>
 
 <script>
-// import utils from '@/components/utils'
-import user from '@/components/auth'
+// import utils from '@/services/utils'
+import user from '@/services/auth'
 import homeAuth from '@/components/HomeAuth'
 import homeGuest from '@/components/HomeGuest'
 

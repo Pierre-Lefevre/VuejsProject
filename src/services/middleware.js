@@ -1,4 +1,4 @@
-import user from './auth'
+import user from '@/services/auth'
 
 export default {
   all (to, from, next) {

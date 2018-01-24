@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import lsm from '@/components/localStorageManager'
-import { EventBus } from '@/components/eventBus'
+import lsm from '@/services/localStorageManager'
+import { EventBus } from '@/services/eventBus'
 import crypto from 'crypto-js'
 
 export default {

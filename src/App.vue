@@ -42,11 +42,11 @@
 </template>
 
 <script>
-// import utils from '@/components/utils'
-import lsm from '@/components/localStorageManager'
+// import utils from '@/services/utils'
+import lsm from '@/services/localStorageManager'
 import Alert from '@/components/Alert'
 import SaveLoadProgress from '@/components/SaveLoadProgress'
-import user from '@/components/auth'
+import user from '@/services/auth'
 
 export default {
   name: 'App',

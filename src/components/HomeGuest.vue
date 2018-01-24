@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import lsm from '@/components/localStorageManager'
+import lsm from '@/services/localStorageManager'
 
 export default {
   name: 'homeGuest',

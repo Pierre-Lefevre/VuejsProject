@@ -7,8 +7,8 @@
 
 <script>
 import config from '@/config/config'
-import lsm from '@/components/localStorageManager'
-import { EventBus } from '@/components/eventBus'
+import lsm from '@/services/localStorageManager'
+import { EventBus } from '@/services/eventBus'
 import crypto from 'crypto-js'
 import fs from 'file-saver'
 

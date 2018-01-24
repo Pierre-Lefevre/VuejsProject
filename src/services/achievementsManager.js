@@ -1,6 +1,6 @@
 import config from '@/config/config'
-import lsm from '@/components/localStorageManager'
-import { EventBus } from '@/components/eventBus'
+import lsm from '@/services/localStorageManager'
+import { EventBus } from '@/services/eventBus'
 
 export default {
   // Permet de savoir si l'utilisateur a déjà débloqué un succès.

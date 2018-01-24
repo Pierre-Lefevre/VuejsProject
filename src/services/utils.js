@@ -1,4 +1,4 @@
-import lsm from '@/components/localStorageManager'
+import lsm from '@/services/localStorageManager'
 
 const gAllPossibleResults = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 15, 16, 18, 20, 21, 24, 25, 27, 28, 30, 32, 35, 36, 40, 42, 45, 48, 49, 50, 54, 56, 60, 63, 64, 70, 72, 80, 81, 90, 100]
 

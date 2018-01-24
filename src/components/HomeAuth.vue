@@ -6,7 +6,7 @@
 </template>
 
 <script>
-// import utils from '@/components/utils'
+// import utils from '@/services/utils'
 
 export default {
   name: 'homeAuth',

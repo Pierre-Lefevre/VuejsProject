@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import lsm from '@/components/localStorageManager'
+import lsm from '@/services/localStorageManager'
 import Pie from '@/components/Pie'
 
 export default {

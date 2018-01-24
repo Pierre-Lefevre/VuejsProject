@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Guard from '@/components/middleware'
+import Guard from '@/services/middleware'
 import Home from '@/components/Home'
 import SignIn from '@/components/SignIn'
 import SignUp from '@/components/SignUp'

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import crypto from 'crypto-js'
-import lsm from '@/components/localStorageManager'
+import lsm from '@/services/localStorageManager'
 
 const LOGIN = 'LOGIN'
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
