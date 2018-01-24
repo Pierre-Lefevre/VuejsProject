@@ -3,7 +3,7 @@
     <form @submit.prevent="login()">
       <input type="text" placeholder="Pseudo" v-model="pseudo">
       <input type="password" placeholder="Mot de passe" v-model="password">
-      <button type="submit" class="btn-primary">Connexion</button>
+      <button type="submit" class="btn-primary background-green hvr-grow" ><h3>Se connecter</h3></button>
     </form>
   </div>
 </template>

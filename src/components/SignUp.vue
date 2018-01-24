@@ -5,7 +5,7 @@
       <input type="text" placeholder="Nom" v-model="lastname">
       <input type="text" placeholder="Pseudo" v-model="pseudo">
       <input type="password" placeholder="Mot de passe" v-model="password">
-      <button type="submit" class="btn-primary">Valider</button>
+      <button type="submit" class="btn-primary background-blue hvr-grow" ><h3>Valider</h3></button>
     </form>
   </div>
 </template>

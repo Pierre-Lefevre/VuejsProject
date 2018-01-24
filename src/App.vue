@@ -11,11 +11,11 @@
           <li class="hvr-grow-rotate">
             <router-link :to="{name: 'Home'}" tag="a" class="color-orange"><h2>Accueil</h2></router-link>
           </li>
-          <li class="hvr-grow-rotate">
-            <router-link :to="{name: 'SignIn'}" tag="a" class="color-orange" v-if="!check"><h2>Connexion</h2></router-link>
+          <li class="hvr-grow">
+            <router-link :to="{name: 'SignIn'}" tag="button" class="btn-primary background-green" v-if="!check"><h2>Connexion</h2></router-link>
           </li>
-          <li class="hvr-grow-rotate">
-            <a class="color-orange" v-if="check" @click="logout"><h2>Déconnexion</h2></a>
+          <li class="hvr-grow">
+            <router-link :to="{name: 'SignUp'}" tag="button" class="btn-primary background-blue" v-if="!check"><h2>Nouvelle inscription</h2></router-link>
           </li>
           <li class="hvr-grow-rotate">
             <router-link :to="{name: 'Learn'}" tag="a" class="color-green" v-if="check"><h2>Apprentissage</h2></router-link>
@@ -25,6 +25,9 @@
           </li>
           <li class="hvr-grow-rotate">
             <router-link :to="{name: 'Statistics'}" tag="a" class="color-blue" v-if="check"><h2>Statistiques</h2></router-link>
+          </li>
+          <li class="hvr-grow">
+            <button class="background-orange btn-primary" v-if="check" @click="logout"><h2>Déconnexion</h2></button>
           </li>
         </ul>
       </nav>
@@ -82,6 +85,8 @@ export default {
 </script>
 
 <style>
+  @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
+
   @font-face {
     font-family: 'TrashHand';
     src: url('assets/webfont/TrashHand-webfont.woff');
@@ -104,11 +109,14 @@ export default {
 
   a, a:link, a:visited, a:hover, a:active {
     text-decoration: none;
+    margin: 0;
+    padding: 0;
+    outline-style: none
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'TrashHand', 'Avenir', Helvetica, Arial, sans-serif;
-    font-weight: normal;
+  h1, h2 {
+    font-family: 'TrashHand', 'Lato', Helvetica, Arial, sans-serif;
+    font-weight: 400;
   }
 
   h1 {
@@ -116,6 +124,10 @@ export default {
   }
 
   h2 {
+    font-size: 2em;
+  }
+
+  p {
     font-size: 2em;
   }
 
@@ -132,18 +144,15 @@ export default {
     border-radius: 4px;
   }
 
-  button.btn-primary {
+  .btn-primary {
     cursor: pointer;
-    padding: 5px 10px;
     color: #FFFFFF;
-    background-color: #007BFF;
-    border: 1px solid #007BFF;
     font-size: 1rem;
     border-radius: 4px;
   }
 
   #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
@@ -154,14 +163,17 @@ export default {
 
   .font-monster {
     font-family: 'TrashHand', 'Avenir', Helvetica, Arial, sans-serif;
+    font-size: xx-large;
   }
 
   .background-blue {
     background-color: #2c3e50;
+    border: #2c3e50 solid 1px;
   }
 
   .background-green {
     background-color: #40AE8A;
+    border: #40AE8A solid 1px;
   }
 
   .background-yellow {
@@ -170,6 +182,7 @@ export default {
 
   .background-orange {
     background-color: #F49E5A;
+    border: #F49E5A solid 1px;
   }
 
   .background-red {
@@ -197,6 +210,22 @@ export default {
     color: #EB5F50;
   }
 
+  .hvr-grow {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px transparent;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+  }
+  .hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
   .hvr-grow-rotate {
     display: inline-block;
     vertical-align: middle;
@@ -212,6 +241,63 @@ export default {
   .hvr-grow-rotate:hover, .hvr-grow-rotate:focus, .hvr-grow-rotate:active {
     -webkit-transform: scale(1.1) rotate(4deg);
     transform: scale(1.1) rotate(4deg);
+  }
+  .list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 60vw;
+    margin: 2rem auto auto;
+  }
+
+  .list li {
+    cursor: pointer;
+    margin: 1rem;
+  }
+
+  .list li div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  @keyframes hvr-hang {
+    0% {
+      -webkit-transform: translateY(8px);
+      transform: translateY(8px);
+    }
+    50% {
+      -webkit-transform: translateY(4px);
+      transform: translateY(4px);
+    }
+    100% {
+      -webkit-transform: translateY(8px);
+      transform: translateY(8px);
+    }
+  }
+
+  @keyframes hvr-hang-sink {
+    100% {
+      -webkit-transform: translateY(8px);
+      transform: translateY(8px);
+    }
+  }
+
+  .hvr-hang {
+    transform: perspective(1px) translateZ(0);
+  }
+  .hvr-hang:hover, .hvr-hang:focus, .hvr-hang:active {
+    animation-name: hvr-hang-sink, hvr-hang;
+    animation-duration: .3s, 1.5s;
+    animation-delay: 0s, .3s;
+    animation-timing-function: ease-out, ease-in-out;
+    animation-iteration-count: 1, infinite;
+    animation-fill-mode: forwards;
+    animation-direction: normal, alternate;
   }
 
   header, footer {
@@ -264,6 +350,11 @@ export default {
 
   #navbar ul a {
     display: block;
-    padding: 10px 20px;
+    padding: 0 20px;
+  }
+
+  #navbar ul button {
+    margin-left: 30px;
+    outline-style: none
   }
 </style>
