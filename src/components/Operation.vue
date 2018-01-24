@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 :class="isTrainning ? 'color-green' : 'color-red'">{{ isTrainning ? 'Apprentissage' : 'Evaluation' }}</h1>
     <div>{{ operations[index].factor1 }} x {{ operations[index].factor2 }}</div>
     <!--<transition-group name="answers" tag="ul" id="answers">-->
     <div id="answers-wrapper">
@@ -25,6 +26,7 @@ export default {
   name: 'operation',
   data () {
     return {
+      isTrainning: false,
       table: null,
       index: 0,
       operations: [],
@@ -34,7 +36,8 @@ export default {
     }
   },
   created () {
-    if (this.$route.params.id !== undefined) {
+    this.isTrainning = (this.$route.params.id !== undefined)
+    if (this.isTrainning) {
       this.table = parseInt(this.$route.params.id)
       this.generateOperationsLearn()
     } else {
@@ -164,7 +167,7 @@ export default {
         }, config.timeBetweenOperation)
       } else {
         this.operations[this.index].nbErrors++
-        this.operations[this.index].answers[indexAnswer].class = 'false'
+        this.operations[this.index].answers[indexAnswer].class = 'background-red'
         this.operations[this.index].badAnswers.push(this.operations[this.index].answers[indexAnswer].value)
       }
     },

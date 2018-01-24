@@ -174,6 +174,7 @@ export default {
 
   .background-red {
     background-color: #EB5F50;
+    color: white;
   }
 
   .color-blue {
