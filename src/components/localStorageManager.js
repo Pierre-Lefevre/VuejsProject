@@ -1,4 +1,19 @@
+import config from '@/config/config'
+
 export default {
+  init () {
+    if (!this.keyExists('history')) {
+      this.setValue('history', [])
+    }
+    if (!this.keyExists('achievements')) {
+      let achievements = {}
+      Object.keys(config.achievements).forEach((key) => {
+        achievements[key] = false
+      })
+      this.setValue('achievements', achievements)
+    }
+    console.log(localStorage)
+  },
   clear () {
     console.log(localStorage)
     localStorage.clear()

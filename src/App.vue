@@ -46,6 +46,9 @@ export default {
     Alert,
     SaveLoadProgress
   },
+  created () {
+    lsm.init()
+  },
   methods: {
     canAccessTest () {
       // return utils.canAccessTest()

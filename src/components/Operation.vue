@@ -19,6 +19,7 @@
 import config from '@/config/config'
 import utils from '@/components/utils'
 import lsm from '@/components/localStorageManager'
+import am from '@/components/achievementsManager'
 // import { EventBus } from '@/components/event-bus'
 
 export default {
@@ -185,7 +186,9 @@ export default {
             lsm.pushValue('tablesAlreadyDone', this.table)
           }
         }
-        console.log(localStorage)
+
+        // Vérifie que l'élève débloque un succès de type tableXMaster.
+        am.tableXMaster(this.table, this.operations)
         this.$router.push({name: 'Score'})
       } else {
         this.index++
