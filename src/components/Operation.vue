@@ -39,6 +39,9 @@ export default {
     this.isTrainning = (this.$route.params.id !== undefined)
     if (this.isTrainning) {
       this.table = parseInt(this.$route.params.id)
+      if (this.table < 1 || this.table > 10) {
+        this.$router.push({name: 'Home'})
+      }
       this.generateOperationsLearn()
     } else {
       // if (!utils.canAccessTest()) {
