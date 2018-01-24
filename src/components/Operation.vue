@@ -166,7 +166,7 @@ export default {
         }, config.timeBetweenOperation)
       } else {
         this.operations[this.index].nbErrors++
-        this.operations[this.index].answers[indexAnswer].class = 'false'
+        this.operations[this.index].answers[indexAnswer].class = 'background-red'
         this.operations[this.index].badAnswers.push(this.operations[this.index].answers[indexAnswer].value)
       }
     },
