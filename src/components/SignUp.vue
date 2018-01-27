@@ -1,11 +1,11 @@
 <template>
   <div>
-    <form @submit.prevent="signUp()">
+    <form @submit.prevent="signUp">
       <input type="text" placeholder="Prénom" v-model="firstname">
       <input type="text" placeholder="Nom" v-model="lastname">
       <input type="text" placeholder="Pseudo" v-model="pseudo">
       <input type="password" placeholder="Mot de passe" v-model="password">
-      <button type="submit" class="btn-primary background-blue hvr-grow" ><h3>Valider</h3></button>
+      <button type="submit" class="btn-primary background-blue hvr-grow">S'inscrire</button>
     </form>
   </div>
 </template>

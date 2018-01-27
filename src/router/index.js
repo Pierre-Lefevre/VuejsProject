@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Guard from '@/services/middleware'
+import guards from '@/services/guards'
 import Home from '@/components/Home'
 import SignIn from '@/components/SignIn'
 import SignUp from '@/components/SignUp'
@@ -23,43 +23,43 @@ export default new Router({
       path: '/connexion/:pseudo?',
       name: 'SignIn',
       component: SignIn,
-      beforeEnter: Guard.guest
+      beforeEnter: guards.guest
     },
     {
       path: '/inscription',
       name: 'SignUp',
       component: SignUp,
-      beforeEnter: Guard.guest
+      beforeEnter: guards.guest
     },
     {
       path: '/apprentissage',
       name: 'Learn',
       component: Learn,
-      beforeEnter: Guard.auth
+      beforeEnter: guards.auth
     },
     {
       path: '/apprentissage/operation/:id',
       name: 'OperationTable',
       component: Operation,
-      beforeEnter: Guard.auth
+      beforeEnter: guards.auth
     },
     {
       path: '/evaluation/operation',
       name: 'Operation',
       component: Operation,
-      beforeEnter: Guard.auth
+      beforeEnter: guards.auth
     },
     {
       path: '/score',
       name: 'Score',
       component: Score,
-      beforeEnter: Guard.auth
+      beforeEnter: guards.auth
     },
     {
       path: '/statistiques',
       name: 'Statistics',
       component: Statistics,
-      beforeEnter: Guard.auth
+      beforeEnter: guards.auth
     },
     {
       path: '*',

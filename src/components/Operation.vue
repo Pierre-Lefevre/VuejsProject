@@ -1,8 +1,7 @@
 <template>
   <div>
-    <h1 :class="isTrainning ? 'color-green' : 'color-red'">{{ isTrainning ? 'Apprentissage' : 'Evaluation' }}</h1>
+    <h1 :class="isTraining ? 'color-green' : 'color-red'">{{ isTraining ? 'Apprentissage' : 'Evaluation' }}</h1>
     <div>{{ operations[index].factor1 }} x {{ operations[index].factor2 }}</div>
-    <!--<transition-group name="answers" tag="ul" id="answers">-->
     <div id="answers-wrapper">
       <ul id="answers">
         <li :key="answer.value" v-for="(answer, i) in operations[index].answers" class="answer randomColor" :class="answer.class" @click="answer.class === 'initial' ? validAnswer(i) : null">
@@ -11,7 +10,6 @@
       </ul>
     </div>
     <span v-if="timeNextQuestion > 0">Question suivante dans : {{ timeNextQuestion }}</span>
-    <!--</transition-group>-->
   </div>
 </template>
 
@@ -20,13 +18,13 @@ import config from '@/config/config'
 import utils from '@/services/utils'
 import lsm from '@/services/localStorageManager'
 import am from '@/services/achievementsManager'
-// import { eventBus } from '@/services/eventBus'
+import guards from '@/services/guards'
 
 export default {
   name: 'operation',
   data () {
     return {
-      isTrainning: false,
+      isTraining: false,
       table: null,
       index: 0,
       operations: [],
@@ -35,26 +33,24 @@ export default {
       timerNextQuestion: null
     }
   },
+  beforeRouteEnter: guards.operation,
+  beforeRouteUpdate: guards.operation,
   created () {
-    this.isTrainning = (this.$route.params.id !== undefined)
-    if (this.isTrainning) {
+    // Détermine si l'élève est en apprentissage ou en examen.
+    this.isTraining = this.$route.params.id !== undefined
+    if (this.isTraining) {
       this.table = parseInt(this.$route.params.id)
-      if (this.table < 1 || this.table > 10) {
-        this.$router.push({name: 'Home'})
-      }
       this.generateOperationsLearn()
     } else {
-      // if (!utils.canAccessTest()) {
-      //   eventBus.$emit('alert', {type: 'info', message: 'Tu dois t\'entraîner davantage !'})
-      //   this.$router.push({name: 'Home'})
-      //   return
-      // }
       this.generateOperationsTest()
     }
     this.startTimestamp = Date.now()
   },
   methods: {
+
+    // Génère 10 opérations en mode apprentissage.
     generateOperationsLearn () {
+      // Génère les 10 réponses pour la table courante.
       let answers = []
       for (let j = 1; j <= 10; j++) {
         answers.push({
@@ -62,32 +58,43 @@ export default {
           class: 'initial'
         })
       }
+
+      // Génère les 10 questions possibles.
       for (let i = 1; i <= 10; i++) {
         let operation = {}
+
+        // L'ordre des facteurs est aléatoire.
         if (Math.random() > 0.5) {
           operation = {factor1: this.table, factor2: i}
         } else {
           operation = {factor1: i, factor2: this.table}
         }
         operation.goodAnswer = operation.factor1 * operation.factor2
-        operation.answers = JSON.parse(JSON.stringify(answers))
+        operation.answers = utils.clone(answers)
+
+        // Mélange du tableau contenant les différentes réponses.
         utils.shuffleArray(operation.answers)
         operation.badAnswers = []
         operation.nbErrors = 0
         this.operations.push(operation)
       }
+
+      // Mélange du tableau contenant les différentes opérations.
       utils.shuffleArray(this.operations)
     },
+
+    // Génère 10 opérations en mode examen.
     generateOperationsTest () {
+      // Récupération des 5 opérations les plus problématiques pour l'élève.
       let problematicOperations = utils.getFiveMostProblematicOperations()
       for (let i = 0; i < 10; i++) {
         let operation
         let tmpAnswers
         let nbRandomAnswers
+
+        // S'il y a des opérations problématiques...
         if (problematicOperations.length > 0) {
           let problematicOperation = problematicOperations.splice(0, 1)[0]
-          console.log('problematicOperation :')
-          console.log(problematicOperation)
           operation = {factor1: problematicOperation.factor1, factor2: problematicOperation.factor2}
           operation.goodAnswer = operation.factor1 * operation.factor2
           tmpAnswers = [operation.goodAnswer].concat(problematicOperation.badAnswers.slice(0, 9))
@@ -98,6 +105,8 @@ export default {
           tmpAnswers = [operation.goodAnswer]
           nbRandomAnswers = 9
         }
+
+        // Ajoute aux réponses existantes, x nouvelles réponses afin d'en avoir 10 au total.
         tmpAnswers = tmpAnswers.concat(utils.getClosestValues(operation.goodAnswer, nbRandomAnswers, tmpAnswers))
         operation.answers = []
         tmpAnswers.forEach((answer) => {
@@ -106,14 +115,21 @@ export default {
             class: 'initial'
           })
         })
+
+        // Mélange du tableau contenant les différentes réponses.
         utils.shuffleArray(operation.answers)
         operation.badAnswers = []
         operation.nbErrors = 0
         this.operations.push(operation)
       }
+
+      // Mélange du tableau contenant les différentes opérations.
       utils.shuffleArray(this.operations)
     },
+
+    // Permet de valider ou non la réponse de l'élève.
     validAnswer (indexAnswer) {
+      // Si la réponse est correct...
       if (this.operations[this.index].factor1 * this.operations[this.index].factor2 === this.operations[this.index].answers[indexAnswer].value) {
         this.operations[this.index].time = Date.now() - this.startTimestamp
         this.operations[this.index].answers[indexAnswer].class = 'correct'
@@ -122,6 +138,8 @@ export default {
             this.operations[this.index].answers[i].class = 'disable'
           }
         }
+
+        // Lancement du timer avant la question suivante.
         this.timeNextQuestion = config.timeBetweenOperation / 1000
         this.timerNextQuestion = setInterval(() => {
           this.decreaseTimerNextQuestion()
@@ -135,16 +153,26 @@ export default {
         this.operations[this.index].badAnswers.push(this.operations[this.index].answers[indexAnswer].value)
       }
     },
+
+    // Permet de décrémenter le timer avant la question suivante.
     decreaseTimerNextQuestion () {
       this.timeNextQuestion -= 1
+
+      // Si le timer est à 0, on supprime cet intervalID.
       if (this.timeNextQuestion === 0) {
         clearTimeout(this.timerNextQuestion)
       }
     },
+
+    // Permet de passer à la question suivante.
     nextQuestion () {
+      // Si l'élève a fini la session...
       if (this.index === 9) {
+        // Ajout de la session à son historique.
         lsm.pushValueUser('history', this.operations)
-        if (this.table !== null) {
+
+        // Si c'était une session d'entraînement, ajout du numéro de la table à celles qu'il a déjà faites.
+        if (this.isTraining) {
           let tablesAlreadyDone = lsm.getValueUser('tablesAlreadyDone')
           if (tablesAlreadyDone === undefined || (tablesAlreadyDone !== undefined && tablesAlreadyDone.indexOf(this.table) === -1)) {
             lsm.pushValueUser('tablesAlreadyDone', this.table)
@@ -153,8 +181,11 @@ export default {
 
         // Vérifie que l'élève débloque un succès de type tableXMaster.
         am.tableXMaster(this.table, this.operations)
+
+        // Redirection vers la page des scores.
         this.$router.push({name: 'Score'})
       } else {
+        // S'il reste des question, on passe à la suivante.
         this.index++
         this.startTimestamp = Date.now()
       }

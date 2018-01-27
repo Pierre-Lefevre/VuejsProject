@@ -1,9 +1,9 @@
 <template>
   <div>
-    <form @submit.prevent="login()">
+    <form @submit.prevent="login">
       <input type="text" placeholder="Pseudo" v-model="pseudo">
       <input type="password" placeholder="Mot de passe" v-model="password">
-      <button type="submit" class="btn-primary background-green hvr-grow" ><h3>Se connecter</h3></button>
+      <button type="submit" class="btn-primary background-green hvr-grow">Se connecter</button>
     </form>
   </div>
 </template>

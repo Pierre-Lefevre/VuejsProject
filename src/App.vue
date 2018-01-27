@@ -28,7 +28,7 @@
               <h2 :class="this.$route.name === 'Learn' ? 'underline' : ''">Apprentissage</h2>
             </router-link>
           </li>
-          <li class="hvr-grow" v-if="isLoggedIn && canAccessTest">
+          <li class="hvr-grow" v-if="isLoggedIn && canAccessTest()">
             <router-link :to="{name: 'Operation'}" class="color-red" tag="a">
               <h2 :class="this.$route.name === 'Operation' ? 'underline' : ''">Evaluation</h2>
             </router-link>
