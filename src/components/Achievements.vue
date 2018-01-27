@@ -58,7 +58,7 @@ export default {
   }
 
   #achievements li.unlock {
-    padding-top: 25px;
+    padding-top: 21px;
   }
 
   .achievement-unlock {
@@ -66,7 +66,7 @@ export default {
     height: 50px;
     border-radius: 50%;
     position: absolute;
-    top: -25px;
+    top: -29px;
     left: 0;
     right: 0;
     margin: auto;
