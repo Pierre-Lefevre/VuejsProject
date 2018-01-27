@@ -1,7 +1,7 @@
 <template>
   <div>
-    <router-link :to="{name: 'Learn'}" tag="button">Apprentissage</router-link>
-    <router-link :to="{name: 'Operation'}" tag="button" v-if="canAccessTest()">Evaluation</router-link>
+    <router-link :to="{name: 'Learn'}" class="btn-primary background-green" tag="button">Apprentissage</router-link>
+    <router-link :to="{name: 'Operation'}" class="btn-primary background-red" tag="button" v-if="canAccessTest()">Evaluation</router-link>
   </div>
 </template>
 

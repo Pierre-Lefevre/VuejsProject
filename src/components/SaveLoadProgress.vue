@@ -16,8 +16,11 @@ export default {
   name: 'save-load-progress',
   methods: {
     saveProgress () {
+      // Cryptage de la progression de l'utilisateur.
       let ciphertext = crypto.AES.encrypt(lsm.getAllToStringUser(), config.hashKey)
       let blob = new Blob([ciphertext], {type: 'text/plain;charset=utf-8'})
+
+      // Sauvegarde du fichier.
       fs.saveAs(blob, config.backupFileName)
       EventBus.$emit('alert', {type: 'success', message: 'Tu as sauvegardé ta progression !'})
     },
@@ -33,10 +36,16 @@ export default {
       let reader = new FileReader()
       reader.onload = (e) => {
         let content = e.target.result
+
+        // Décryptage de la progression de l'utilisateur.
         let bytes = crypto.AES.decrypt(content.toString(), config.hashKey)
+
+        // Chargement des données reçues dans le localStorage.
         lsm.setAllFromStringUser(bytes.toString(crypto.enc.Utf8))
         EventBus.$emit('alert', {type: 'success', message: 'Tu as récupéré ta progression !'})
       }
+
+      // Lecture du fichier transmis par l'utilisateur.
       reader.readAsText(file)
     }
   }

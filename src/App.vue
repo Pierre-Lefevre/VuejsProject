@@ -8,26 +8,26 @@
       </figure>
       <nav id="navbar">
         <ul>
-          <li class="hvr-grow-rotate">
-            <router-link :to="{name: 'Home'}" tag="a" class="color-orange"><h2>Accueil</h2></router-link>
-          </li>
           <li class="hvr-grow">
-            <router-link :to="{name: 'SignIn'}" tag="button" class="btn-primary background-green" v-if="!check"><h2>Connexion</h2></router-link>
+            <router-link :to="{name: 'Home'}" class="color-orange" tag="a"><h2 :class="this.$route.name === 'Home' ? 'underline' : ''">Accueil</h2></router-link>
           </li>
-          <li class="hvr-grow">
-            <router-link :to="{name: 'SignUp'}" tag="button" class="btn-primary background-blue" v-if="!check"><h2>Nouvelle inscription</h2></router-link>
+          <li class="hvr-grow" v-if="!check">
+            <router-link :to="{name: 'SignIn'}" class="color-green" tag="a"><h2 :class="this.$route.name === 'SignIn' ? 'underline' : ''">Connexion</h2></router-link>
           </li>
-          <li class="hvr-grow-rotate">
-            <router-link :to="{name: 'Learn'}" tag="a" class="color-green" v-if="check"><h2>Apprentissage</h2></router-link>
+          <li class="hvr-grow" v-if="!check">
+            <router-link :to="{name: 'SignUp'}" class="color-blue" tag="a"><h2 :class="this.$route.name === 'SignUp' ? 'underline' : ''">Inscription</h2></router-link>
           </li>
-          <li class="hvr-grow-rotate">
-            <router-link :to="{name: 'Operation'}" tag="a" class="color-red" v-if="check && canAccessTest"><h2>Evaluation</h2></router-link>
+          <li class="hvr-grow" v-if="check">
+            <router-link :to="{name: 'Learn'}" class="color-green" tag="a"><h2 :class="this.$route.name === 'Learn' ? 'underline' : ''">Apprentissage</h2></router-link>
           </li>
-          <li class="hvr-grow-rotate">
-            <router-link :to="{name: 'Statistics'}" tag="a" class="color-blue" v-if="check"><h2>Statistiques</h2></router-link>
+          <li class="hvr-grow" v-if="check && canAccessTest">
+            <router-link :to="{name: 'Operation'}" class="color-red" tag="a"><h2 :class="this.$route.name === 'Operation' ? 'underline' : ''">Evaluation</h2></router-link>
           </li>
-          <li class="hvr-grow">
-            <button class="background-orange btn-primary" v-if="check" @click="logout"><h2>Déconnexion</h2></button>
+          <li class="hvr-grow" v-if="check">
+            <router-link :to="{name: 'Statistics'}" class="color-blue" tag="a"><h2 :class="this.$route.name === 'Statistics' ? 'underline' : ''">Statistiques</h2></router-link>
+          </li>
+          <li class="hvr-grow" v-if="check">
+            <a class="color-green" @click="logout"><h2>Déconnexion</h2></a>
           </li>
         </ul>
       </nav>
@@ -58,6 +58,7 @@ export default {
     SaveLoadProgress
   },
   created () {
+    console.log(this.$route.name)
     lsm.init()
   },
   methods: {
@@ -98,7 +99,7 @@ export default {
     box-sizing: border-box;
   }
 
-  body, ul, p {
+  body, ul, p, h1, h2, h3, h4 {
     margin: 0;
   }
 
@@ -111,7 +112,9 @@ export default {
     text-decoration: none;
     margin: 0;
     padding: 0;
-    outline-style: none
+    display: block;
+    outline-style: none;
+    cursor: pointer;
   }
 
   h1, h2 {
@@ -149,6 +152,8 @@ export default {
     color: #FFFFFF;
     font-size: 1rem;
     border-radius: 4px;
+    padding: 10px 15px;
+    border: none;
   }
 
   #app {
@@ -168,12 +173,10 @@ export default {
 
   .background-blue {
     background-color: #2c3e50;
-    border: #2c3e50 solid 1px;
   }
 
   .background-green {
     background-color: #40AE8A;
-    border: #40AE8A solid 1px;
   }
 
   .background-yellow {
@@ -182,12 +185,10 @@ export default {
 
   .background-orange {
     background-color: #F49E5A;
-    border: #F49E5A solid 1px;
   }
 
   .background-red {
     background-color: #EB5F50;
-    color: white;
   }
 
   .color-blue {
@@ -210,38 +211,36 @@ export default {
     color: #EB5F50;
   }
 
+  .underline {
+    text-decoration: underline;
+  }
+
   .hvr-grow {
     display: inline-block;
     vertical-align: middle;
-    -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
     box-shadow: 0 0 1px transparent;
-    -webkit-transition-duration: 0.3s;
     transition-duration: 0.3s;
-    -webkit-transition-property: transform;
     transition-property: transform;
   }
+
   .hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
-    -webkit-transform: scale(1.1);
     transform: scale(1.1);
   }
 
   .hvr-grow-rotate {
     display: inline-block;
     vertical-align: middle;
-    -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
     box-shadow: 0 0 1px transparent;
-    -webkit-transition-duration: 0.3s;
     transition-duration: 0.3s;
-    -webkit-transition-property: transform;
     transition-property: transform;
   }
 
   .hvr-grow-rotate:hover, .hvr-grow-rotate:focus, .hvr-grow-rotate:active {
-    -webkit-transform: scale(1.1) rotate(4deg);
     transform: scale(1.1) rotate(4deg);
   }
+
   .list {
     display: flex;
     flex-direction: row;
@@ -267,22 +266,18 @@ export default {
 
   @keyframes hvr-hang {
     0% {
-      -webkit-transform: translateY(8px);
       transform: translateY(8px);
     }
     50% {
-      -webkit-transform: translateY(4px);
       transform: translateY(4px);
     }
     100% {
-      -webkit-transform: translateY(8px);
       transform: translateY(8px);
     }
   }
 
   @keyframes hvr-hang-sink {
     100% {
-      -webkit-transform: translateY(8px);
       transform: translateY(8px);
     }
   }
@@ -290,6 +285,7 @@ export default {
   .hvr-hang {
     transform: perspective(1px) translateZ(0);
   }
+
   .hvr-hang:hover, .hvr-hang:focus, .hvr-hang:active {
     animation-name: hvr-hang-sink, hvr-hang;
     animation-duration: .3s, 1.5s;
@@ -308,6 +304,7 @@ export default {
 
   header {
     justify-content: space-between;
+    padding: 20px;
   }
 
   footer {
@@ -329,32 +326,37 @@ export default {
   }
 
   #logo {
-    margin-right: 0;
-    margin-left: 10rem;
-    margin-bottom: 0;
-    justify-self: left;
+    margin: 0 20px;
+    width: 30%;
+    display: flex;
+    justify-content: center;
+  }
+
+  #logo > a {
+    width: 100%;
   }
 
   #logo img {
     height: 200px;
+    width: 100%;
   }
 
   #navbar {
-    width: 100%;
+    width: 70%;
   }
 
   #navbar ul {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
   }
 
-  #navbar ul a {
-    display: block;
-    padding: 0 20px;
+  #navbar ul li {
+    margin: 5px 15px;
   }
 
   #navbar ul button {
     margin-left: 30px;
-    outline-style: none
+    outline-style: none;
   }
 </style>
