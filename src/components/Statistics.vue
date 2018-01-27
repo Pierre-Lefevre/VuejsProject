@@ -4,17 +4,6 @@
       <div :key="i" v-for="(factor1, i) in statsTab">
         <h1>Table de {{ i }}</h1>
         <table cellspacing="0">
-          <col width="40px" />
-          <col width="40px" />
-          <col width="40px" />
-          <col width="40px" />
-          <col width="40px" />
-          <col width="40px" />
-          <col width="40px" />
-          <col width="40px" />
-          <col width="40px" />
-          <col width="40px" />
-          <col width="40px" />
           <thead>
             <tr>
               <th></th>
@@ -118,14 +107,21 @@ export default {
 
 <style scoped>
   table {
-    table-layout:fixed
+    table-layout: fixed
   }
+
+  thead th {
+    width: 40px;
+  }
+
   th:not(:last-child) {
     border-right: 1px solid black;
   }
+
   tbody th {
     border-top: 1px solid black;
   }
+
   td {
     border-top: 1px solid black;
     border-right: 1px solid black;
