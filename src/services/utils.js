@@ -71,8 +71,8 @@ export default {
 
     // Crée un tableau contenant toutes les opérations différentes effectuées (l'ordre des facteurs étant important).
     let allOperations = []
-    history.forEach(function (session) {
-      session.forEach(function (operation) {
+    history.forEach(session => {
+      session.forEach(operation => {
         let index = this.objectExistInArrayByProperties(allOperations, operation, ['factor1', 'factor2'])
         if (index !== -1) {
           allOperations[index].nbErrors += operation.nbErrors
@@ -80,18 +80,18 @@ export default {
         } else {
           allOperations.push({factor1: operation.factor1, factor2: operation.factor2, nbErrors: operation.nbErrors, badAnswers: operation.badAnswers})
         }
-      }.bind(this))
-    }.bind(this))
+      })
+    })
 
     // Duplique, avec une probabilité de 25%, certaines opérations.
-    allOperations.forEach(function (operation) {
+    allOperations.forEach(operation => {
       if (Math.random() > 0.75) {
         allOperations.push(this.clone(operation))
       }
-    }.bind(this))
+    })
 
     // Trie toutes les opérations effectuées en fonction du nombre d'erreurs décroissant.
-    allOperations.sort(function (a, b) {
+    allOperations.sort((a, b) => {
       return (a.nbErrors < b.nbErrors) ? 1 : ((b.nbErrors < a.nbErrors) ? -1 : 0)
     })
 

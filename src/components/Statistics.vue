@@ -56,8 +56,8 @@ export default {
   },
   methods: {
     updateStats () {
-      this.globalHistory.forEach(function (session) {
-        session.forEach(function (operation) {
+      this.globalHistory.forEach(session => {
+        session.forEach(operation => {
           if (this.statsTab[operation.factor1] === undefined) {
             this.statsTab[operation.factor1] = {}
           }
@@ -76,8 +76,8 @@ export default {
           this.statsTab[operation.factor2][operation.factor1].count++
           this.statsTab[operation.factor1][operation.factor2].avgErrors = this.statsTab[operation.factor1][operation.factor2].nbErrors / this.statsTab[operation.factor1][operation.factor2].count
           this.statsTab[operation.factor2][operation.factor1].avgErrors = this.statsTab[operation.factor2][operation.factor1].nbErrors / this.statsTab[operation.factor2][operation.factor1].count
-        }.bind(this))
-      }.bind(this))
+        })
+      })
       console.log(this.statsTab)
     },
     deduceCellColor (factor1, factor2) {

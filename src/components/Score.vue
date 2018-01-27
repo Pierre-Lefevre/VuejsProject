@@ -68,7 +68,7 @@ export default {
     // Retourne le nombre total d'erreurs.
     getNbTotalError () {
       let sum = 0
-      this.operations.forEach(function (operation) {
+      this.operations.forEach(operation => {
         sum += operation.nbErrors
       })
       return sum
@@ -77,7 +77,7 @@ export default {
     // Retourne le temps total passé.
     getTotalTime () {
       let sum = 0
-      this.operations.forEach(function (operation) {
+      this.operations.forEach(operation => {
         sum += operation.time
       })
       return sum
@@ -86,7 +86,7 @@ export default {
     // Retourne une chaîne correctement formatée contenant les erreurs effectuées.
     getBadAnswers (badAnswers) {
       let str = ''
-      badAnswers.forEach(function (badAnswer, i) {
+      badAnswers.forEach((badAnswer, i) => {
         str += badAnswer
         if (i < badAnswers.length - 1) {
           str += ', '
