@@ -27,14 +27,19 @@
         </p> -->
       </div>
     </ul>
+    <achievements/>
   </div>
 </template>
 
 <script>
 import lsm from '@/services/localStorageManager'
+import achievements from '@/components/achievements'
 
 export default {
   name: 'statistics',
+  components: {
+    achievements
+  },
   data () {
     return {
       globalHistory: [],
