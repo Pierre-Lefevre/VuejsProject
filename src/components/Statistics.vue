@@ -2,11 +2,40 @@
   <div>
     <ul>
       <div :key="i" v-for="(factor1, i) in statsTab">
-        <h1>Table du {{ i }}</h1>
-        <p :key="j" v-for="(factor2, j) in factor1">
+        <h1>Table de {{ i }}</h1>
+        <table cellspacing="0">
+          <col width="40px" />
+          <col width="40px" />
+          <col width="40px" />
+          <col width="40px" />
+          <col width="40px" />
+          <col width="40px" />
+          <col width="40px" />
+          <col width="40px" />
+          <col width="40px" />
+          <col width="40px" />
+          <col width="40px" />
+          <thead>
+            <tr>
+              <th></th>
+              <th :key="k" v-for="k in 10">{{ k }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>{{ i }}</th>
+              <td :key="j" v-for="j in 10" :class="deduceCellColor(i, j)">
+                <span style="display: none">
+                {{ statsTab[i] !== undefined && statsTab[i][j] !== undefined ? statsTab[i][j].avgErrors : "?" }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- <p :key="j" v-for="(factor2, j) in factor1">
           {{ i }} * {{ j }} =>
           Nombre d'erreurs moyen : {{ factor2.avgErrors }}
-        </p>
+        </p> -->
       </div>
     </ul>
   </div>
@@ -53,25 +82,53 @@ export default {
         }.bind(this))
       }.bind(this))
       console.log(this.statsTab)
+    },
+    deduceCellColor (factor1, factor2) {
+      let sumAvgErrors = 0
+      let count = 0
+      if (this.statsTab[factor1] !== undefined && this.statsTab[factor1][factor2] !== undefined) {
+        sumAvgErrors += this.statsTab[factor1][factor2].avgErrors
+        count++
+      }
+      if (this.statsTab[factor2] !== undefined && this.statsTab[factor2][factor1] !== undefined) {
+        sumAvgErrors += this.statsTab[factor2][factor1].avgErrors
+        count++
+      }
+      if (count === 0) {
+        return 'background-grey'
+      }
+      let errorsAverage = sumAvgErrors / count
+      switch (true) {
+        case (errorsAverage >= 0 && errorsAverage < 1):
+          return 'background-green'
+        case (errorsAverage >= 1 && errorsAverage < 3):
+          return 'background-yellow'
+        case (errorsAverage >= 3 && errorsAverage < 6):
+          return 'background-orange'
+        case (errorsAverage >= 6 && errorsAverage <= 9):
+          return 'background-red'
+        default:
+          console.log('Switch failed')
+          break
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-  ul li ul li:nth-child(odd) {
-    background-color: yellowgreen;
+  table {
+    table-layout:fixed
   }
-
-  ul li ul li:nth-child(even) {
-    background-color: hotpink;
+  th:not(:last-child) {
+    border-right: 1px solid black;
   }
-
-  pre:nth-child(even) {
-    background-color: dodgerblue;
+  tbody th {
+    border-top: 1px solid black;
   }
-
-  pre:nth-child(odd) {
-    background-color: orange;
+  td {
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
   }
 </style>

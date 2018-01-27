@@ -130,8 +130,8 @@ export default {
     font-size: 2em;
   }
 
-  p {
-    font-size: 2em;
+  p, table *  {
+    font-size: 2rem;
   }
 
   form > *:not(:last-child) {
@@ -171,6 +171,10 @@ export default {
     font-size: xx-large;
   }
 
+  .background-grey {
+    background-color: lightgray;
+  }
+
   .background-blue {
     background-color: #2c3e50;
   }
@@ -193,6 +197,10 @@ export default {
 
   .color-blue {
     color: #2c3e50;
+  }
+
+  .border-blue {
+    border-color: #2c3e50;
   }
 
   .color-green {
