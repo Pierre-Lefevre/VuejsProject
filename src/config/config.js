@@ -6,6 +6,7 @@ for (let i = 1; i <= 10; i++) {
 achievements['tableMaster'] = {name: 'Maître des tables', message: 'Finir toutes les tables sans faute.'}
 
 module.exports = {
+
   // Clef de hashage utilisée pour encrypter la progression de l'utilisateur.
   hashKey: 'doge_is_love_doge_is_life',
 

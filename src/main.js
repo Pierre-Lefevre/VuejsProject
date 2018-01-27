@@ -1,3 +1,5 @@
+/* eslint-disable no-new */
+
 import Vue from 'vue'
 import App from './App'
 import router from '@/router'
@@ -5,7 +7,7 @@ import store from '@/store/store'
 
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
+// Création de l'instance de Vue.
 new Vue({
   el: '#app',
   router,

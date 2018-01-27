@@ -78,47 +78,8 @@ export default {
       }
       utils.shuffleArray(this.operations)
     },
-    getFiveMostProblematicOperations () {
-      // Récupère l'historique des 5 dernières sessions d'opérations.
-      if (!lsm.keyExistsUser('history')) {
-        return []
-      }
-      let history = lsm.getValueUser('history').slice(0, 5)
-
-      console.log('history :')
-      console.log(history)
-
-      // Crée un tableau contenant toutes les opérations différentes effectuées (l'ordre des facteurs étant important).
-      let allOperations = []
-      history.forEach(function (session) {
-        session.forEach(function (operation) {
-          let index = utils.objectExistInArrayByProperties(allOperations, operation, ['factor1', 'factor2'])
-          if (index !== -1) {
-            allOperations[index].nbErrors += operation.nbErrors
-            allOperations[index].badAnswers = utils.arrayUnique(allOperations[index].badAnswers.concat(operation.badAnswers))
-          } else {
-            allOperations.push({factor1: operation.factor1, factor2: operation.factor2, nbErrors: operation.nbErrors, badAnswers: operation.badAnswers})
-          }
-        })
-      })
-
-      // Duplique, avec une probabilité de 1/4, certaines opérations.
-      allOperations.forEach(function (operation) {
-        if (Math.random() > 0.75) {
-          allOperations.push(utils.clone(operation))
-        }
-      })
-
-      // Trie toutes les opérations effectuées en fonction du nombre d'erreurs décroissant.
-      allOperations.sort(function (a, b) {
-        return (a.nbErrors < b.nbErrors) ? 1 : ((b.nbErrors < a.nbErrors) ? -1 : 0)
-      })
-
-      // Récupère, au maximum, les 5 opérations les plus problématiques.
-      return allOperations.slice(0, 5)
-    },
     generateOperationsTest () {
-      let problematicOperations = this.getFiveMostProblematicOperations()
+      let problematicOperations = utils.getFiveMostProblematicOperations()
       for (let i = 0; i < 10; i++) {
         let operation
         let tmpAnswers

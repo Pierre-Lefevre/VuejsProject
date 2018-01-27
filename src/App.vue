@@ -9,25 +9,39 @@
       <nav id="navbar">
         <ul>
           <li class="hvr-grow">
-            <router-link :to="{name: 'Home'}" class="color-orange" tag="a"><h2 :class="this.$route.name === 'Home' ? 'underline' : ''">Accueil</h2></router-link>
+            <router-link :to="{name: 'Home'}" class="color-orange" tag="a">
+              <h2 :class="this.$route.name === 'Home' ? 'underline' : ''">Accueil</h2>
+            </router-link>
           </li>
           <li class="hvr-grow" v-if="!isLoggedIn">
-            <router-link :to="{name: 'SignIn'}" class="color-green" tag="a"><h2 :class="this.$route.name === 'SignIn' ? 'underline' : ''">Connexion</h2></router-link>
+            <router-link :to="{name: 'SignIn'}" class="color-green" tag="a">
+              <h2 :class="this.$route.name === 'SignIn' ? 'underline' : ''">Connexion</h2>
+            </router-link>
           </li>
           <li class="hvr-grow" v-if="!isLoggedIn">
-            <router-link :to="{name: 'SignUp'}" class="color-blue" tag="a"><h2 :class="this.$route.name === 'SignUp' ? 'underline' : ''">Inscription</h2></router-link>
+            <router-link :to="{name: 'SignUp'}" class="color-blue" tag="a">
+              <h2 :class="this.$route.name === 'SignUp' ? 'underline' : ''">Inscription</h2>
+            </router-link>
           </li>
           <li class="hvr-grow" v-if="isLoggedIn">
-            <router-link :to="{name: 'Learn'}" class="color-green" tag="a"><h2 :class="this.$route.name === 'Learn' ? 'underline' : ''">Apprentissage</h2></router-link>
+            <router-link :to="{name: 'Learn'}" class="color-green" tag="a">
+              <h2 :class="this.$route.name === 'Learn' ? 'underline' : ''">Apprentissage</h2>
+            </router-link>
           </li>
           <li class="hvr-grow" v-if="isLoggedIn && canAccessTest">
-            <router-link :to="{name: 'Operation'}" class="color-red" tag="a"><h2 :class="this.$route.name === 'Operation' ? 'underline' : ''">Evaluation</h2></router-link>
+            <router-link :to="{name: 'Operation'}" class="color-red" tag="a">
+              <h2 :class="this.$route.name === 'Operation' ? 'underline' : ''">Evaluation</h2>
+            </router-link>
           </li>
           <li class="hvr-grow" v-if="isLoggedIn">
-            <router-link :to="{name: 'Statistics'}" class="color-blue" tag="a"><h2 :class="this.$route.name === 'Statistics' ? 'underline' : ''">Statistiques</h2></router-link>
+            <router-link :to="{name: 'Statistics'}" class="color-blue" tag="a">
+              <h2 :class="this.$route.name === 'Statistics' ? 'underline' : ''">Statistiques</h2>
+            </router-link>
           </li>
           <li class="hvr-grow" v-if="isLoggedIn">
-            <a class="color-green" @click="logout"><h2>Déconnexion</h2></a>
+            <a class="color-green" @click="logout">
+              <h2>Déconnexion</h2>
+            </a>
           </li>
         </ul>
       </nav>

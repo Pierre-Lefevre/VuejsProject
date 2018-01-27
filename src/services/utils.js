@@ -33,7 +33,7 @@ export default {
     return array.slice(0)
   },
 
-  //
+  // Permet de savoir si un objet existe dans un tableau en s'appuyant sur les propriétés d'une autre objet.
   objectExistInArrayByProperties (array, element, properties) {
     for (let i = 0; i < array.length; i++) {
       let nbMatchProperties = 0
@@ -60,15 +60,58 @@ export default {
       array.push(shuffleOperations[i])
     }
   },
+
+  // Renvoie les cinq opérations les plus problématiques pour l'élève parmi les cinq dernières sessions d'opérations.
+  getFiveMostProblematicOperations () {
+    // Récupère l'historique des 5 dernières sessions d'opérations.
+    if (!lsm.keyExistsUser('history')) {
+      return []
+    }
+    let history = lsm.getValueUser('history').slice(0, 5)
+
+    // Crée un tableau contenant toutes les opérations différentes effectuées (l'ordre des facteurs étant important).
+    let allOperations = []
+    history.forEach(function (session) {
+      session.forEach(function (operation) {
+        let index = this.objectExistInArrayByProperties(allOperations, operation, ['factor1', 'factor2'])
+        if (index !== -1) {
+          allOperations[index].nbErrors += operation.nbErrors
+          allOperations[index].badAnswers = this.arrayUnique(allOperations[index].badAnswers.concat(operation.badAnswers))
+        } else {
+          allOperations.push({factor1: operation.factor1, factor2: operation.factor2, nbErrors: operation.nbErrors, badAnswers: operation.badAnswers})
+        }
+      })
+    })
+
+    // Duplique, avec une probabilité de 25%, certaines opérations.
+    allOperations.forEach(function (operation) {
+      if (Math.random() > 0.75) {
+        allOperations.push(this.clone(operation))
+      }
+    })
+
+    // Trie toutes les opérations effectuées en fonction du nombre d'erreurs décroissant.
+    allOperations.sort(function (a, b) {
+      return (a.nbErrors < b.nbErrors) ? 1 : ((b.nbErrors < a.nbErrors) ? -1 : 0)
+    })
+
+    // Récupère, au maximum, les 5 opérations les plus problématiques.
+    return allOperations.slice(0, 5)
+  },
+
+  // Permet de récupérer, parmi tous les résultats possibles dans toutes les tables de multiplication, les x résultats les plus proches de la bonne réponse, excepté certains.
   getClosestValues (goodAnswers, nbValues, except) {
+    // Copie du tableau contenant tous les résultats possibles dans toutes les tables de multiplication.
     let allPossibleResults = this.cloneArray(gAllPossibleResults)
 
+    // Suppression des valeurs à exclure.
     for (let i = 0; i < except.length; i++) {
       if (except[i] !== goodAnswers) {
         allPossibleResults.splice(allPossibleResults.indexOf(except[i]), 1)
       }
     }
 
+    // Détermine l'indice de la bonne réponse dans le tableau.
     let index
     for (let i = 0; i < allPossibleResults.length; i++) {
       if (goodAnswers === allPossibleResults[i]) {
@@ -77,6 +120,7 @@ export default {
       }
     }
 
+    // Détermine les bornes d'indices supérieur et inférieur correspondant aux valeurs à récupérer.
     let answers = []
     let startIndex = index - Math.floor(nbValues / 2)
     let endIndex = index + Math.ceil(nbValues / 2)
@@ -89,7 +133,10 @@ export default {
       endIndex = allPossibleResults.length - 1
     }
 
+    // Récupération de ces valeurs.
     answers = allPossibleResults.slice(startIndex, endIndex + 1)
+
+    // Suppression de la bonne réponse.
     answers.splice(answers.indexOf(goodAnswers), 1)
 
     return answers

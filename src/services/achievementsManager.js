@@ -18,7 +18,7 @@ export default {
     eventBus.$emit('alert', {type: 'success', message: 'Succès débloqué : ' + config.achievements[key].name + ' !'})
   },
 
-  // Permet de checker si l'utilisateur répond aux critères permettant de débloquer un succès de type tableXMaster.
+  // Permet de vérifier si l'utilisateur répond aux critères permettant de débloquer un succès de type tableXMaster.
   tableXMaster (number, operations) {
     if (!this.hasUnlockedAchievement('table' + number + 'Master')) {
       let sum = 0
@@ -32,7 +32,7 @@ export default {
     }
   },
 
-  // Permet de checker si l'utilisateur répond aux critères permettant de débloquer le succès tableMaster.
+  // Permet de vérifier si l'utilisateur répond aux critères permettant de débloquer le succès tableMaster.
   tableMaster () {
     if (!this.hasUnlockedAchievement('tableMaster')) {
       for (let i = 1; i <= 10; i++) {

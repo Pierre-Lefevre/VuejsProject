@@ -9,6 +9,7 @@ const LOGOUT = 'LOGOUT'
 
 Vue.use(Vuex)
 
+// Store de l'applciation.
 export default new Vuex.Store({
   state: {
     isLoggedIn: !!localStorage.getItem('token'),
@@ -31,12 +32,17 @@ export default new Vuex.Store({
   actions: {
     login ({commit}, data) {
       commit(LOGIN)
+
+      // Renvoie une promesse permettant de savoir si la tentative de connexion a réussi ou non.
       return new Promise((resolve, reject) => {
         setTimeout(() => {
+          // Récupération de tous les utilisateurs.
           let users = lsm.getValue('users')
           if (users === undefined) {
             reject(new Error('Aucun utilisateur.'))
           }
+
+          // Vérifie si les identifiants sont ceux d'un des utilisateurs existant.
           users.forEach((user) => {
             if (data.pseudo === user.pseudo && crypto.SHA256(data.password).toString(crypto.enc.Hex) === user.password) {
               localStorage.setItem('token', user.pseudo)
