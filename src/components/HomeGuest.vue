@@ -20,6 +20,7 @@ export default {
     }
   },
   created () {
+    // Récupère la liste des utilisateurs depuis le localStorage.
     this.users = lsm.getValue('users')
   }
 }

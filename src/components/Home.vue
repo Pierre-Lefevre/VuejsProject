@@ -1,13 +1,13 @@
 <template>
   <div>
-    <home-auth v-if="check"></home-auth>
-    <home-guest v-if="!check"></home-guest>
+    <home-auth v-if="isLoggedIn"/>
+    <home-guest v-if="!isLoggedIn"/>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 // import utils from '@/services/utils'
-import user from '@/services/auth'
 import homeAuth from '@/components/HomeAuth'
 import homeGuest from '@/components/HomeGuest'
 
@@ -18,9 +18,7 @@ export default {
     homeGuest
   },
   computed: {
-    check () {
-      return user.check()
-    }
+    ...mapGetters(['isLoggedIn'])
   }
 }
 </script>

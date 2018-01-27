@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { EventBus } from '@/services/eventBus'
+import { eventBus } from '@/services/eventBus'
 
 export default {
   name: 'alert',
@@ -20,7 +20,7 @@ export default {
   },
   created () {
     // Si l'évènement "alert" est reçu...
-    EventBus.$on('alert', (alert) => {
+    eventBus.$on('alert', (alert) => {
       alert.show = true
 
       // On ajoute l'alerte à les listes des alertes.

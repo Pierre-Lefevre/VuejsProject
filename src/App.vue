@@ -11,22 +11,22 @@
           <li class="hvr-grow">
             <router-link :to="{name: 'Home'}" class="color-orange" tag="a"><h2 :class="this.$route.name === 'Home' ? 'underline' : ''">Accueil</h2></router-link>
           </li>
-          <li class="hvr-grow" v-if="!check">
+          <li class="hvr-grow" v-if="!isLoggedIn">
             <router-link :to="{name: 'SignIn'}" class="color-green" tag="a"><h2 :class="this.$route.name === 'SignIn' ? 'underline' : ''">Connexion</h2></router-link>
           </li>
-          <li class="hvr-grow" v-if="!check">
+          <li class="hvr-grow" v-if="!isLoggedIn">
             <router-link :to="{name: 'SignUp'}" class="color-blue" tag="a"><h2 :class="this.$route.name === 'SignUp' ? 'underline' : ''">Inscription</h2></router-link>
           </li>
-          <li class="hvr-grow" v-if="check">
+          <li class="hvr-grow" v-if="isLoggedIn">
             <router-link :to="{name: 'Learn'}" class="color-green" tag="a"><h2 :class="this.$route.name === 'Learn' ? 'underline' : ''">Apprentissage</h2></router-link>
           </li>
-          <li class="hvr-grow" v-if="check && canAccessTest">
+          <li class="hvr-grow" v-if="isLoggedIn && canAccessTest">
             <router-link :to="{name: 'Operation'}" class="color-red" tag="a"><h2 :class="this.$route.name === 'Operation' ? 'underline' : ''">Evaluation</h2></router-link>
           </li>
-          <li class="hvr-grow" v-if="check">
+          <li class="hvr-grow" v-if="isLoggedIn">
             <router-link :to="{name: 'Statistics'}" class="color-blue" tag="a"><h2 :class="this.$route.name === 'Statistics' ? 'underline' : ''">Statistiques</h2></router-link>
           </li>
-          <li class="hvr-grow" v-if="check">
+          <li class="hvr-grow" v-if="isLoggedIn">
             <a class="color-green" @click="logout"><h2>Déconnexion</h2></a>
           </li>
         </ul>
@@ -45,11 +45,11 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 // import utils from '@/services/utils'
 import lsm from '@/services/localStorageManager'
 import Alert from '@/components/Alert'
 import SaveLoadProgress from '@/components/SaveLoadProgress'
-import user from '@/services/auth'
 
 export default {
   name: 'App',
@@ -58,10 +58,10 @@ export default {
     SaveLoadProgress
   },
   created () {
-    console.log(this.$route.name)
     lsm.init()
   },
   methods: {
+    ...mapActions({processLogout: 'logout'}),
     canAccessTest () {
       // return utils.canAccessTest()
       return true
@@ -73,14 +73,12 @@ export default {
       console.log(localStorage)
     },
     logout () {
-      user.logout()
+      this.processLogout()
       this.$router.push({name: 'Home'})
     }
   },
   computed: {
-    check () {
-      return user.check()
-    }
+    ...mapGetters(['isLoggedIn'])
   }
 }
 </script>
@@ -130,7 +128,7 @@ export default {
     font-size: 2em;
   }
 
-  p, table *  {
+  p, table * {
     font-size: 2rem;
   }
 

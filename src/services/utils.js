@@ -1,11 +1,16 @@
 import lsm from '@/services/localStorageManager'
 
+// Tous les résultats possibles dans toutes les tables de multiplication.
 const gAllPossibleResults = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 15, 16, 18, 20, 21, 24, 25, 27, 28, 30, 32, 35, 36, 40, 42, 45, 48, 49, 50, 54, 56, 60, 63, 64, 70, 72, 80, 81, 90, 100]
 
 export default {
+
+  // Renvoie un nombre aléatoire entre deux bornes.
   randomBetween (from, to) {
     return Math.floor(Math.random() * to) + from
   },
+
+  // Supprime les doublons d'un tableau.
   arrayUnique (array) {
     let a = array.concat()
     for (let i = 0; i < a.length; ++i) {
@@ -17,12 +22,18 @@ export default {
     }
     return a
   },
+
+  // Clone un objet.
   clone (object) {
     return JSON.parse(JSON.stringify(object))
   },
+
+  // Clone un tableau.
   cloneArray (array) {
     return array.slice(0)
   },
+
+  //
   objectExistInArrayByProperties (array, element, properties) {
     for (let i = 0; i < array.length; i++) {
       let nbMatchProperties = 0
@@ -37,6 +48,8 @@ export default {
     }
     return -1
   },
+
+  // Mélange de façon aléatoire le contenu d'un tableau.
   shuffleArray (array) {
     let shuffleOperations = []
     for (let i = 0; i < array.length; i++) {
@@ -81,6 +94,8 @@ export default {
 
     return answers
   },
+
+  // Permet de savoir l'utilisateur peut accéder au mode examen.
   canAccessTest () {
     let tablesAlreadyDone = lsm.getValueUser('tablesAlreadyDone')
     return tablesAlreadyDone !== undefined && tablesAlreadyDone.length === 10

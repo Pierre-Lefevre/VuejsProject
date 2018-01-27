@@ -17,8 +17,7 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home,
-      beforeEnter: Guard.all
+      component: Home
     },
     {
       path: '/connexion/:pseudo?',

@@ -1,2 +1,4 @@
 import Vue from 'vue'
-export const EventBus = new Vue()
+
+// Bus d'évènements utilisé par l'applciation.
+export const eventBus = new Vue()

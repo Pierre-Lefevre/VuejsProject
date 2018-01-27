@@ -8,7 +8,7 @@
 <script>
 import config from '@/config/config'
 import lsm from '@/services/localStorageManager'
-import { EventBus } from '@/services/eventBus'
+import { eventBus } from '@/services/eventBus'
 import crypto from 'crypto-js'
 import fs from 'file-saver'
 
@@ -22,7 +22,7 @@ export default {
 
       // Sauvegarde du fichier.
       fs.saveAs(blob, config.backupFileName)
-      EventBus.$emit('alert', {type: 'success', message: 'Tu as sauvegardé ta progression !'})
+      eventBus.$emit('alert', {type: 'success', message: 'Tu as sauvegardé ta progression !'})
     },
     handleFileChange (e) {
       let files = e.target.files || e.dataTransfer.files
@@ -42,7 +42,7 @@ export default {
 
         // Chargement des données reçues dans le localStorage.
         lsm.setAllFromStringUser(bytes.toString(crypto.enc.Utf8))
-        EventBus.$emit('alert', {type: 'success', message: 'Tu as récupéré ta progression !'})
+        eventBus.$emit('alert', {type: 'success', message: 'Tu as récupéré ta progression !'})
       }
 
       // Lecture du fichier transmis par l'utilisateur.

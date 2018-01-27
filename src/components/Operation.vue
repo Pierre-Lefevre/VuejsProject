@@ -20,7 +20,7 @@ import config from '@/config/config'
 import utils from '@/services/utils'
 import lsm from '@/services/localStorageManager'
 import am from '@/services/achievementsManager'
-// import { EventBus } from '@/services/eventBus'
+// import { eventBus } from '@/services/eventBus'
 
 export default {
   name: 'operation',
@@ -45,7 +45,7 @@ export default {
       this.generateOperationsLearn()
     } else {
       // if (!utils.canAccessTest()) {
-      //   EventBus.$emit('alert', {type: 'info', message: 'Tu dois t\'entraîner davantage !'})
+      //   eventBus.$emit('alert', {type: 'info', message: 'Tu dois t\'entraîner davantage !'})
       //   this.$router.push({name: 'Home'})
       //   return
       // }

@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import user from '@/services/auth'
-import { EventBus } from '@/services/eventBus'
+import { mapActions } from 'vuex'
+import { eventBus } from '@/services/eventBus'
 
 export default {
   name: 'signIn',
@@ -21,19 +21,22 @@ export default {
     }
   },
   created () {
+    // Pré-remplit, si possible, le champ pseudo.
     if (this.$route.params.pseudo !== undefined) {
       this.pseudo = this.$route.params.pseudo
     }
   },
   methods: {
+    ...mapActions({processLogin: 'login'}),
     login () {
-      user.login({
+      // Promesse de connexion.
+      this.processLogin({
         pseudo: this.pseudo,
         password: this.password
       }).then(() => {
         this.$router.push('/')
       }, (err) => {
-        EventBus.$emit('alert', {type: 'error', message: err.message})
+        eventBus.$emit('alert', {type: 'error', message: err.message})
       })
     }
   }

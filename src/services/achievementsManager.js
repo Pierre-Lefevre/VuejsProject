@@ -1,20 +1,23 @@
 import config from '@/config/config'
 import lsm from '@/services/localStorageManager'
-import { EventBus } from '@/services/eventBus'
+import { eventBus } from '@/services/eventBus'
 
 export default {
+
   // Permet de savoir si l'utilisateur a déjà débloqué un succès.
   hasUnlockedAchievement (key) {
     let achievements = lsm.getValueUser('achievements')
     return achievements[key]
   },
+
   // Permet de débloquer un succès.
   unlockAchievement (key) {
     let achievements = lsm.getValueUser('achievements')
     achievements[key] = true
     lsm.setValueUser('achievements', achievements)
-    EventBus.$emit('alert', {type: 'success', message: 'Succès débloqué : ' + config.achievements[key].name + ' !'})
+    eventBus.$emit('alert', {type: 'success', message: 'Succès débloqué : ' + config.achievements[key].name + ' !'})
   },
+
   // Permet de checker si l'utilisateur répond aux critères permettant de débloquer un succès de type tableXMaster.
   tableXMaster (number, operations) {
     if (!this.hasUnlockedAchievement('table' + number + 'Master')) {
@@ -28,6 +31,7 @@ export default {
       }
     }
   },
+
   // Permet de checker si l'utilisateur répond aux critères permettant de débloquer le succès tableMaster.
   tableMaster () {
     if (!this.hasUnlockedAchievement('tableMaster')) {

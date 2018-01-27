@@ -12,7 +12,7 @@
 
 <script>
 import lsm from '@/services/localStorageManager'
-import { EventBus } from '@/services/eventBus'
+import { eventBus } from '@/services/eventBus'
 import crypto from 'crypto-js'
 
 export default {
@@ -27,10 +27,13 @@ export default {
   },
   methods: {
     signUp () {
+      // Vérifie que tous les champs sont renseignés.
       if (this.firstname === '' || this.lastname === '' || this.pseudo === '' || this.password === '') {
-        EventBus.$emit('alert', {type: 'error', message: 'Tu dois remplir tous les champs.'})
+        eventBus.$emit('alert', {type: 'error', message: 'Tu dois remplir tous les champs.'})
         return
       }
+
+      // Ajout de l'utilisateur au localStorage.
       lsm.pushValue('users', {firstname: this.firstname, lastname: this.lastname, pseudo: this.pseudo, password: crypto.SHA256(this.password).toString(crypto.enc.Hex)})
       this.$router.push({name: 'Users'})
     }

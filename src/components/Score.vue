@@ -52,15 +52,19 @@ export default {
     }
   },
   created () {
+    // Retour à la page d'accueil s'il n'y a pas de données dans l'historique.
     if (!lsm.keyExistsUser('history')) {
       this.$router.push({name: 'Home'})
       return
     }
+
+    // Récupération de la dernière session dans l'historique.
     let history = lsm.getValueUser('history')
     this.operations = history[history.length - 1]
     this.pie.data = [10, this.getNbTotalError()]
   },
   methods: {
+    // Retourne le nombre total d'erreurs.
     getNbTotalError () {
       let sum = 0
       this.operations.forEach(function (operation) {
@@ -68,6 +72,8 @@ export default {
       })
       return sum
     },
+
+    // Retourne le temps total passé.
     getTotalTime () {
       let sum = 0
       this.operations.forEach(function (operation) {
@@ -75,6 +81,8 @@ export default {
       })
       return sum
     },
+
+    // Retourne une chaîne correctement formatée contenant les erreurs effectuées.
     getBadAnswers (badAnswers) {
       let str = ''
       badAnswers.forEach(function (badAnswer, i) {
@@ -88,11 +96,15 @@ export default {
       }
       return str
     },
+
+    // Retourne une chaîne pluralisée, ou non, en fonction d'un compteur.
     pluralize (string, count) {
       return count >= 2 ? string + 's' : string
     }
   },
   filters: {
+
+    // Filtre permettant d'arrondir un nombre avec tant de décimales.
     round (value, decimal) {
       if (!value) {
         return ''

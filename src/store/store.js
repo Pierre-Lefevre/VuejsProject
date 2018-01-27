@@ -25,6 +25,7 @@ export default new Vuex.Store({
     },
     [LOGOUT] (state) {
       state.isLoggedIn = false
+      state.user = null
     }
   },
   actions: {
@@ -56,7 +57,7 @@ export default new Vuex.Store({
     isLoggedIn: state => {
       return state.isLoggedIn
     },
-    user: state => {
+    getUser: state => {
       return state.user
     }
   }
