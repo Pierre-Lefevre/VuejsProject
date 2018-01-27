@@ -28,17 +28,20 @@
       </div>
     </ul>
     <achievements/>
+    <save-load-progress/>
   </div>
 </template>
 
 <script>
 import lsm from '@/services/localStorageManager'
-import achievements from '@/components/achievements'
+import Achievements from '@/components/achievements'
+import SaveLoadProgress from '@/components/SaveLoadProgress'
 
 export default {
   name: 'statistics',
   components: {
-    achievements
+    Achievements,
+    SaveLoadProgress
   },
   data () {
     return {

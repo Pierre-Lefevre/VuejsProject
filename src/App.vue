@@ -50,11 +50,10 @@
       <router-view :key="$route.fullPath"/>
     </main>
     <footer class="background-blue">
-      <save-load-progress></save-load-progress>
       <button @click="resetLocalStorage">Reset localstorage</button>
       <button @click="displayLocalStorage">Display localstorage</button>
     </footer>
-    <alert></alert>
+    <alert/>
   </div>
 </template>
 
@@ -63,13 +62,11 @@ import { mapActions, mapGetters } from 'vuex'
 // import utils from '@/services/utils'
 import lsm from '@/services/localStorageManager'
 import Alert from '@/components/Alert'
-import SaveLoadProgress from '@/components/SaveLoadProgress'
 
 export default {
   name: 'App',
   components: {
-    Alert,
-    SaveLoadProgress
+    Alert
   },
   created () {
     lsm.init()

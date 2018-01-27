@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2>Sauvegarder sa progression</h2>
     <button @click="saveProgress">Save</button>
     <input type="file" @change="handleFileChange"/>
   </div>
