@@ -80,15 +80,15 @@ export default {
         } else {
           allOperations.push({factor1: operation.factor1, factor2: operation.factor2, nbErrors: operation.nbErrors, badAnswers: operation.badAnswers})
         }
-      })
-    })
+      }.bind(this))
+    }.bind(this))
 
     // Duplique, avec une probabilité de 25%, certaines opérations.
     allOperations.forEach(function (operation) {
       if (Math.random() > 0.75) {
         allOperations.push(this.clone(operation))
       }
-    })
+    }.bind(this))
 
     // Trie toutes les opérations effectuées en fonction du nombre d'erreurs décroissant.
     allOperations.sort(function (a, b) {
