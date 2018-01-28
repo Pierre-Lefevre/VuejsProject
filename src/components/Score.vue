@@ -3,6 +3,7 @@
     <div id="pie-wrapper">
       <pie :data="pie" :width="350" :height="350" :options="{responsive: true, maintainAspectRatio: false}"></pie>
     </div>
+    <p>Temps de référence : {{ getReferenceTime() }}</p>
     <table>
       <thead>
         <tr>
@@ -47,7 +48,7 @@ export default {
       operations: [],
       pie: {
         labels: ['Bonnes réponses', 'Mauvaises réponses'],
-        colors: ['#2ecc71', '#e74c3c']
+        colors: ['#4E950B', '#BE1621']
       }
     }
   },
@@ -64,6 +65,11 @@ export default {
     this.pie.data = [10, this.getNbTotalError()]
   },
   methods: {
+
+    // Retourne le temps de référence de l'élève calculé sur la table de 1
+    getReferenceTime () {
+      lsm.getValueUser('referenceTime')
+    },
 
     // Retourne le nombre total d'erreurs.
     getNbTotalError () {

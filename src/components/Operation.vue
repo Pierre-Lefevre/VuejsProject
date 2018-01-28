@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1 :class="isTraining ? 'color-green' : 'color-red'">{{ isTraining ? 'Apprentissage' : 'Evaluation' }}</h1>
+    {{ avgTimeToAnswer }}
     <div>{{ operations[index].factor1 }} x {{ operations[index].factor2 }}</div>
     <div id="answers-wrapper">
       <ul id="answers">
@@ -24,22 +25,25 @@ export default {
   name: 'operation',
   data () {
     return {
+      tableId: this.$route.params.id,
       isTraining: false,
       table: null,
       index: 0,
       operations: [],
       startTimestamp: 0,
       timeNextQuestion: 0,
-      timerNextQuestion: null
+      timerNextQuestion: null,
+      avgTimeToAnswer: null,
+      worseTimeToAnswer: null
     }
   },
   beforeRouteEnter: guards.operation,
   beforeRouteUpdate: guards.operation,
   created () {
     // Détermine si l'élève est en apprentissage ou en examen.
-    this.isTraining = this.$route.params.id !== undefined
+    this.isTraining = this.tableId !== undefined
     if (this.isTraining) {
-      this.table = parseInt(this.$route.params.id)
+      this.table = parseInt(this.tableId)
       this.generateOperationsLearn()
     } else {
       this.generateOperationsTest()
@@ -179,13 +183,31 @@ export default {
           }
         }
 
+        // Si l'élève s'exerçait avec la table de 1
+        if (this.tableId === 1) {
+          // Calcul du temps moyen de réponse
+          let sum = 0
+          let worseTime = 0
+          this.operations.forEach(operation => {
+            sum += operation.time
+            if (-operation.time < worseTime) {
+              worseTime = operation.time
+            }
+          })
+          this.avgTimeToAnswer = sum / 10
+          this.worseTimeToAnswer = worseTime
+          console.log(this.avgTimeToAnswer)
+          lsm.pushValueUser('referenceTime', this.avgTimeToAnswer)
+          lsm.pushValueUser('worseReferenceTime', this.worseTimeToAnswer)
+        }
+
         // Vérifie que l'élève débloque un succès de type tableXMaster.
         am.tableXMaster(this.table, this.operations)
 
         // Redirection vers la page des scores.
         this.$router.push({name: 'Score'})
       } else {
-        // S'il reste des question, on passe à la suivante.
+        // S'il reste des questions, on passe à la suivante.
         this.index++
         this.startTimestamp = Date.now()
       }

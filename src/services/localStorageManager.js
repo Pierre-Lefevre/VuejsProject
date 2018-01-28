@@ -23,7 +23,9 @@ export default {
       users.forEach((user) => {
         data[user.pseudo] = {
           'history': [],
-          'achievements': achievements
+          'achievements': achievements,
+          'referenceTime': null,
+          'worseReferenceTime': null
         }
       })
       this.setValue('data', data)
