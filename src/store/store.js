@@ -9,7 +9,7 @@ const LOGOUT = 'LOGOUT'
 
 Vue.use(Vuex)
 
-// Store de l'applciation.
+// Store de l'application.
 export default new Vuex.Store({
   state: {
     isLoggedIn: !!localStorage.getItem('token'),
