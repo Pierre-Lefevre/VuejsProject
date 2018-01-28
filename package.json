@@ -1,8 +1,17 @@
 {
-  "name": "VuejsProject",
+  "name": "Tables de multiplication",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "Pierre-Lefevre <lefevre.pierre.m.d@gmail.com>",
+  "description": "Une application web Vue.js permettant à des élèves de réviser leurs tables de multiplciation.",
+  "contributors": [
+    {
+      "name": "Pierre Lefèvre",
+      "email": "lefevre.pierre.m.d@gmail.com"
+    },
+    {
+      "name": "Solène Dorey",
+      "email": "solene.dorey@outlook.com "
+    }
+  ],
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
