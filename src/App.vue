@@ -8,37 +8,37 @@
       </figure>
       <nav id="navbar">
         <ul>
-          <li class="hvr-grow">
+          <li class="hvr-grow-rotate">
             <router-link :to="{name: 'Home'}" class="color-orange" tag="a">
-              <h2 :class="this.$route.name === 'Home' ? 'underline' : ''">Accueil</h2>
+              <h2 :class="this.$route.name === 'Home' ? 'border-bottom border-orange' : ''">Accueil</h2>
             </router-link>
           </li>
-          <li class="hvr-grow" v-if="!isLoggedIn">
+          <li class="hvr-grow-rotate" v-if="!isLoggedIn">
             <router-link :to="{name: 'SignIn'}" class="color-green" tag="a">
-              <h2 :class="this.$route.name === 'SignIn' ? 'underline' : ''">Connexion</h2>
+              <h2 :class="this.$route.name === 'SignIn' ? 'border-bottom border-green' : ''">Connexion</h2>
             </router-link>
           </li>
-          <li class="hvr-grow" v-if="!isLoggedIn">
+          <li class="hvr-grow-rotate" v-if="!isLoggedIn">
             <router-link :to="{name: 'SignUp'}" class="color-blue" tag="a">
-              <h2 :class="this.$route.name === 'SignUp' ? 'underline' : ''">Inscription</h2>
+              <h2 :class="this.$route.name === 'SignUp' ? 'border-bottom border-blue' : ''">Inscription</h2>
             </router-link>
           </li>
-          <li class="hvr-grow" v-if="isLoggedIn">
+          <li class="hvr-grow-rotate" v-if="isLoggedIn">
             <router-link :to="{name: 'Learn'}" class="color-green" tag="a">
-              <h2 :class="this.$route.name === 'Learn' ? 'underline' : ''">Apprentissage</h2>
+              <h2 :class="this.$route.name === 'Learn' ? 'border-bottom border-green' : ''">Apprentissage</h2>
             </router-link>
           </li>
-          <li class="hvr-grow" v-if="isLoggedIn && canAccessTest()">
+          <li class="hvr-grow-rotate" v-if="isLoggedIn && canAccessTest()">
             <router-link :to="{name: 'Operation'}" class="color-red" tag="a">
-              <h2 :class="this.$route.name === 'Operation' ? 'underline' : ''">Evaluation</h2>
+              <h2 :class="this.$route.name === 'Operation' ? 'border-bottom border-red' : ''">Evaluation</h2>
             </router-link>
           </li>
-          <li class="hvr-grow" v-if="isLoggedIn">
+          <li class="hvr-grow-rotate" v-if="isLoggedIn">
             <router-link :to="{name: 'Statistics'}" class="color-blue" tag="a">
-              <h2 :class="this.$route.name === 'Statistics' ? 'underline' : ''">Statistiques</h2>
+              <h2 :class="this.$route.name === 'Statistics' ? 'border-bottom border-blue' : ''">Statistiques</h2>
             </router-link>
           </li>
-          <li class="hvr-grow" v-if="isLoggedIn">
+          <li class="hvr-grow-rotate" v-if="isLoggedIn">
             <a class="color-green" @click="logout">
               <h2>Déconnexion</h2>
             </a>
@@ -95,6 +95,8 @@ export default {
 </script>
 
 <style>
+
+  /***** Font *****/
   @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
 
   @font-face {
@@ -103,6 +105,8 @@ export default {
     font-weight: normal;
     font-style: normal;
   }
+
+  /***** Général *****/
 
   * {
     box-sizing: border-box;
@@ -132,15 +136,15 @@ export default {
   }
 
   h1 {
-    font-size: 3em;
+    font-size: 3rem;
   }
 
   h2 {
-    font-size: 2em;
+    font-size: 2rem;
   }
 
   p, table * {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   form > *:not(:last-child) {
@@ -154,15 +158,6 @@ export default {
     color: #495057;
     border: 1px solid #CED4DA;
     border-radius: 4px;
-  }
-
-  .btn-primary {
-    cursor: pointer;
-    color: #FFFFFF;
-    font-size: 1rem;
-    border-radius: 4px;
-    padding: 10px 15px;
-    border: none;
   }
 
   #app {
@@ -181,27 +176,11 @@ export default {
   }
 
   .background-grey {
-    background-color: lightgray;
+    background-color: #d3d3d3;
   }
 
   .background-blue {
     background-color: #2c3e50;
-  }
-
-  .background-green {
-    background-color: #40AE8A;
-  }
-
-  .background-yellow {
-    background-color: #FFD86F;
-  }
-
-  .background-orange {
-    background-color: #F49E5A;
-  }
-
-  .background-red {
-    background-color: #EB5F50;
   }
 
   .color-blue {
@@ -212,24 +191,65 @@ export default {
     border-color: #2c3e50;
   }
 
+  .background-green {
+    background-color: #4E950B;
+  }
+
   .color-green {
-    color: #40AE8A;
+    color: #4E950B;
+  }
+
+  .border-green {
+    border-color: #4E950B;
+  }
+
+  .background-yellow {
+    background-color: #FCC007;
   }
 
   .color-yellow {
-    color: #FFD86F;
+    color: #FCC007;
+  }
+
+  .border-yellow {
+    border-color: #FCC007;
+  }
+
+  .background-orange {
+    background-color: #EA5C1C;
   }
 
   .color-orange {
-    color: #F49E5A;
+    color: #EA5C1C;
+  }
+
+  .border-yellow {
+    border-color: #EA5C1C;
+  }
+
+  .background-red {
+    background-color: #BE1621;
   }
 
   .color-red {
-    color: #EB5F50;
+    color: #BE1621;
   }
 
-  .underline {
-    text-decoration: underline;
+  .border-red {
+    border-color: #BE1621;
+  }
+
+  .border-bottom {
+    border-bottom: 4px solid;
+  }
+
+  .btn-primary {
+    cursor: pointer;
+    color: #FFFFFF;
+    font-size: 1rem;
+    border-radius: 4px;
+    padding: 10px 15px;
+    border: none;
   }
 
   .hvr-grow {
@@ -321,7 +341,9 @@ export default {
 
   header {
     justify-content: space-between;
-    padding: 20px;
+    width: 80vw;
+    margin: auto;
+    padding-top: 2rem;
   }
 
   footer {
@@ -339,11 +361,13 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding: 2rem 2rem calc(100px + 2rem);
+    width: 80vw;
+    margin: auto;
+    padding: 2rem  0 calc(100px + 2rem);
   }
 
   #logo {
-    margin: 0 20px;
+    margin: 0;
     width: 30%;
     display: flex;
     justify-content: center;
@@ -355,7 +379,6 @@ export default {
 
   #logo img {
     height: 200px;
-    width: 100%;
   }
 
   #navbar {

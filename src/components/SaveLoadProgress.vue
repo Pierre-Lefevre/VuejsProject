@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h2>Votre progression</h2>
-    <button class="btn-primary background-green" @click="saveProgress">Sauvegarder</button>
+    <h2>Votre progression : </h2>
+    <button class="hvr-grow btn-primary background-green" @click="saveProgress">Sauvegarder</button>
     <div class="drop-zone">
       <input type="file" @change="handleFileChange" accept="text/plain"/>
-      <button class="btn-primary background-green">Récupérer</button>
+      <button class="hvr-grow btn-primary background-green">Charger</button>
     </div>
   </div>
 </template>
@@ -57,6 +57,10 @@ export default {
 </script>
 
 <style scoped>
+  h2 + button {
+    margin: 0 1rem;
+  }
+
   .drop-zone {
     display: inline-block;
     position: relative;

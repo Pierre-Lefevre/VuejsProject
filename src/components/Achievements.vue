@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Succès</h2>
+    <h2>Tes succès</h2>
     <ul id="achievements">
       <li :key="i" v-for="(achievement, i) in achievements" :class="achievement.unlock ? 'unlock' : ''">
         <span class="achievement-unlock" v-if="achievement.unlock"></span>
@@ -39,6 +39,11 @@ export default {
 </script>
 
 <style scoped>
+  h2 {
+    font-size: 3rem;
+    padding-bottom: 1rem;
+  }
+
   #achievements {
     display: flex;
     flex-wrap: wrap;
