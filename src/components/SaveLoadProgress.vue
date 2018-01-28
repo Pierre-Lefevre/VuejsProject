@@ -1,8 +1,11 @@
 <template>
   <div>
-    <h2>Sauvegarder sa progression</h2>
-    <button @click="saveProgress">Save</button>
-    <input type="file" @change="handleFileChange"/>
+    <h2>Votre progression</h2>
+    <button class="btn-primary background-green" @click="saveProgress">Sauvegarder</button>
+    <div class="drop-zone">
+      <input type="file" @change="handleFileChange" accept="text/plain"/>
+      <button class="btn-primary background-green">Récupérer</button>
+    </div>
   </div>
 </template>
 
@@ -54,5 +57,16 @@ export default {
 </script>
 
 <style scoped>
+  .drop-zone {
+    display: inline-block;
+    position: relative;
+  }
 
+  .drop-zone input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
 </style>
