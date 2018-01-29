@@ -178,6 +178,7 @@ export default {
 
   .background-grey {
     background-color: #d3d3d3;
+    color: white;
   }
 
   .background-blue {
@@ -194,6 +195,7 @@ export default {
 
   .background-green {
     background-color: #4E950B;
+    color: white
   }
 
   .color-green {
@@ -230,6 +232,7 @@ export default {
 
   .background-red {
     background-color: #BE1621;
+    color: white;
   }
 
   .color-red {
@@ -355,7 +358,7 @@ export default {
     width: 100%;
     padding: 2rem 1rem;
     margin-top: 2rem;
-    max-height: 100px;
+    min-height: 100px;
   }
 
   main {

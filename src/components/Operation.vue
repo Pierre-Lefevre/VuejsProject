@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div class="operation">
     <h1 :class="isTraining ? 'color-green' : 'color-red'">{{ isTraining ? 'Apprentissage' : 'Evaluation' }}</h1>
     {{ avgTimeToAnswer }}
-    <div>{{ operations[index].factor1 }} x {{ operations[index].factor2 }}</div>
+    <p>{{ operations[index].factor1 }} x {{ operations[index].factor2 }}</p>
+    <p v-if="timeNextQuestion > 0">Question suivante dans : {{ timeNextQuestion }}</p>
     <div id="answers-wrapper">
       <ul id="answers">
         <li :key="answer.value" v-for="(answer, i) in operations[index].answers" class="answer randomColor" :class="answer.class" @click="answer.class === 'initial' ? validAnswer(i) : null">
@@ -10,7 +11,9 @@
         </li>
       </ul>
     </div>
-    <span v-if="timeNextQuestion > 0">Question suivante dans : {{ timeNextQuestion }}</span>
+    <figure class="alert-wrong-answer" v-if="wrongAnswer">
+      <img src="../assets/img/alert_error.svg" alt="Alerte mauvaise réponse">
+    </figure>
   </div>
 </template>
 
@@ -34,7 +37,8 @@ export default {
       timeNextQuestion: 0,
       timerNextQuestion: null,
       avgTimeToAnswer: null,
-      worseTimeToAnswer: null
+      worseTimeToAnswer: null,
+      wrongAnswer: false
     }
   },
   beforeRouteEnter: guards.operation,
@@ -136,10 +140,10 @@ export default {
       // Si la réponse est correct...
       if (this.operations[this.index].factor1 * this.operations[this.index].factor2 === this.operations[this.index].answers[indexAnswer].value) {
         this.operations[this.index].time = Date.now() - this.startTimestamp
-        this.operations[this.index].answers[indexAnswer].class = 'correct'
+        this.operations[this.index].answers[indexAnswer].class = 'background-green'
         for (let i = 0; i < this.operations[this.index].answers.length; i++) {
           if (this.operations[this.index].answers[i].class === 'initial') {
-            this.operations[this.index].answers[i].class = 'disable'
+            this.operations[this.index].answers[i].class = 'background-grey'
           }
         }
 
@@ -154,6 +158,7 @@ export default {
       } else {
         this.operations[this.index].nbErrors++
         this.operations[this.index].answers[indexAnswer].class = 'background-red'
+        this.wrongAnswer = true
         this.operations[this.index].badAnswers.push(this.operations[this.index].answers[indexAnswer].value)
       }
     },
@@ -205,6 +210,7 @@ export default {
         this.$router.push({name: 'Score'})
       } else {
         // S'il reste des questions, on passe à la suivante.
+        this.wrongAnswer = false
         this.index++
         this.startTimestamp = Date.now()
       }
@@ -214,6 +220,24 @@ export default {
 </script>
 
 <style scoped>
+
+  .operation {
+    padding: 0 10vw;
+  }
+
+  .operation p {
+    font-size: xx-large;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  figure img {
+    position: absolute;
+    right: 5vw;
+    bottom: 20px;
+    z-index: 1;
+  }
+
   #answers-wrapper {
     display: flex;
     justify-content: center;
@@ -225,6 +249,7 @@ export default {
     justify-content: center;
     flex-wrap: wrap;
     max-width: 685px;
+    margin-bottom: 1rem;
   }
 
   .answers-leave-active {
@@ -253,18 +278,6 @@ export default {
 
   .answer span {
     transform: rotate(-45deg);
-  }
-
-  .answer.correct {
-    background-color: #2ecc71;
-  }
-
-  .answer.false {
-    background-color: #e74c3c;
-  }
-
-  .answer.disable {
-    background-color: #bdc3c7;
   }
 
   .answer.initial {
