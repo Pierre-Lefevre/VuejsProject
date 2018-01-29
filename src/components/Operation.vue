@@ -2,7 +2,7 @@
   <div class="operation">
     <h1 :class="isTraining ? 'color-green' : 'color-red'">{{ isTraining ? 'Apprentissage' : 'Evaluation' }}</h1>
     <p>{{ operations[index].factor1 }} x {{ operations[index].factor2 }}</p>
-    <!--<p v-if="timeNextQuestion > 0">Question suivante dans : {{ timeNextQuestion }}</p>-->
+    <p v-if="timeNextQuestion > 0">Question suivante dans : {{ timeNextQuestion }}</p>
     <div id="answers-wrapper">
       <ul id="answers">
         <li :key="answer.value" v-for="(answer, i) in operations[index].answers" class="answer randomColor" :class="answer.class" @click="answer.class === 'initial' ? validAnswer(i) : null">
@@ -10,11 +10,11 @@
         </li>
       </ul>
     </div>
-    <figure class="alert-wrong-answer" v-if="answerState === 0">
-      <img src="../assets/img/alert_error.svg" alt="Alerte mauvaise réponse">
+    <figure class="alert-wrong-answer">
+      <img src="../assets/img/alert_error.svg" alt="Alerte mauvaise réponse" :class="{'fade': answerState === 0}">
     </figure>
-    <figure class="alert-good-answer" v-if="answerState === 1">
-      <img src="../assets/img/alert_success.svg" alt="Alerte bonne réponse">
+    <figure class="alert-good-answer">
+      <img src="../assets/img/alert_success.svg" alt="Alerte bonne réponse" :class="{'fade': answerState === 1}">
     </figure>
   </div>
 </template>
@@ -240,12 +240,12 @@ export default {
     right: 5vw;
     bottom: 20px;
     z-index: 1;
-    animation: fadein 2s;
+    opacity: 0;
+    transition: opacity 2s;
   }
 
-  @keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+  figure img.fade {
+    opacity: 1;
   }
 
   #answers-wrapper {
