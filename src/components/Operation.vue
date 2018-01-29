@@ -272,8 +272,6 @@ export default {
   }
 
   .answer {
-    /*background-size: cover;*/
-    /*clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);*/
     width: 75px;
     height: 75px;
     display: flex;
@@ -281,9 +279,13 @@ export default {
     align-items: center;
     justify-content: center;
     margin: 30px;
-    transition: background-color 1s;
+    transition: background-color 1s, border-color 1s;
     border: 1px solid #BDC3C7;
     transform: rotate(45deg);
+  }
+
+  .answer.bg-green, .answer.bg-red, .answer.bg-grey {
+    border-color: transparent;
   }
 
   .answer span {
