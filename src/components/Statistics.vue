@@ -20,7 +20,7 @@
             <tr>
               <th>{{ i }}</th>
               <td :key="j" v-for="(factor2, j) in factor1" :class="factor2.classColor" class="popover-wrapper">
-                <div class="popover-content" v-if="factor2.classColor != 'background-grey'">
+                <div class="popover-content background-blue" v-if="factor2.classColor != 'background-grey'">
                   <div>
                     <h3>{{ i + ' x ' + j }} : </h3>
                     {{ statsTab[i] !== undefined && statsTab[i][j] !== undefined && statsTab[i][j].avgErrors != -1 ? $options.filters.round(statsTab[i][j].avgErrors, 2) : "-" }}
@@ -216,7 +216,6 @@ export default {
     position: absolute;
     left: calc(-180px / 2 + 20px);
     transform: translate(0, 10px);
-    background-color: #BFBFBF;
     padding: 1.5rem;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
     width: 180px;
@@ -238,7 +237,7 @@ export default {
     top: -10px;
     border-style: solid;
     border-width: 0 10px 10px 10px;
-    border-color: transparent transparent #BFBFBF transparent;
+    border-color: transparent transparent #2c3e50 transparent;
     transition-duration: 0.3s;
     transition-property: transform;
   }
