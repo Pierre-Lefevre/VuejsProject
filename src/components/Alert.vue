@@ -20,7 +20,7 @@ export default {
   },
   created () {
     // Si l'évènement "alert" est reçu...
-    eventBus.$on('alert', (alert) => {
+    eventBus.$on('alert', alert => {
       alert.show = true
 
       switch (alert.type) {

@@ -43,7 +43,7 @@ export default new Vuex.Store({
           }
 
           // Vérifie si les identifiants sont ceux d'un des utilisateurs existant.
-          users.forEach((user) => {
+          users.forEach(user => {
             if (data.pseudo === user.pseudo && crypto.SHA256(data.password).toString(crypto.enc.Hex) === user.password) {
               localStorage.setItem('token', user.pseudo)
               commit(LOGIN_SUCCESS, user)

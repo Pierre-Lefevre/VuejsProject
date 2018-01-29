@@ -12,7 +12,7 @@ export default {
 
     // Liste des succès, en s'appuyant sur ceux définis dans la configuration.
     let achievements = {}
-    Object.keys(config.achievements).forEach((key) => {
+    Object.keys(config.achievements).forEach(key => {
       achievements[key] = false
     })
     if (!this.keyExists('users')) {
@@ -20,7 +20,7 @@ export default {
     }
     if (!this.keyExists('data')) {
       let data = {}
-      users.forEach((user) => {
+      users.forEach(user => {
         data[user.pseudo] = {
           'history': [],
           'achievements': achievements

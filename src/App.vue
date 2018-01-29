@@ -174,7 +174,7 @@ export default {
     font-family: 'Lato', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #2c3e50;
+    color: #2C3E50;
     min-height: 100vh;
     margin: 0 auto;
     position: relative;
@@ -186,25 +186,25 @@ export default {
   }
 
   .bg-grey {
-    background-color: #d3d3d3;
+    background-color: #D3D3D3;
     color: white;
   }
 
   .color-grey {
-    color: #d3d3d3;
+    color: #D3D3D3;
   }
 
   .bg-blue {
-    background-color: #2c3e50;
+    background-color: #2C3E50;
     color: white;
   }
 
   .color-blue {
-    color: #2c3e50;
+    color: #2C3E50;
   }
 
   .border-blue {
-    border-color: #2c3e50;
+    border-color: #2C3E50;
   }
 
   .bg-green {

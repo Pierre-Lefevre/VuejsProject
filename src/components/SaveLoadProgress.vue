@@ -38,7 +38,7 @@ export default {
     },
     loadProgress (file) {
       let reader = new FileReader()
-      reader.onload = (e) => {
+      reader.onload = e => {
         let content = e.target.result
 
         // Décryptage de la progression de l'utilisateur.

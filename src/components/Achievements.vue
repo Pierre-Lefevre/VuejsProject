@@ -31,7 +31,7 @@ export default {
     let achievementsUser = lsm.getValueUser('achievements')
 
     // Définit pour chaque succès un booléen qui indique s'il est débloqué ou non.
-    Object.keys(this.achievements).forEach((key) => {
+    Object.keys(this.achievements).forEach(key => {
       this.achievements[key].unlock = achievementsUser[key]
     })
   }
@@ -93,9 +93,6 @@ export default {
     font-weight: bold;
     padding: 10px;
     text-align: center;
-  }
-
-  #achievements li:not(.unlock) .achievement-name {
     flex: 1;
     display: flex;
     justify-content: center;

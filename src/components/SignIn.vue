@@ -36,7 +36,7 @@ export default {
         password: this.password
       }).then(() => {
         this.$router.push('/')
-      }, (err) => {
+      }, err => {
         eventBus.$emit('alert', {type: 'error', message: err.message})
       })
     }
