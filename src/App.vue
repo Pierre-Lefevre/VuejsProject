@@ -10,32 +10,32 @@
         <ul>
           <li class="hvr-grow-rotate">
             <router-link :to="{name: 'Home'}" class="color-orange" tag="a">
-              <h2 :class="this.$route.name === 'Home' ? 'border-bottom border-orange' : ''">Accueil</h2>
+              <h2 :class="{'border-bottom border-orange': this.$route.name === 'Home'}">Accueil</h2>
             </router-link>
           </li>
           <li class="hvr-grow-rotate" v-if="!isLoggedIn">
             <router-link :to="{name: 'SignIn'}" class="color-green" tag="a">
-              <h2 :class="this.$route.name === 'SignIn' ? 'border-bottom border-green' : ''">Connexion</h2>
+              <h2 :class="{'border-bottom border-green': this.$route.name === 'SignIn'}">Connexion</h2>
             </router-link>
           </li>
           <li class="hvr-grow-rotate" v-if="!isLoggedIn">
             <router-link :to="{name: 'SignUp'}" class="color-blue" tag="a">
-              <h2 :class="this.$route.name === 'SignUp' ? 'border-bottom border-blue' : ''">Inscription</h2>
+              <h2 :class="{'border-bottom border-blue': this.$route.name === 'SignUp'}">Inscription</h2>
             </router-link>
           </li>
           <li class="hvr-grow-rotate" v-if="isLoggedIn">
             <router-link :to="{name: 'Learn'}" class="color-green" tag="a">
-              <h2 :class="this.$route.name === 'Learn' || this.$route.name === 'OperationTable' ? 'border-bottom border-green' : ''">Apprentissage</h2>
-            </router-link>
-          </li>
-          <li class="hvr-grow-rotate" v-if="isLoggedIn && canAccessTest()">
-            <router-link :to="{name: 'Operation'}" class="color-red" tag="a">
-              <h2 :class="this.$route.name === 'Operation' ? 'border-bottom border-red' : ''">Evaluation</h2>
+              <h2 :class="{'border-bottom border-green': this.$route.name === 'Learn' || this.$route.name === 'OperationTable'}">Apprentissage</h2>
             </router-link>
           </li>
           <li class="hvr-grow-rotate" v-if="isLoggedIn">
+            <a class="color-red" @click="tryAccessTest">
+              <h2 :class="{'border-bottom border-red': this.$route.name === 'Operation', 'color-grey': !canAccessTest()}">Evaluation</h2>
+            </a>
+          </li>
+          <li class="hvr-grow-rotate" v-if="isLoggedIn">
             <router-link :to="{name: 'Statistics'}" class="color-blue" tag="a">
-              <h2 :class="this.$route.name === 'Statistics' ? 'border-bottom border-blue' : ''">Statistiques</h2>
+              <h2 :class="{'border-bottom border-blue': this.$route.name === 'Statistics'}">Statistiques</h2>
             </router-link>
           </li>
           <li class="hvr-grow-rotate" v-if="isLoggedIn">
@@ -61,6 +61,7 @@
 import { mapActions, mapGetters } from 'vuex'
 // import utils from '@/services/utils'
 import lsm from '@/services/localStorageManager'
+import { eventBus } from '@/services/eventBus'
 import Alert from '@/components/Alert'
 
 export default {
@@ -86,6 +87,14 @@ export default {
     logout () {
       this.processLogout()
       this.$router.push({name: 'Home'})
+    },
+    tryAccessTest (e) {
+      if (!this.canAccessTest()) {
+        eventBus.$emit('alert', {type: 'info', message: 'Tu dois t\'entraîner davantage !'})
+        e.preventDefault()
+      } else {
+        this.$router.push({name: 'Operation'})
+      }
     }
   },
   computed: {
@@ -179,6 +188,10 @@ export default {
   .bg-grey {
     background-color: #d3d3d3;
     color: white;
+  }
+
+  .color-grey {
+    color: #d3d3d3;
   }
 
   .bg-blue {
@@ -368,7 +381,7 @@ export default {
     justify-content: center;
     width: 90vw;
     margin: auto;
-    padding: 2rem  0 calc(100px + 2rem);
+    padding: 2rem 0 calc(100px + 2rem);
   }
 
   #logo {
