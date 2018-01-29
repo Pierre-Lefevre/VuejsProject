@@ -184,21 +184,18 @@ export default {
         }
 
         // Si l'élève s'exerçait avec la table de 1
+
         if (this.tableId === 1) {
           // Calcul du temps moyen de réponse
           let sum = 0
-          let worseTime = 0
           this.operations.forEach(operation => {
             sum += operation.time
-            if (-operation.time < worseTime) {
+            /* if (-operation.time < worseTime) {
               worseTime = operation.time
-            }
+            } */
           })
           this.avgTimeToAnswer = sum / 10
-          this.worseTimeToAnswer = worseTime
-          console.log(this.avgTimeToAnswer)
-          lsm.pushValueUser('referenceTime', this.avgTimeToAnswer)
-          lsm.pushValueUser('worseReferenceTime', this.worseTimeToAnswer)
+          lsm.setValueUser('referenceTime', this.avgTimeToAnswer)
         }
 
         // Vérifie que l'élève débloque un succès de type tableXMaster.

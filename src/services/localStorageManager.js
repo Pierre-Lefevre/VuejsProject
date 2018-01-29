@@ -24,8 +24,7 @@ export default {
         data[user.pseudo] = {
           'history': [],
           'achievements': achievements,
-          'referenceTime': null,
-          'worseReferenceTime': null
+          'referenceTime': null
         }
       })
       this.setValue('data', data)
@@ -97,7 +96,6 @@ export default {
 
   // Permet de récupérer les données contenues à une certaine clef pour un utilisateur.
   getValueUser (key) {
-    console.log(key)
     if (this.keyExistsUser(key)) {
       try {
         return JSON.parse(this.getUserData()[key])

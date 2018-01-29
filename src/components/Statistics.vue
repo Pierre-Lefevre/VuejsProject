@@ -2,11 +2,12 @@
   <div>
     <h1 class="color-blue">Statistiques</h1>
     <save-load-progress id="progress-btns"/>
+    <!--<pre>{{ statsTab }}</pre>-->
     <ul id="tables-stats">
       <li :key="i" v-for="(factor1, i) in statsTab">
         <h1>Table de {{ i }}</h1>
         <div id="pie-wrapper">
-          <pie :data="pie" :width="200" :height="200" :options="{responsive: true, maintainAspectRatio: false}"></pie>
+          <pie :data="pie[i]" :width="200" :height="200" :options="{responsive: true, maintainAspectRatio: false}"></pie>
         </div>
         <table cellspacing="0">
           <thead>
@@ -57,39 +58,58 @@ export default {
     return {
       globalHistory: [],
       statsTab: {},
-      pie: {
-        labels: ['Parfaitement sue', 'Presque sue', 'Moyennement retenue', 'Pas retenue du tout', 'Pas encore testée'],
-        colors: ['#4E950B', '#FCC007', '#EA5C1C', '#BE1621', '#d3d3d3'],
-        data: [10, 20, 30, 40]
-      }
+      levelInformation: {},
+      pie: {}
     }
   },
   created () {
     this.globalHistory = lsm.getValueUser('history')
     this.updateStats()
-
+    for (let i = 1; i <= 10; i++) {
+      this.pie[i] = {
+        labels: ['Parfaitement sue', 'Presque sue', 'Moyennement retenue', 'Pas retenue du tout', 'Pas encore testée'],
+        colors: ['#4E950B', '#FCC007', '#EA5C1C', '#BE1621', '#d3d3d3'],
+        data: [
+          this.levelInformation[i].greenCount,
+          this.levelInformation[i].yellowCount,
+          this.levelInformation[i].orangeCount,
+          this.levelInformation[i].redCount,
+          this.levelInformation[i].greyCount
+        ]
+      }
+    }
   },
   methods: {
+    // Construit le tableau stockant les statistiques des résultats
     updateStats () {
+      // Initialise le tableau
       for (let i = 1; i <= 10; i++) {
         for (let j = 1; j <= 10; j++) {
           if (this.statsTab[i] === undefined) {
             this.statsTab[i] = {}
           }
-          this.statsTab[i][j] = {nbErrors: -1, count: -1, avgErrors: -1}
+          this.statsTab[i][j] = {nbErrors: -1, count: -1, avgErrors: -1, classColor: null}
         }
       }
+      // Remplissage du tableau
       this.globalHistory.forEach(session => {
         session.forEach(operation => {
           if (this.statsTab[operation.factor1][operation.factor2].nbErrors === -1) {
-            this.statsTab[operation.factor1][operation.factor2] = {nbErrors: 0, count: 0, avgErrors: 0}
+            this.statsTab[operation.factor1][operation.factor2] = {nbErrors: 0, count: 0, avgErrors: 0, classColor: null}
           }
           this.statsTab[operation.factor1][operation.factor2].nbErrors += operation.nbErrors
           this.statsTab[operation.factor1][operation.factor2].count++
           this.statsTab[operation.factor1][operation.factor2].avgErrors = this.statsTab[operation.factor1][operation.factor2].nbErrors / this.statsTab[operation.factor1][operation.factor2].count
         })
       })
+      for (let i = 1; i <= 10; i++) {
+        this.levelInformation[i] = {greenCount: 0, yellowCount: 0, orangeCount: 0, redCount: 0, greyCount: 0}
+        for (let j = 1; j <= 10; j++) {
+          this.deduceCellColor(i, j)
+        }
+      }
     },
+    // Met à jour la couleur de fond de la cellule en fonction de la moyenne des erreurs faites sur les opérations factor1*factor2 et factor2*factor1
     deduceCellColor (factor1, factor2) {
       let sumAvgErrors = 0
       let count = 0
@@ -101,26 +121,28 @@ export default {
         sumAvgErrors += this.statsTab[factor2][factor1].avgErrors
         count++
       }
-      let classColor = ""
-      if (count === 0) {
-        classColor = 'background-grey'
-      }
+      let classColor = ''
       let errorsAverage = sumAvgErrors / count
       switch (true) {
         case (errorsAverage >= 0 && errorsAverage < 1):
           classColor = 'background-green'
+          this.levelInformation[factor1].greenCount++
           break
         case (errorsAverage >= 1 && errorsAverage < 3):
           classColor = 'background-yellow'
+          this.levelInformation[factor1].yellowCount++
           break
         case (errorsAverage >= 3 && errorsAverage < 6):
           classColor = 'background-orange'
+          this.levelInformation[factor1].orangeCount++
           break
         case (errorsAverage >= 6 && errorsAverage <= 9):
           classColor = 'background-red'
+          this.levelInformation[factor1].redCount++
           break
         default:
-          console.log('Switch failed')
+          classColor = 'background-grey'
+          this.levelInformation[factor1].greyCount++
           break
       }
       this.statsTab[factor1][factor2].classColor = classColor

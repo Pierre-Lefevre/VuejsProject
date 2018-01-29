@@ -3,7 +3,7 @@
     <div id="pie-wrapper">
       <pie :data="pie" :width="350" :height="350" :options="{responsive: true, maintainAspectRatio: false}"></pie>
     </div>
-    <p>Temps de référence : {{ getReferenceTime() }}</p>
+    <p>Temps de référence : {{ getReferenceTime() / 1000 | round(2) }}</p>
     <table>
       <thead>
         <tr>
@@ -68,7 +68,7 @@ export default {
 
     // Retourne le temps de référence de l'élève calculé sur la table de 1
     getReferenceTime () {
-      lsm.getValueUser('referenceTime')
+      return lsm.getValueUser('referenceTime')
     },
 
     // Retourne le nombre total d'erreurs.
