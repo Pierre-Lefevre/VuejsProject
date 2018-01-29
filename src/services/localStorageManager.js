@@ -97,6 +97,7 @@ export default {
 
   // Permet de récupérer les données contenues à une certaine clef pour un utilisateur.
   getValueUser (key) {
+    console.log(key)
     if (this.keyExistsUser(key)) {
       try {
         return JSON.parse(this.getUserData()[key])

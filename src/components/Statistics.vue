@@ -18,25 +18,21 @@
           <tbody>
             <tr>
               <th>{{ i }}</th>
-              <td :key="j" v-for="j in 10" :class="deduceCellColor(i, j)" class="popover__wrapper">
-                <div class="popover__content">
+              <td :key="j" v-for="(factor2, j) in factor1" :class="factor2.classColor" class="popover-wrapper">
+                <div class="popover-content">
                   <div>
-                    <h3>{{ i + ' x ' + j }}</h3>
-                    {{ statsTab[i] !== undefined && statsTab[i][j] !== undefined ? statsTab[i][j].avgErrors : "Pas encore essayé." }}
+                    <h3>{{ i + ' x ' + j }} : </h3>
+                    {{ statsTab[i] !== undefined && statsTab[i][j] !== undefined && statsTab[i][j].avgErrors != -1 ? statsTab[i][j].avgErrors : "-" }}
                   </div>
-                  <div>
-                    <h3>{{ j + ' x ' + i }}</h3>
-                    {{ statsTab[j] !== undefined && statsTab[j][i] !== undefined ? statsTab[j][i].avgErrors : "Pas encore essayé." }}
+                  <div v-if="i != j">
+                    <h3>{{ j + ' x ' + i }} : </h3>
+                    {{ statsTab[j] !== undefined && statsTab[j][i] !== undefined && statsTab[j][i].avgErrors != -1 ? statsTab[j][i].avgErrors : "-" }}
                   </div>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
-        <!-- <p :key="j" v-for="(factor2, j) in factor1">
-          {{ i }} * {{ j }} =>
-          Nombre d'erreurs moyen : {{ factor2.avgErrors }}
-        </p> -->
       </li>
     </ul>
     <!--<button class="hvr-grow btn-primary background-green" @click="window.print()">Imprimer les statistiques</button>-->
@@ -63,70 +59,72 @@ export default {
       statsTab: {},
       pie: {
         labels: ['Parfaitement sue', 'Presque sue', 'Moyennement retenue', 'Pas retenue du tout', 'Pas encore testée'],
-        colors: ['#4E950B', '#FCC007', '#EA5C1C', '#BE1621', '#d3d3d3']
+        colors: ['#4E950B', '#FCC007', '#EA5C1C', '#BE1621', '#d3d3d3'],
+        data: [10, 20, 30, 40]
       }
     }
   },
   created () {
     this.globalHistory = lsm.getValueUser('history')
-    console.log(this.globalHistory)
     this.updateStats()
-    this.pie.data = [10, 20, 30, 40]
+
   },
   methods: {
     updateStats () {
+      for (let i = 1; i <= 10; i++) {
+        for (let j = 1; j <= 10; j++) {
+          if (this.statsTab[i] === undefined) {
+            this.statsTab[i] = {}
+          }
+          this.statsTab[i][j] = {nbErrors: -1, count: -1, avgErrors: -1}
+        }
+      }
       this.globalHistory.forEach(session => {
         session.forEach(operation => {
-          if (this.statsTab[operation.factor1] === undefined) {
-            this.statsTab[operation.factor1] = {}
-          }
-          if (this.statsTab[operation.factor1][operation.factor2] === undefined) {
+          if (this.statsTab[operation.factor1][operation.factor2].nbErrors === -1) {
             this.statsTab[operation.factor1][operation.factor2] = {nbErrors: 0, count: 0, avgErrors: 0}
           }
-          if (this.statsTab[operation.factor2] === undefined) {
-            this.statsTab[operation.factor2] = {}
-          }
-          if (this.statsTab[operation.factor2][operation.factor1] === undefined) {
-            this.statsTab[operation.factor2][operation.factor1] = {nbErrors: 0, count: 0, avgErrors: 0}
-          }
           this.statsTab[operation.factor1][operation.factor2].nbErrors += operation.nbErrors
-          this.statsTab[operation.factor2][operation.factor1].nbErrors += operation.nbErrors
           this.statsTab[operation.factor1][operation.factor2].count++
-          this.statsTab[operation.factor2][operation.factor1].count++
           this.statsTab[operation.factor1][operation.factor2].avgErrors = this.statsTab[operation.factor1][operation.factor2].nbErrors / this.statsTab[operation.factor1][operation.factor2].count
-          this.statsTab[operation.factor2][operation.factor1].avgErrors = this.statsTab[operation.factor2][operation.factor1].nbErrors / this.statsTab[operation.factor2][operation.factor1].count
         })
       })
-      console.log(this.statsTab)
     },
     deduceCellColor (factor1, factor2) {
       let sumAvgErrors = 0
       let count = 0
-      if (this.statsTab[factor1] !== undefined && this.statsTab[factor1][factor2] !== undefined) {
+      if (this.statsTab[factor1] !== undefined && this.statsTab[factor1][factor2] !== undefined && this.statsTab[factor1][factor2].avgErrors !== -1) {
         sumAvgErrors += this.statsTab[factor1][factor2].avgErrors
         count++
       }
-      if (this.statsTab[factor2] !== undefined && this.statsTab[factor2][factor1] !== undefined) {
+      if (this.statsTab[factor2] !== undefined && this.statsTab[factor2][factor1] !== undefined && this.statsTab[factor2][factor1].avgErrors !== -1) {
         sumAvgErrors += this.statsTab[factor2][factor1].avgErrors
         count++
       }
+      let classColor = ""
       if (count === 0) {
-        return 'background-grey'
+        classColor = 'background-grey'
       }
       let errorsAverage = sumAvgErrors / count
       switch (true) {
         case (errorsAverage >= 0 && errorsAverage < 1):
-          return 'background-green'
+          classColor = 'background-green'
+          break
         case (errorsAverage >= 1 && errorsAverage < 3):
-          return 'background-yellow'
+          classColor = 'background-yellow'
+          break
         case (errorsAverage >= 3 && errorsAverage < 6):
-          return 'background-orange'
+          classColor = 'background-orange'
+          break
         case (errorsAverage >= 6 && errorsAverage <= 9):
-          return 'background-red'
+          classColor = 'background-red'
+          break
         default:
           console.log('Switch failed')
           break
       }
+      this.statsTab[factor1][factor2].classColor = classColor
+      this.statsTab[factor2][factor1].classColor = classColor
     }
   }
 }
@@ -157,52 +155,48 @@ export default {
     margin-top: 1rem;
   }
 
-  thead th {
+  table th, table td {
     width: 40px;
-    text-align: center;
     height: 40px;
+    text-align: center;
     border-right: 2px solid #F3F4F5;
-  }
-
-  tbody th {
-    text-align: center;
-    border-top: 2px solid #F3F4F5;
-    height: 40px;
-  }
-
-  td {
-    border: 2px solid #F3F4F5;
-    border-left: none;
+    border-bottom: 2px solid #F3F4F5;
   }
 
   span {
     color: green;
   }
 
-  .popover__wrapper {
+  .popover-wrapper {
     position: relative;
   }
 
-  .popover__content {
+  .popover-content {
     opacity: 0;
     visibility: hidden;
     position: absolute;
-    left: -150px;/*
-    margin-left: 130px;
-    margin-top: 20px;*/
-    transform: translate(0,10px);
+    left: calc(-180px / 2 + 20px);
+    transform: translate(0, 10px);
     background-color: #BFBFBF;
     padding: 1.5rem;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-    width: auto;
+    width: 180px;
+    top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  .popover__content:before {
+  .popover-content h3 {
+    display: inline-block;
+  }
+
+  .popover-content:before {
     position: absolute;
     z-index: -1;
     content: '';
     right: calc(50% - 10px);
-    top: -8px;
+    top: -10px;
     border-style: solid;
     border-width: 0 10px 10px 10px;
     border-color: transparent transparent #BFBFBF transparent;
@@ -210,11 +204,11 @@ export default {
     transition-property: transform;
   }
 
-  .popover__wrapper:hover .popover__content {
+  .popover-wrapper:hover .popover-content {
     z-index: 10;
     opacity: 1;
     visibility: visible;
-    transform: translate(0,-20px);
+    transform: translate(0, -20px);
     transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
   }
 
