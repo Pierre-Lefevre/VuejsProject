@@ -1,3 +1,4 @@
+import config from '@/config/config'
 import lsm from '@/services/localStorageManager'
 
 // Tous les résultats possibles dans toutes les tables de multiplication.
@@ -77,17 +78,11 @@ export default {
         if (index !== -1) {
           allOperations[index].nbErrors += operation.nbErrors
           allOperations[index].badAnswers = this.arrayUnique(allOperations[index].badAnswers.concat(operation.badAnswers))
+          allOperations[index].time += operation.time
         } else {
-          allOperations.push({factor1: operation.factor1, factor2: operation.factor2, nbErrors: operation.nbErrors, badAnswers: operation.badAnswers})
+          allOperations.push({factor1: operation.factor1, factor2: operation.factor2, nbErrors: operation.nbErrors, badAnswers: operation.badAnswers, time: operation.time})
         }
       })
-    })
-
-    // Duplique, avec une probabilité de 25%, certaines opérations.
-    allOperations.forEach(operation => {
-      if (Math.random() > 0.75) {
-        allOperations.push(this.clone(operation))
-      }
     })
 
     // Trie toutes les opérations effectuées en fonction du nombre d'erreurs décroissant.
@@ -95,8 +90,47 @@ export default {
       return (a.nbErrors < b.nbErrors) ? 1 : ((b.nbErrors < a.nbErrors) ? -1 : 0)
     })
 
+    // Isole les 5 opérations ayant le plus d'erreurs.
+    let operationsErrors = allOperations.slice(0, 5)
+
+    let problematicOperations = []
+
+    // Récupération du temps de référence.
+    let referenceTime = lsm.getValueUser('referenceTime')
+    if (referenceTime !== undefined) {
+      // Trie toutes les opérations effectuées en fonction du temps décroissant.
+      allOperations.sort((a, b) => {
+        return (a.time < b.time) ? 1 : ((b.time < a.time) ? -1 : 0)
+      })
+
+      // Isole les 2 opérations ayant le temps le plus long.
+      let tmpOperationsFingers = allOperations.slice(0, 2)
+
+      // Parmi ces 2 opérations, on récupère ceux dont le temps est supérieur à x fois le temps de référence.
+      tmpOperationsFingers.forEach(operation => {
+        if (operation.time > config.coefficientToDeduceCountingFingersThreshold * referenceTime) {
+          problematicOperations.push(operation)
+        }
+      })
+
+      // Complète le tableau des opérations problématiques afin d'atteindre une longueur égale à 5.
+      problematicOperations = problematicOperations.concat(operationsErrors.slice(0, 5 - problematicOperations.length))
+    } else {
+      problematicOperations = operationsErrors
+    }
+
+    // Duplique, avec une probabilité de 25%, certaines opérations.
+    problematicOperations.forEach(operation => {
+      if (Math.random() > 0.75) {
+        problematicOperations.push(this.clone(operation))
+      }
+    })
+
+    // Mélange du tableau des opérations problématiques.
+    this.shuffleArray(problematicOperations)
+
     // Récupère, au maximum, les 5 opérations les plus problématiques.
-    return allOperations.slice(0, 5)
+    return problematicOperations.slice(0, 5)
   },
 
   // Permet de récupérer, parmi tous les résultats possibles dans toutes les tables de multiplication, les x résultats les plus proches de la bonne réponse, excepté certains.

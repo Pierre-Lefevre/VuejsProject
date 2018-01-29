@@ -1,7 +1,6 @@
 <template>
   <div class="operation">
     <h1 :class="isTraining ? 'color-green' : 'color-red'">{{ isTraining ? 'Apprentissage' : 'Evaluation' }}</h1>
-    {{ avgTimeToAnswer }}
     <p>{{ operations[index].factor1 }} x {{ operations[index].factor2 }}</p>
     <p v-if="timeNextQuestion > 0">Question suivante dans : {{ timeNextQuestion }}</p>
     <div id="answers-wrapper">
@@ -36,7 +35,6 @@ export default {
       startTimestamp: 0,
       timeNextQuestion: 0,
       timerNextQuestion: null,
-      avgTimeToAnswer: null,
       worseTimeToAnswer: null,
       wrongAnswer: false
     }
@@ -140,10 +138,10 @@ export default {
       // Si la réponse est correct...
       if (this.operations[this.index].factor1 * this.operations[this.index].factor2 === this.operations[this.index].answers[indexAnswer].value) {
         this.operations[this.index].time = Date.now() - this.startTimestamp
-        this.operations[this.index].answers[indexAnswer].class = 'background-green'
+        this.operations[this.index].answers[indexAnswer].class = 'bg-green'
         for (let i = 0; i < this.operations[this.index].answers.length; i++) {
           if (this.operations[this.index].answers[i].class === 'initial') {
-            this.operations[this.index].answers[i].class = 'background-grey'
+            this.operations[this.index].answers[i].class = 'bg-grey'
           }
         }
 
@@ -157,7 +155,7 @@ export default {
         }, config.timeBetweenOperation)
       } else {
         this.operations[this.index].nbErrors++
-        this.operations[this.index].answers[indexAnswer].class = 'background-red'
+        this.operations[this.index].answers[indexAnswer].class = 'bg-red'
         this.wrongAnswer = true
         this.operations[this.index].badAnswers.push(this.operations[this.index].answers[indexAnswer].value)
       }
@@ -188,19 +186,14 @@ export default {
           }
         }
 
-        // Si l'élève s'exerçait pour la première fois avec la table de 1
-        this.avgTimeToAnswer = lsm.getValueUser('referenceTime')
-        if (this.tableId === 1 && this.avgTimeToAnswer === null) {
-          // Calcul du temps moyen de réponse
+        // Si l'élève s'exerçait avec la table de 1.
+        if (this.tableId === 1) {
+          // Calcul du temps moyen de réponse.
           let sum = 0
           this.operations.forEach(operation => {
             sum += operation.time
-            /* if (-operation.time < worseTime) {
-              worseTime = operation.time
-            } */
           })
-          this.avgTimeToAnswer = sum / 10
-          lsm.setValueUser('referenceTime', this.avgTimeToAnswer)
+          lsm.setValueUser('referenceTime', sum / 10)
         }
 
         // Vérifie que l'élève débloque un succès de type tableXMaster.

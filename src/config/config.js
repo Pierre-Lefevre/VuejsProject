@@ -16,6 +16,9 @@ module.exports = {
   // Temps, en millisecondes, entre deux questions.
   timeBetweenOperation: 1,
 
+  // Coefficient permettant de déduire le seuil minimal temporel au-dessus duquel nous supposons que l'élève compte sur ses doigts.
+  coefficientToDeduceCountingFingersThreshold: 3,
+
   // Les listes des succès.
   achievements: achievements
 }

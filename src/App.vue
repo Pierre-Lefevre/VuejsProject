@@ -49,7 +49,7 @@
     <main>
       <router-view :key="$route.fullPath"/>
     </main>
-    <footer class="background-blue">
+    <footer class="bg-blue">
       <button @click="resetLocalStorage">Reset localstorage</button>
       <button @click="displayLocalStorage">Display localstorage</button>
     </footer>
@@ -176,12 +176,12 @@ export default {
     font-size: xx-large;
   }
 
-  .background-grey {
+  .bg-grey {
     background-color: #d3d3d3;
     color: white;
   }
 
-  .background-blue {
+  .bg-blue {
     background-color: #2c3e50;
     color: white;
   }
@@ -194,7 +194,7 @@ export default {
     border-color: #2c3e50;
   }
 
-  .background-green {
+  .bg-green {
     background-color: #4E950B;
     color: white
   }
@@ -207,7 +207,7 @@ export default {
     border-color: #4E950B;
   }
 
-  .background-yellow {
+  .bg-yellow {
     background-color: #FCC007;
   }
 
@@ -219,7 +219,7 @@ export default {
     border-color: #FCC007;
   }
 
-  .background-orange {
+  .bg-orange {
     background-color: #EA5C1C;
   }
 
@@ -231,7 +231,7 @@ export default {
     border-color: #EA5C1C;
   }
 
-  .background-red {
+  .bg-red {
     background-color: #BE1621;
     color: white;
   }

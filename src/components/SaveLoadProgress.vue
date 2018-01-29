@@ -1,10 +1,10 @@
 <template>
   <div>
     <h2>Votre progression : </h2>
-    <button class="hvr-grow btn-primary background-green" @click="saveProgress">Sauvegarder</button>
+    <button class="hvr-grow btn-primary bg-green" @click="saveProgress">Sauvegarder</button>
     <div class="hvr-grow drop-zone">
       <input type="file" @change="handleFileChange" accept="text/plain"/>
-      <button class="btn-primary background-green">Charger</button>
+      <button class="btn-primary bg-green">Charger</button>
     </div>
   </div>
 </template>

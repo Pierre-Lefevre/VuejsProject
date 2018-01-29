@@ -20,7 +20,7 @@
             <tr>
               <th>{{ i }}</th>
               <td :key="j" v-for="(factor2, j) in factor1" :class="factor2.classColor" class="popover-wrapper">
-                <div class="popover-content background-blue" v-if="factor2.classColor != 'background-grey'">
+                <div class="popover-content bg-blue" v-if="factor2.classColor != 'bg-grey'">
                   <span>Nombre d'erreurs moyen</span>
                   <div>
                     <h3>{{ i + ' x ' + j }} : </h3>
@@ -37,7 +37,7 @@
         </table>
       </li>
     </ul>
-    <!--<button class="hvr-grow btn-primary background-green" @click="window.print()">Imprimer les statistiques</button>-->
+    <!--<button class="hvr-grow btn-primary bg-green" @click="window.print()">Imprimer les statistiques</button>-->
     <achievements class="achievements"/>
   </div>
 </template>
@@ -71,7 +71,7 @@ export default {
     }
   },
   methods: {
-    // Construit le tableau stockant les statistiques des résultats
+    // Construit le tableau stockant les statistiques des résultats.
     updateStats () {
       // Initialise le tableau
       for (let i = 1; i <= 10; i++) {
@@ -82,7 +82,7 @@ export default {
           this.statsTab[i][j] = {nbErrors: -1, count: -1, avgErrors: -1, classColor: null}
         }
       }
-      // Remplissage du tableau
+      // Remplissage du tableau.
       this.globalHistory.forEach(session => {
         session.forEach(operation => {
           if (this.statsTab[operation.factor1][operation.factor2].nbErrors === -1) {
@@ -100,7 +100,7 @@ export default {
         }
       }
     },
-    // Met à jour la couleur de fond de la cellule en fonction de la moyenne des erreurs faites sur les opérations factor1*factor2 et factor2*factor1
+    // Met à jour la couleur de fond de la cellule en fonction de la moyenne des erreurs faites sur les opérations factor1 * factor2 et factor2 * factor1.
     deduceCellColor (factor1, factor2) {
       let sumAvgErrors = 0
       let count = 0
@@ -116,23 +116,23 @@ export default {
       let errorsAverage = sumAvgErrors / count
       switch (true) {
         case (errorsAverage >= 0 && errorsAverage < 1):
-          classColor = 'background-green'
+          classColor = 'bg-green'
           this.levelInformation[factor1].greenCount++
           break
         case (errorsAverage >= 1 && errorsAverage < 3):
-          classColor = 'background-yellow'
+          classColor = 'bg-yellow'
           this.levelInformation[factor1].yellowCount++
           break
         case (errorsAverage >= 3 && errorsAverage < 6):
-          classColor = 'background-orange'
+          classColor = 'bg-orange'
           this.levelInformation[factor1].orangeCount++
           break
         case (errorsAverage >= 6 && errorsAverage <= 9):
-          classColor = 'background-red'
+          classColor = 'bg-red'
           this.levelInformation[factor1].redCount++
           break
         default:
-          classColor = 'background-grey'
+          classColor = 'bg-grey'
           this.levelInformation[factor1].greyCount++
           break
       }
@@ -203,7 +203,7 @@ export default {
     border-bottom: 2px solid #F3F4F5;
   }
 
-  table td.background-green, table td.background-yellow, table td.background-orange, table td.background-red {
+  table td.bg-green, table td.bg-yellow, table td.bg-orange, table td.bg-red {
     cursor: pointer;
   }
 
