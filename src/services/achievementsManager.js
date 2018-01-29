@@ -44,29 +44,40 @@ export default {
     }
   },
 
-  // Permet de vérifier si l'utilisateur répond aux critères permettant de débloquer un succès de type tableXtimeMaster.
-  tableXtimeMaster (number, operations) {
-    if (!this.hasUnlockedAchievement('table' + number + 'timeMaster')) {
+  // Permet de vérifier si l'utilisateur répond aux critères permettant de débloquer un succès de type tableXTimeMaster.
+  tableXTimeMaster (number, operations) {
+    if (!this.hasUnlockedAchievement('table' + number + 'TimeMaster')) {
       let sum = 0
       operations.forEach(operation => {
         sum += operation.time
       })
       if (sum < config.timeMasterThreshold) {
-        this.unlockAchievement('table' + number + 'timeMaster')
+        this.unlockAchievement('table' + number + 'TimeMaster')
         this.timeMaster()
       }
     }
   },
 
-  // Permet de vérifier si l'utilisateur répond aux critères permettant de débloquer le succès tableMaster.
+  // Permet de vérifier si l'utilisateur répond aux critères permettant de débloquer le succès timeMaster.
   timeMaster () {
     if (!this.hasUnlockedAchievement('timeMaster')) {
       for (let i = 1; i <= 10; i++) {
-        if (!this.hasUnlockedAchievement('table' + i + 'timeMaster')) {
+        if (!this.hasUnlockedAchievement('table' + i + 'TimeMaster')) {
           return
         }
       }
       this.unlockAchievement('timeMaster')
+    }
+  },
+
+  // Permet de vérifier si l'utilisateur répond aux critères permettant de débloquer le succès jokeOver.
+  jokeOver () {
+    if (!this.hasUnlockedAchievement('jokeOver')) {
+      let tablesAlreadyDone = lsm.getValueUser('tablesAlreadyDone')
+      if (tablesAlreadyDone.length === 10) {
+        this.unlockAchievement('jokeOver')
+        eventBus.$emit('alert', {type: 'success', message: 'Mode évaluation débloqué !'})
+      }
     }
   }
 }

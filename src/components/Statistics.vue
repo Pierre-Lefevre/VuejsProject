@@ -243,7 +243,7 @@ export default {
     top: -10px;
     border-style: solid;
     border-width: 0 10px 10px 10px;
-    border-color: transparent transparent #2c3e50 transparent;
+    border-color: transparent transparent #2C3E50 transparent;
     transition-duration: 0.3s;
     transition-property: transform;
   }

@@ -6,9 +6,10 @@ for (let i = 1; i <= 10; i++) {
 achievements['tableMaster'] = {name: 'Maître des tables', message: 'Finir toutes les tables sans faute.', secret: false}
 let timeMasterThreshold = 20000
 for (let i = 1; i <= 10; i++) {
-  achievements['table' + i + 'timeMaster'] = {name: 'Table de ' + i + ' en contre-la-montre', message: 'Finir la table de ' + i + ' en moins de ' + timeMasterThreshold / 1000 + ' secondes.', secret: false}
+  achievements['table' + i + 'TimeMaster'] = {name: 'Table de ' + i + ' en contre-la-montre', message: 'Finir la table de ' + i + ' en moins de ' + timeMasterThreshold / 1000 + ' secondes.', secret: false}
 }
 achievements['timeMaster'] = {name: 'Maître du temps', message: 'Finir toutes les tables en moins de ' + timeMasterThreshold / 1000 + ' secondes.', secret: false}
+achievements['jokeOver'] = {name: 'Fini de jouer !', message: 'Débloquer le mode évaluation.', secret: false}
 achievements['niceTry'] = {name: 'Bien essayé !', message: 'Tenter d\'accéder à une table non référencée.', secret: true}
 
 module.exports = {

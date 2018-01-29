@@ -121,7 +121,7 @@ export default {
         // Ajoute aux réponses existantes, x nouvelles réponses afin d'en avoir 10 au total.
         tmpAnswers = tmpAnswers.concat(utils.getClosestValues(operation.goodAnswer, nbRandomAnswers, tmpAnswers))
         operation.answers = []
-        tmpAnswers.forEach((answer) => {
+        tmpAnswers.forEach(answer => {
           operation.answers.push({
             value: answer,
             class: 'initial'
@@ -190,6 +190,7 @@ export default {
           let tablesAlreadyDone = lsm.getValueUser('tablesAlreadyDone')
           if (tablesAlreadyDone === undefined || (tablesAlreadyDone !== undefined && tablesAlreadyDone.indexOf(this.table) === -1)) {
             lsm.pushValueUser('tablesAlreadyDone', this.table)
+            am.jokeOver()
           }
         }
 
@@ -206,8 +207,8 @@ export default {
         // Vérifie que l'élève débloque un succès de type tableXMaster.
         am.tableXMaster(this.table, this.operations)
 
-        // Vérifie que l'élève débloque un succès de type tableXtimeMaster.
-        am.tableXtimeMaster(this.table, this.operations)
+        // Vérifie que l'élève débloque un succès de type tableXTimeMaster.
+        am.tableXTimeMaster(this.table, this.operations)
 
         // Redirection vers la page des scores.
         this.$router.push({name: 'Score'})
@@ -281,7 +282,7 @@ export default {
     justify-content: center;
     margin: 30px;
     transition: background-color 1s;
-    border: 1px solid #bdc3c7;
+    border: 1px solid #BDC3C7;
     transform: rotate(45deg);
   }
 
