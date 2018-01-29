@@ -21,6 +21,7 @@
               <th>{{ i }}</th>
               <td :key="j" v-for="(factor2, j) in factor1" :class="factor2.classColor" class="popover-wrapper">
                 <div class="popover-content background-blue" v-if="factor2.classColor != 'background-grey'">
+                  <span>Nombre d'erreurs moyen</span>
                   <div>
                     <h3>{{ i + ' x ' + j }} : </h3>
                     {{ statsTab[i] !== undefined && statsTab[i][j] !== undefined && statsTab[i][j].avgErrors != -1 ? $options.filters.round(statsTab[i][j].avgErrors, 2) : "-" }}
@@ -216,7 +217,7 @@ export default {
     position: absolute;
     left: calc(-180px / 2 + 20px);
     transform: translate(0, 10px);
-    padding: 1.5rem;
+    padding: 1rem;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
     width: 180px;
     top: 60px;
@@ -227,6 +228,11 @@ export default {
 
   .popover-content h3 {
     display: inline-block;
+  }
+
+  .popover-content span {
+    font-size: small;
+    margin-bottom: 0.5rem;
   }
 
   .popover-content:before {
