@@ -3,7 +3,7 @@
     <div id="pie-wrapper">
       <pie :data="pie" :width="350" :height="350" :options="{responsive: true, maintainAspectRatio: false}"></pie>
     </div>
-    <p>Temps de référence : {{ getReferenceTime() / 1000 | round(2) }}</p>
+    <p v-if="getReferenceTime()">Temps de référence : {{ getReferenceTime() / 1000 | round(2) }} {{ pluralize('seconde', getReferenceTime() / 1000) }}</p>
     <table>
       <thead>
         <tr>
