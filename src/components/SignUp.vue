@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 class="color-blue">Inscription</h1>
     <form @submit.prevent="signUp">
       <input type="text" placeholder="Prénom" v-model="firstname">
       <input type="text" placeholder="Nom" v-model="lastname">
@@ -42,5 +43,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

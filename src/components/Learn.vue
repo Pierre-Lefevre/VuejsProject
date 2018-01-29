@@ -17,6 +17,10 @@ export default {
 </script>
 
 <style scoped>
+  .list {
+    margin: 2rem auto;
+  }
+
   .list li {
     height: 100px;
     width: 150px;

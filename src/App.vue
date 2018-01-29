@@ -137,6 +137,7 @@ export default {
 
   h1 {
     font-size: 3rem;
+    margin-bottom: 2rem;
   }
 
   h2 {
@@ -284,7 +285,7 @@ export default {
     flex-wrap: wrap;
     justify-content: center;
     max-width: 60vw;
-    margin: 2rem auto auto;
+    margin: auto;
   }
 
   .list li {

@@ -41,7 +41,7 @@ export default {
 <style scoped>
   h2 {
     font-size: 3rem;
-    padding-bottom: 1rem;
+    margin-bottom: 2rem;
   }
 
   #achievements {

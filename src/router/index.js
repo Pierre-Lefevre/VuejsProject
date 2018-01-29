@@ -99,7 +99,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const nearestWithTitle = to.matched.slice().reverse().find(r => r.meta && r.meta.title)
   if (nearestWithTitle) {
-    document.title = 'Tables de multiplication - ' + nearestWithTitle.meta.title
+    document.title = nearestWithTitle.meta.title + ' - Tables de multiplication'
   }
   next()
 })

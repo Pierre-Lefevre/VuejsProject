@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 class="color-green">Connexion</h1>
     <form @submit.prevent="login">
       <input type="text" placeholder="Pseudo" v-model="pseudo">
       <input type="password" placeholder="Mot de passe" v-model="password">
@@ -44,5 +45,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

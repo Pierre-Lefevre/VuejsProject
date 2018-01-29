@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>Score</h1>
     <div id="pie-wrapper">
       <pie :data="pie" :width="350" :height="350" :options="{responsive: true, maintainAspectRatio: false}"></pie>
     </div>

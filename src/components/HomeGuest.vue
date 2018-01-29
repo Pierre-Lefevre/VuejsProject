@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="color-green">Qui es-tu ?</h1>
+    <h1 class="color-orange">Qui es-tu ?</h1>
     <ul class="list">
       <li :key="i" v-for="(user, i) in users" class="hvr-hang">
         <router-link :to="{name: 'SignIn', params: {pseudo: user.pseudo}}" tag="div" class="color-blue font-monster"><span>{{ user.firstname }}</span><span>{{ user.lastname }}</span></router-link>
