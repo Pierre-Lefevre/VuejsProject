@@ -20,7 +20,7 @@ module.exports = {
   backupFileName: 'progression.txt',
 
   // Temps, en millisecondes, entre deux questions.
-  timeBetweenOperation: 1,
+  timeBetweenOperation: 3000,
 
   // Coefficient permettant de déduire le seuil minimal temporel au-dessus duquel nous supposons que l'élève compte sur ses doigts.
   coefficientToDeduceCountingFingersThreshold: 3,

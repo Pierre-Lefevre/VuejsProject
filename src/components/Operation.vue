@@ -2,7 +2,7 @@
   <div class="operation">
     <h1 :class="isTraining ? 'color-green' : 'color-red'">{{ isTraining ? 'Apprentissage' : 'Evaluation' }}</h1>
     <p>{{ operations[index].factor1 }} x {{ operations[index].factor2 }}</p>
-    <p v-if="timeNextQuestion > 0">Question suivante dans : {{ timeNextQuestion }}</p>
+    <!--<p v-if="timeNextQuestion > 0">Question suivante dans : {{ timeNextQuestion }}</p>-->
     <div id="answers-wrapper">
       <ul id="answers">
         <li :key="answer.value" v-for="(answer, i) in operations[index].answers" class="answer randomColor" :class="answer.class" @click="answer.class === 'initial' ? validAnswer(i) : null">
@@ -10,8 +10,11 @@
         </li>
       </ul>
     </div>
-    <figure class="alert-wrong-answer" v-if="wrongAnswer">
+    <figure class="alert-wrong-answer" v-if="answerState === 0">
       <img src="../assets/img/alert_error.svg" alt="Alerte mauvaise réponse">
+    </figure>
+    <figure class="alert-good-answer" v-if="answerState === 1">
+      <img src="../assets/img/alert_success.svg" alt="Alerte bonne réponse">
     </figure>
   </div>
 </template>
@@ -35,13 +38,16 @@ export default {
       startTimestamp: 0,
       timeNextQuestion: 0,
       timerNextQuestion: null,
-      worseTimeToAnswer: null,
-      wrongAnswer: false
+      answerPossibleStates: [0, 1, 2],
+      answerState: null
     }
   },
   beforeRouteEnter: guards.operation,
   beforeRouteUpdate: guards.operation,
   created () {
+    // Initialise l'état de la réponse à 2 pour non répondu.
+    this.answerState = this.answerPossibleStates[2]
+
     // Détermine si l'élève est en apprentissage ou en examen.
     this.isTraining = this.tableId !== undefined
     if (this.isTraining) {
@@ -137,6 +143,7 @@ export default {
     validAnswer (indexAnswer) {
       // Si la réponse est correct...
       if (this.operations[this.index].factor1 * this.operations[this.index].factor2 === this.operations[this.index].answers[indexAnswer].value) {
+        this.answerState = this.answerPossibleStates[1]
         this.operations[this.index].time = Date.now() - this.startTimestamp
         this.operations[this.index].answers[indexAnswer].class = 'bg-green'
         for (let i = 0; i < this.operations[this.index].answers.length; i++) {
@@ -154,9 +161,9 @@ export default {
           this.nextQuestion()
         }, config.timeBetweenOperation)
       } else {
+        this.answerState = this.answerPossibleStates[0]
         this.operations[this.index].nbErrors++
         this.operations[this.index].answers[indexAnswer].class = 'bg-red'
-        this.wrongAnswer = true
         this.operations[this.index].badAnswers.push(this.operations[this.index].answers[indexAnswer].value)
       }
     },
@@ -206,7 +213,7 @@ export default {
         this.$router.push({name: 'Score'})
       } else {
         // S'il reste des questions, on passe à la suivante.
-        this.wrongAnswer = false
+        this.answerState = this.answerPossibleStates[2]
         this.index++
         this.startTimestamp = Date.now()
       }
@@ -232,6 +239,12 @@ export default {
     right: 5vw;
     bottom: 20px;
     z-index: 1;
+    animation: fadein 2s;
+  }
+
+  @keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
 
   #answers-wrapper {
