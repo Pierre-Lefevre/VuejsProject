@@ -199,6 +199,9 @@ export default {
         // Vérifie que l'élève débloque un succès de type tableXMaster.
         am.tableXMaster(this.table, this.operations)
 
+        // Vérifie que l'élève débloque un succès de type tableXtimeMaster.
+        am.tableXtimeMaster(this.table, this.operations)
+
         // Redirection vers la page des scores.
         this.$router.push({name: 'Score'})
       } else {

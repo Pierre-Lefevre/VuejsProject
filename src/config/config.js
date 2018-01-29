@@ -4,7 +4,7 @@ for (let i = 1; i <= 10; i++) {
   achievements['table' + i + 'Master'] = {name: 'Maître de la table de ' + i, message: 'Finir la table de ' + i + ' sans faute.', secret: false}
 }
 achievements['tableMaster'] = {name: 'Maître des tables', message: 'Finir toutes les tables sans faute.', secret: false}
-let timeMasterThreshold = 15000
+let timeMasterThreshold = 20000
 for (let i = 1; i <= 10; i++) {
   achievements['table' + i + 'timeMaster'] = {name: 'Table de ' + i + ' en contre-la-montre', message: 'Finir la table de ' + i + ' en moins de ' + timeMasterThreshold / 1000 + ' secondes.', secret: false}
 }
