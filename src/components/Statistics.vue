@@ -2,7 +2,7 @@
   <div>
     <h1 class="color-blue">Statistiques</h1>
     <save-load-progress id="progress-btns"/>
-    <!--<pre>{{ statsTab }}</pre>-->
+    <p id="indication">En survolant les cases colorées, tu peux voir ton nombre d'erreurs moyen.</p>
     <ul id="tables-stats">
       <li :key="i" v-for="(factor1, i) in statsTab">
         <h1>Table de {{ i }}</h1>
@@ -20,14 +20,14 @@
             <tr>
               <th>{{ i }}</th>
               <td :key="j" v-for="(factor2, j) in factor1" :class="factor2.classColor" class="popover-wrapper">
-                <div class="popover-content">
+                <div class="popover-content" v-if="factor2.classColor != 'background-grey'">
                   <div>
                     <h3>{{ i + ' x ' + j }} : </h3>
-                    {{ statsTab[i] !== undefined && statsTab[i][j] !== undefined && statsTab[i][j].avgErrors != -1 ? statsTab[i][j].avgErrors : "-" }}
+                    {{ statsTab[i] !== undefined && statsTab[i][j] !== undefined && statsTab[i][j].avgErrors != -1 ? $options.filters.round(statsTab[i][j].avgErrors, 2) : "-" }}
                   </div>
                   <div v-if="i != j">
                     <h3>{{ j + ' x ' + i }} : </h3>
-                    {{ statsTab[j] !== undefined && statsTab[j][i] !== undefined && statsTab[j][i].avgErrors != -1 ? statsTab[j][i].avgErrors : "-" }}
+                    {{ statsTab[j] !== undefined && statsTab[j][i] !== undefined && statsTab[j][i].avgErrors != -1 ? $options.filters.round(statsTab[j][i].avgErrors, 2) : "-" }}
                   </div>
                 </div>
               </td>
@@ -66,19 +66,7 @@ export default {
     if (lsm.getValueUser('history') !== undefined) {
       this.globalHistory = lsm.getValueUser('history')
       this.updateStats()
-      for (let i = 1; i <= 10; i++) {
-        this.pie[i] = {
-          labels: ['Parfaitement sue', 'Presque sue', 'Moyennement retenue', 'Pas retenue du tout', 'Pas encore testée'],
-          colors: ['#4E950B', '#FCC007', '#EA5C1C', '#BE1621', '#d3d3d3'],
-          data: [
-            this.levelInformation[i].greenCount,
-            this.levelInformation[i].yellowCount,
-            this.levelInformation[i].orangeCount,
-            this.levelInformation[i].redCount,
-            this.levelInformation[i].greyCount
-          ]
-        }
-      }
+      this.initializePies()
     }
   },
   methods: {
@@ -149,12 +137,39 @@ export default {
       }
       this.statsTab[factor1][factor2].classColor = classColor
       this.statsTab[factor2][factor1].classColor = classColor
+    },
+    initializePies () {
+      let keyCount = ['greenCount', 'yellowCount', 'orangeCount', 'redCount', 'greyCount']
+      let availableLabels = ['Parfaitement sue', 'Presque sue', 'Moyennement retenue', 'Pas retenue du tout', 'Pas encore testée']
+      let availableColors = ['#4E950B', '#FCC007', '#EA5C1C', '#BE1621', '#D3D3D3']
+      for (let i = 1; i <= 10; i++) {
+        let labels = []
+        let colors = []
+        let data = []
+        for (let j = 0; j < keyCount.length; j++) {
+          if (this.levelInformation[i][keyCount[j]] > 0) {
+            labels.push(availableLabels[j])
+            colors.push(availableColors[j])
+            data.push(this.levelInformation[i][keyCount[j]])
+          }
+        }
+        this.pie[i] = {
+          labels: labels,
+          colors: colors,
+          data: data
+        }
+      }
     }
   }
 }
 </script>
 
 <style scoped>
+
+  #indication {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
 
   #tables-stats {
     display: flex;
@@ -185,6 +200,10 @@ export default {
     text-align: center;
     border-right: 2px solid #F3F4F5;
     border-bottom: 2px solid #F3F4F5;
+  }
+
+  table td.background-green, table td.background-yellow, table td.background-orange, table td.background-red {
+    cursor: pointer;
   }
 
   .popover-wrapper {
