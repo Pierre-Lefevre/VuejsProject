@@ -15,7 +15,7 @@ export default {
     let achievements = lsm.getValueUser('achievements')
     achievements[key] = true
     lsm.setValueUser('achievements', achievements)
-    eventBus.$emit('alert', {type: 'success', message: 'Succès débloqué : ' + config.achievements[key].name + ' !'})
+    eventBus.$emit('alert', {type: 'success', message: 'Succès débloqué : ' + config.achievements[key].name})
   },
 
   // Permet de vérifier si l'utilisateur répond aux critères permettant de débloquer un succès de type tableXMaster.

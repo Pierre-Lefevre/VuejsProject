@@ -2,7 +2,7 @@
   <div>
     <h2>Tes succès</h2>
     <ul id="achievements">
-      <li :key="i" v-for="(achievement, i) in achievements" :class="achievement.unlock ? 'unlock' : ''">
+      <li :key="i" v-for="(achievement, i) in achievements" :class="achievement.unlock ? 'unlock' : ''" v-if="!achievement.secret || achievement.unlock">
         <span class="achievement-unlock" v-if="achievement.unlock"></span>
         <span class="achievement-lock" v-if="!achievement.unlock"></span>
         <span class="achievement-name">{{ achievement.name }}</span>

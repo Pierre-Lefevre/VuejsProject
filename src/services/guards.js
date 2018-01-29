@@ -1,5 +1,6 @@
 // import utils from '@/services/utils'
 import store from '@/store/store'
+import am from '@/services/achievementsManager'
 // import { eventBus } from '@/services/eventBus'
 
 // Intercepteurs utilisés par l'application.
@@ -23,6 +24,7 @@ export default {
       if (id >= 1 && id <= 10) {
         next()
       } else {
+        am.unlockAchievement('niceTry')
         next({name: 'Learn'})
       }
     } else {

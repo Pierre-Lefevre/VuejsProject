@@ -1,9 +1,10 @@
 // Définition de tous les succès.
 let achievements = {}
 for (let i = 1; i <= 10; i++) {
-  achievements['table' + i + 'Master'] = {name: 'Maître de la table de ' + i, message: 'Finir la table de ' + i + ' sans faute.'}
+  achievements['table' + i + 'Master'] = {name: 'Maître de la table de ' + i, message: 'Finir la table de ' + i + ' sans faute.', secret: false}
 }
-achievements['tableMaster'] = {name: 'Maître des tables', message: 'Finir toutes les tables sans faute.'}
+achievements['tableMaster'] = {name: 'Maître des tables', message: 'Finir toutes les tables sans faute.', secret: false}
+achievements['niceTry'] = {name: 'Bien essayé !', message: 'Tenter d\'accéder à une table non référencée.', secret: true}
 
 module.exports = {
 
