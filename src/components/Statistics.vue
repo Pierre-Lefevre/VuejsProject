@@ -187,10 +187,6 @@ export default {
     border-bottom: 2px solid #F3F4F5;
   }
 
-  span {
-    color: green;
-  }
-
   .popover-wrapper {
     position: relative;
   }

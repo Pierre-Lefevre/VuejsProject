@@ -4,12 +4,12 @@
       <pie :data="pie" :width="350" :height="350" :options="{responsive: true, maintainAspectRatio: false}"></pie>
     </div>
     <p v-if="getReferenceTime()">Temps de référence : {{ getReferenceTime() / 1000 | round(2) }} {{ pluralize('seconde', getReferenceTime() / 1000) }}</p>
-    <table>
+    <table cellspacing="0">
       <thead>
         <tr>
-          <th>Opérations</th>
-          <th>Réponse</th>
-          <th>Erreurs</th>
+          <th>Opération</th>
+          <th>Résultat</th>
+          <th>Réponse(s) erronée(s)</th>
           <th>Nombre d'erreurs</th>
           <th>Temps</th>
         </tr>
@@ -23,9 +23,7 @@
       </tr>
       <tfoot>
         <tr>
-          <td></td>
-          <td></td>
-          <td></td>
+          <th colspan="3">Total</th>
           <td>{{ getNbTotalError() }}</td>
           <td>{{ getTotalTime() / 1000 | round(2) }} seconde{{ getTotalTime() >= 2 ? 's' : '' }}</td>
         </tr>
@@ -124,5 +122,27 @@ export default {
 </script>
 
 <style scoped>
+  #pie-wrapper {
+    margin-bottom: 2rem;
+  }
 
+  table {
+    background-color: white;
+    margin-top: 1rem;
+  }
+
+  table th, table td {
+    text-align: center;
+    border-right: 2px solid #F3F4F5;
+    border-bottom: 2px solid #F3F4F5;
+    padding: 5px 10px;
+  }
+
+  table td:last-child, table th:last-child {
+    border-right: none;
+  }
+
+  table tr:last-child td, table tr:last-child th{
+    border-bottom: none;
+  }
 </style>
