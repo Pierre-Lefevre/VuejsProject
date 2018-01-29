@@ -107,17 +107,6 @@ export default {
     pluralize (string, count) {
       return count >= 2 ? string + 's' : string
     }
-  },
-  filters: {
-
-    // Filtre permettant d'arrondir un nombre avec tant de décimales.
-    round (value, decimal) {
-      if (!value) {
-        return ''
-      }
-      let factor = Math.pow(10, decimal)
-      return Math.round(value * factor) / factor
-    }
   }
 }
 </script>

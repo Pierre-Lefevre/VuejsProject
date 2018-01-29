@@ -74,4 +74,13 @@ export default {
     cursor: pointer;
     z-index: 99;
   }
+
+  .drop-zone input[type="file"]::-webkit-file-upload-button {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 99;
+  }
 </style>

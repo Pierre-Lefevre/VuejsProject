@@ -25,7 +25,7 @@
           </li>
           <li class="hvr-grow-rotate" v-if="isLoggedIn">
             <router-link :to="{name: 'Learn'}" class="color-green" tag="a">
-              <h2 :class="this.$route.name === 'Learn' ? 'border-bottom border-green' : ''">Apprentissage</h2>
+              <h2 :class="this.$route.name === 'Learn' || this.$route.name === 'OperationTable' ? 'border-bottom border-green' : ''">Apprentissage</h2>
             </router-link>
           </li>
           <li class="hvr-grow-rotate" v-if="isLoggedIn && canAccessTest()">
