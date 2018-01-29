@@ -1,7 +1,7 @@
 <template>
   <div v-show="alerts.length" id="alert-wrapper">
     <transition-group name="fade">
-      <div v-for="(alert, i) in alerts" v-if="alert.show" :key="i" class="alert" :class="alert.type">
+      <div v-for="(alert, i) in alerts" v-if="alert.show" :key="i" class="alert" :class="alert.class">
         <p>{{ alert.message }}</p>
       </div>
     </transition-group>
@@ -22,6 +22,18 @@ export default {
     // Si l'évènement "alert" est reçu...
     eventBus.$on('alert', (alert) => {
       alert.show = true
+
+      switch (alert.type) {
+        case 'success':
+          alert.class = 'bg-green'
+          break
+        case 'info':
+          alert.class = 'bg-blue'
+          break
+        case 'error':
+          alert.class = 'bg-red'
+          break
+      }
 
       // On ajoute l'alerte à les listes des alertes.
       this.alerts.push(alert)
@@ -52,29 +64,11 @@ export default {
   .alert {
     padding: 10px;
     border-radius: 4px;
-    border: 1px solid transparent;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
   }
 
   .alert:not(:last-child) {
     margin-bottom: 20px;
-  }
-
-  .alert.success {
-    color: #3c763d;
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
-  }
-
-  .alert.info {
-    color: #31708f;
-    background-color: #d9edf7;
-    border-color: #bce8f1;
-  }
-
-  .alert.error {
-    color: #a94442;
-    background-color: #f2dede;
-    border-color: #ebccd1;
   }
 
   .fade-enter-active, .fade-leave-active {
