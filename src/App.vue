@@ -341,7 +341,7 @@ export default {
 
   header {
     justify-content: space-between;
-    width: 80vw;
+    width: 90vw;
     margin: auto;
     padding-top: 2rem;
   }
@@ -361,7 +361,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    width: 80vw;
+    width: 90vw;
     margin: auto;
     padding: 2rem  0 calc(100px + 2rem);
   }

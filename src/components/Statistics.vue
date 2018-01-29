@@ -63,19 +63,21 @@ export default {
     }
   },
   created () {
-    this.globalHistory = lsm.getValueUser('history')
-    this.updateStats()
-    for (let i = 1; i <= 10; i++) {
-      this.pie[i] = {
-        labels: ['Parfaitement sue', 'Presque sue', 'Moyennement retenue', 'Pas retenue du tout', 'Pas encore testée'],
-        colors: ['#4E950B', '#FCC007', '#EA5C1C', '#BE1621', '#d3d3d3'],
-        data: [
-          this.levelInformation[i].greenCount,
-          this.levelInformation[i].yellowCount,
-          this.levelInformation[i].orangeCount,
-          this.levelInformation[i].redCount,
-          this.levelInformation[i].greyCount
-        ]
+    if (lsm.getValueUser('history') !== undefined) {
+      this.globalHistory = lsm.getValueUser('history')
+      this.updateStats()
+      for (let i = 1; i <= 10; i++) {
+        this.pie[i] = {
+          labels: ['Parfaitement sue', 'Presque sue', 'Moyennement retenue', 'Pas retenue du tout', 'Pas encore testée'],
+          colors: ['#4E950B', '#FCC007', '#EA5C1C', '#BE1621', '#d3d3d3'],
+          data: [
+            this.levelInformation[i].greenCount,
+            this.levelInformation[i].yellowCount,
+            this.levelInformation[i].orangeCount,
+            this.levelInformation[i].redCount,
+            this.levelInformation[i].greyCount
+          ]
+        }
       }
     }
   },

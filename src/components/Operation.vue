@@ -183,9 +183,9 @@ export default {
           }
         }
 
-        // Si l'élève s'exerçait avec la table de 1
-
-        if (this.tableId === 1) {
+        // Si l'élève s'exerçait pour la première fois avec la table de 1
+        this.avgTimeToAnswer = lsm.getValueUser('referenceTime')
+        if (this.tableId === 1 && this.avgTimeToAnswer !== null) {
           // Calcul du temps moyen de réponse
           let sum = 0
           this.operations.forEach(operation => {
