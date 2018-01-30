@@ -47,6 +47,9 @@ export default {
         // Chargement des données reçues dans le localStorage.
         lsm.setAllFromStringUser(bytes.toString(crypto.enc.Utf8))
         eventBus.$emit('alert', {type: 'success', message: 'Tu as récupéré ta progression !'})
+
+        // Indique au composant parent qu'il doit se recharger.
+        this.$emit('reload')
       }
 
       // Lecture du fichier transmis par l'utilisateur.

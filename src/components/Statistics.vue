@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div :key="id">
     <h1 class="color-blue">Statistiques</h1>
-    <save-load-progress id="progress-btns"/>
+    <save-load-progress id="progress-btns" @reload="reload"/>
     <p id="indication">En survolant les cases colorées, tu peux voir ton nombre d'erreurs moyen.</p>
     <ul id="tables-stats">
       <li :key="i" v-for="(factor1, i) in statsTab">
@@ -59,7 +59,8 @@ export default {
       globalHistory: [],
       statsTab: {},
       levelInformation: {},
-      pie: {}
+      pie: {},
+      id: 1
     }
   },
   created () {
@@ -165,6 +166,19 @@ export default {
           colors: colors,
           data: data
         }
+      }
+    },
+
+    // Permet de recharger l'intégralité du composant.
+    reload () {
+      if (lsm.getValueUser('history') !== undefined) {
+        this.id++
+        this.globalHistory = lsm.getValueUser('history')
+        this.statsTab = {}
+        this.levelInformation = {}
+        this.pie = {}
+        this.updateStats()
+        this.initializePies()
       }
     }
   }
