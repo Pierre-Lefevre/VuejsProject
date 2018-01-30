@@ -7,7 +7,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-// import utils from '@/services/utils'
 import homeAuth from '@/components/HomeAuth'
 import homeGuest from '@/components/HomeGuest'
 

@@ -132,7 +132,7 @@ export default {
     border-right: none;
   }
 
-  table tr:last-child td, table tr:last-child th{
+  table tr:last-child td, table tr:last-child th {
     border-bottom: none;
   }
 </style>

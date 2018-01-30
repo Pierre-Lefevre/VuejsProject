@@ -50,8 +50,10 @@
       <router-view :key="$route.fullPath"/>
     </main>
     <footer class="bg-blue">
-      <button @click="resetLocalStorage">Reset localstorage</button>
-      <button @click="displayLocalStorage">Display localstorage</button>
+      <!-- Boutons permettant de débuguer le localStorage. -->
+      <!--<button @click="resetLocalStorage">Reset localstorage</button>-->
+      <!--<button @click="displayLocalStorage">Display localstorage</button>-->
+      <p>Projet Vue.js - Master 2 DNR2i - Solène Dorey & Pierre Lefèvre</p>
     </footer>
     <alert/>
   </div>
@@ -59,7 +61,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-// import utils from '@/services/utils'
+import utils from '@/services/utils'
 import lsm from '@/services/localStorageManager'
 import { eventBus } from '@/services/eventBus'
 import Alert from '@/components/Alert'
@@ -75,8 +77,7 @@ export default {
   methods: {
     ...mapActions({processLogout: 'logout'}),
     canAccessTest () {
-      // return utils.canAccessTest()
-      return true
+      return utils.canAccessTest()
     },
     resetLocalStorage () {
       lsm.clear()
@@ -90,7 +91,7 @@ export default {
     },
     tryAccessTest (e) {
       if (!this.canAccessTest()) {
-        eventBus.$emit('alert', {type: 'info', message: 'Tu dois t\'entraîner davantage !'})
+        eventBus.$emit('alert', {type: 'error', message: 'Tu dois t\'entraîner davantage !'})
         e.preventDefault()
       } else {
         this.$router.push({name: 'Operation'})
@@ -104,7 +105,6 @@ export default {
 </script>
 
 <style>
-
   /***** Font *****/
   @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
 
@@ -373,6 +373,11 @@ export default {
     padding: 2rem 1rem;
     margin-top: 2rem;
     min-height: 100px;
+  }
+
+  footer p {
+    font-size: 1rem;
+    text-align: center;
   }
 
   main {

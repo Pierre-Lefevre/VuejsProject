@@ -1,7 +1,7 @@
-// import utils from '@/services/utils'
+import utils from '@/services/utils'
 import store from '@/store/store'
 import am from '@/services/achievementsManager'
-// import { eventBus } from '@/services/eventBus'
+import { eventBus } from '@/services/eventBus'
 
 // Intercepteurs utilisés par l'application.
 export default {
@@ -28,12 +28,12 @@ export default {
         next({name: 'Learn'})
       }
     } else {
-      // if (!utils.canAccessTest()) {
-      //   eventBus.$emit('alert', {type: 'info', message: 'Tu dois t\'entraîner davantage !'})
-      //   next({name: 'Home'})
-      // } else {
-      next()
-      // }
+      if (!utils.canAccessTest()) {
+        eventBus.$emit('alert', {type: 'error', message: 'Tu dois t\'entraîner davantage !'})
+        next({name: 'Home'})
+      } else {
+        next()
+      }
     }
   }
 }

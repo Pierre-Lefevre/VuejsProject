@@ -68,7 +68,7 @@ export default {
 
   // Permet de modifier toutes les données d'un utilisateur à partir d'une string.
   setAllFromStringUser (string) {
-    this.setUserData(undefined, string)
+    this.setUserData(undefined, JSON.parse(string))
   },
 
   // Permet de vérifier qu'une clef existe à la racine du localStorage.

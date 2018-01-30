@@ -17,7 +17,7 @@ import crypto from 'crypto-js'
 import fs from 'file-saver'
 
 export default {
-  name: 'save-load-progress',
+  name: 'saveLoadProgress',
   methods: {
     saveProgress () {
       // Cryptage de la progression de l'utilisateur.

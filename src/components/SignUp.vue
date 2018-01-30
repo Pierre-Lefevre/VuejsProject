@@ -17,7 +17,7 @@ import { eventBus } from '@/services/eventBus'
 import crypto from 'crypto-js'
 
 export default {
-  name: 'sign-up',
+  name: 'signUp',
   data () {
     return {
       firstname: '',

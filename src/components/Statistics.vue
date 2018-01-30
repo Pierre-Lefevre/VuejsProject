@@ -37,7 +37,6 @@
         </table>
       </li>
     </ul>
-    <!--<button class="hvr-grow btn-primary bg-green" @click="window.print()">Imprimer les statistiques</button>-->
     <achievements class="achievements"/>
   </div>
 </template>
@@ -71,9 +70,10 @@ export default {
     }
   },
   methods: {
+
     // Construit le tableau stockant les statistiques des résultats.
     updateStats () {
-      // Initialise le tableau
+      // Initialise le tableau avec toutes les opérations possibles.
       for (let i = 1; i <= 10; i++) {
         for (let j = 1; j <= 10; j++) {
           if (this.statsTab[i] === undefined) {
@@ -82,7 +82,8 @@ export default {
           this.statsTab[i][j] = {nbErrors: -1, count: -1, avgErrors: -1, classColor: null}
         }
       }
-      // Remplissage du tableau.
+
+      // Remplissage du tableau en fonction de l'historique.
       this.globalHistory.forEach(session => {
         session.forEach(operation => {
           if (this.statsTab[operation.factor1][operation.factor2].nbErrors === -1) {
@@ -100,6 +101,7 @@ export default {
         }
       }
     },
+
     // Met à jour la couleur de fond de la cellule en fonction de la moyenne des erreurs faites sur les opérations factor1 * factor2 et factor2 * factor1.
     deduceCellColor (factor1, factor2) {
       let sumAvgErrors = 0
@@ -139,6 +141,8 @@ export default {
       this.statsTab[factor1][factor2].classColor = classColor
       this.statsTab[factor2][factor1].classColor = classColor
     },
+
+    // Permet d'initialiser tous les diagrammes circulaires.
     initializePies () {
       let keyCount = ['greenCount', 'yellowCount', 'orangeCount', 'redCount', 'greyCount']
       let availableLabels = ['Parfaitement sue', 'Presque sue', 'Moyennement retenue', 'Pas retenue du tout', 'Pas encore testée']
@@ -166,7 +170,6 @@ export default {
 </script>
 
 <style scoped>
-
   #indication {
     text-align: center;
     margin-bottom: 1rem;

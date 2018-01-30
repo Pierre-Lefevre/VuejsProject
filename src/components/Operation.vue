@@ -224,7 +224,6 @@ export default {
 </script>
 
 <style scoped>
-
   .operation {
     padding: 0 10vw;
   }
