@@ -153,10 +153,12 @@ export default {
         }
 
         // Lancement du timer avant la question suivante.
-        this.timeNextQuestion = config.timeBetweenOperation / 1000
-        this.timerNextQuestion = setInterval(() => {
-          this.decreaseTimerNextQuestion()
-        }, 1000)
+        if (this.index < 9) {
+          this.timeNextQuestion = config.timeBetweenOperation / 1000
+          this.timerNextQuestion = setInterval(() => {
+            this.decreaseTimerNextQuestion()
+          }, 1000)
+        }
         setTimeout(() => {
           this.nextQuestion()
         }, config.timeBetweenOperation)

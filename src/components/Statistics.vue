@@ -114,6 +114,8 @@ export default {
         sumAvgErrors += this.statsTab[factor2][factor1].avgErrors
         count++
       }
+
+      // Associe une classe CSS en fonction du nombre d'erreurs moyen.
       let classColor = ''
       let errorsAverage = sumAvgErrors / count
       switch (true) {
